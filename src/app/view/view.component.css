@@ -1,0 +1,33 @@
+.thumbnail {
+  float: left;
+}
+
+.thumbnail img {
+  object-fit: cover;
+}
+
+.ui-dataview-content {
+  padding: 0 !important;
+}
+
+:host >>> .ui-toolbar {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ui-dataview-content {
+  border-top: none !important;
+}
+
+:host >>> .ui-table-wrapper th {
+  border-top: none !important;
+  text-align: left;
+}
+
+.loading-bar {
+  text-align: center;
+}
+
+:host >>> .ui-button {
+  margin-left: 5px;
+}

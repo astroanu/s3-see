@@ -1,0 +1,52 @@
+<div class="ui-dataview ui-widget ui-dataview-grid">
+  <p-toolbar>
+    <div class="ui-toolbar-group-left"></div>
+
+    <div class="ui-toolbar-group-right">
+      {{ filesShown.length }} Files
+      <p-button icon="pi pi-bars" (onClick)="viewList()" [disabled]="listView"></p-button>
+      <p-button icon="pi pi-th-large" (onClick)="viewThumbs()" [disabled]="!listView"></p-button>
+    </div>
+  </p-toolbar>
+
+  <div *ngIf="loading" class="loading-bar ui-dataview-content ui-widget-content">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div *ngIf="listView">
+    <p-table
+      dataKey="key"
+      selectionMode="single"
+      [(selection)]="selectedFile"
+      [columns]="columns"
+      [value]="filesShown"
+      autoLayout="true"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{ col.header }}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div *ngIf="!listView" class="ui-dataview-content ui-widget-content">
+    <div class="ui-md-12">
+      <div *ngFor="let file of filesShown" class="ui-md-3 thumbnail" [style.height.px]="thumbSize">
+        <img *ngIf="file.signedUrl" [style.width.%]="100" [style.height.%]="100" src="{{ file.signedUrl }}" />
+      </div>
+
+      <div class="ui-helper-clearfix"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="ui-g">
+  <div class="ui-md-3">
+    <p-menubar class="menubar" [model]="items"></p-menubar>
+
+    <app-dir-tree (selected)="onSelected($event)"></app-dir-tree>
+  </div>
+  <div class="ui-md-9">
+    <app-view [folder]="currentFolder"></app-view>
+  </div>
+</div>
