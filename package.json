@@ -1,5 +1,12 @@
 {
   "name": "s3see",
+  "description": "AWS S3 media viewer",
+  "author": {
+    "name": "Anuradha Jayathilaka",
+    "email": "anuradha@codebreez.com",
+    "url": "http://codebreez.com"
+  },
+  "license": "MIT",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,7 +16,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~7.2.0",
     "@angular/common": "~7.2.0",
