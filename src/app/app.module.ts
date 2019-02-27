@@ -12,6 +12,7 @@ import { ViewComponent } from './view/view.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @NgModule({
   declarations: [AppComponent, DirTreeComponent, ViewComponent],
   imports: [

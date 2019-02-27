@@ -10,17 +10,11 @@ const config = new ConfigService();
   providedIn: 'root'
 })
 export class FileService {
-  private bucketName = config.get('bucketName');
+  private bucketName = config.currentBucket;
   private s3: AWS.S3;
 
   constructor() {
-    this.s3 = new AWS.S3(
-      new AWS.Config({
-        accessKeyId: config.get('accessKeyId'),
-        secretAccessKey: config.get('secretAccessKey'),
-        region: config.get('region')
-      })
-    );
+    this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
   }
 
   listObjects(prefix: any, continuationToken = null) {
