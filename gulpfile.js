@@ -1,5 +1,21 @@
-const { src, dest } = require('gulp');
+const fs = require('fs');
+const ts = require('typescript');
+
+const tasksDir = './src/tasks';
+
+const taskFiles = fs.readdirSync(tasksDir);
+
+taskFiles
+  .filter((filename) => {
+    return filename.split('.').pop() == 'ts';
+  })
+  .forEach((filename) => {
+    eval(ts.transpile(fs.readFileSync(`${tasksDir}\\${filename}`).toString()));
+  });
+
+/*const { src, dest } = require('gulp');
 const argv = require('yargs').argv;
+
 const fs = require('fs');
 const rename = require('gulp-rename');
 const through = require('through2');
@@ -8,10 +24,10 @@ const path = require('path');
 const msg = require('gulp-msg');
 const recursive = require('recursive-readdir');
 
-const inPath = argv.path;
-const globPattern = `${inPath}/**/*.+(jpg|jpeg|NEF|png)`;
-const out = `${argv.out}/`;
-
+const inPath = argv.path;*/
+//const globPattern = `${inPath}/**/*.+(jpg|jpeg|NEF|png)`;
+//const out = `${argv.out}/`;
+/*
 recursive(inPath, (err, files) => {
   msg.info('<%= length %> files found', {
     length: files.length
@@ -53,3 +69,4 @@ exports.thumbs = () => {
       })
     );
 };
+*/

@@ -7,21 +7,14 @@ import * as config from '../../config.json';
 })
 export class ConfigService {
   private config: any;
-
-  public set currentBucket(bucketName: string) {
-    this.currentBucket = bucketName;
-  }
-
-  public get currentBucket() {
-    return this.currentBucket;
-  }
+  public currentBucket: string;
 
   public get currentBucketConfig() {
     return this.getBucketConfig(this.currentBucket);
   }
 
   public getBucketConfig(bucketName: string) {
-    const bucketConfig = this.buckets.filter((bucketInfo) => {
+    let bucketConfig = this.buckets.filter((bucketInfo) => {
       return bucketInfo.bucketName === bucketName;
     })[0];
 
@@ -37,10 +30,11 @@ export class ConfigService {
   }
 
   public get appName() {
-    return this.config.getAppName;
+    return this.config.appName;
   }
 
   constructor() {
     this.config = config['default'];
+    this.currentBucket = this.buckets[0].bucketName;
   }
 }

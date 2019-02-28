@@ -7,14 +7,8 @@ const config = new ConfigService();
 
 export class File {
   private url: string = null;
-  private bucketName = config.get('bucketName');
-  private s3: S3 = new AWS.S3(
-    new AWS.Config({
-      accessKeyId: config.get('accessKeyId'),
-      secretAccessKey: config.get('secretAccessKey'),
-      region: config.get('region')
-    })
-  );
+  private bucketName = config.currentBucket;
+  private s3: S3;
 
   get sizePretty(): string {
     let bytes = this.size;
@@ -62,8 +56,11 @@ export class File {
   }
 
   constructor(private file: S3.Types.Object) {
+    this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
+
     if (!this.key.includes('_thumbs')) {
-      const thumbKey = this.key.replace(this.fileName, `_thumbs/${this.fileName.toLowerCase().replace('nef', 'jpg')}`);
+      const ext = this.key.split('.').pop();
+      const thumbKey = this.key.replace(this.fileName, `_thumbs/${this.fileName.toLowerCase().replace(ext, 'jpg')}`);
 
       this.getSignedUrl(thumbKey).then((url: string) => {
         this.url = url;
