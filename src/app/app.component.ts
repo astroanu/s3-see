@@ -14,7 +14,8 @@ export class AppComponent {
 
   menuItems = [
     {
-      label: this.config.appName
+      label: this.config.appName,
+      icon: 'pi pi-fw pi-eye'
     }
   ];
 

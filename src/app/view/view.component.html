@@ -17,7 +17,7 @@
     No files to show
   </div>
 
-  <div *ngIf="listView">
+  <div *ngIf="listView && filesShown.length">
     <p-table
       dataKey="key"
       selectionMode="single"
@@ -44,7 +44,7 @@
     </p-table>
   </div>
 
-  <div *ngIf="!listView" class="ui-dataview-content ui-widget-content">
+  <div *ngIf="!listView && filesShown.length" class="ui-dataview-content ui-widget-content">
     <div class="ui-md-12">
       <div
         *ngFor="let file of filesShown"

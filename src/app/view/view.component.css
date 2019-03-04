@@ -39,13 +39,10 @@
   margin-left: 5px;
 }
 
-:host >>> .loading-bar {
-  border-bottom: none !important;
-}
-
 .placeholder {
   padding: 60px;
   text-align: center;
   border-left: thin solid #c8c8c8;
   border-right: thin solid #c8c8c8;
+  border-bottom: thin solid #c8c8c8;
 }
