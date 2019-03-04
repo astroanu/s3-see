@@ -24,11 +24,13 @@ export class DirTreeComponent implements OnInit {
   fileCache: Array<object> = [];
   fileTree: Array<object> = [];
   folderStructor: Object = {};
+  loading: boolean = true;
 
   private initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
     this.folderStructor = {};
+    this.loading = true;
     this.getFileStructure().then(() => {
       console.log('Dir listing complete');
     });
@@ -43,6 +45,7 @@ export class DirTreeComponent implements OnInit {
   constructor(private fileService: FileService) {}
 
   buildTree() {
+    this.loading = false;
     this.fileTree = this.objectToNodeArray(this.folderStructor);
   }
 

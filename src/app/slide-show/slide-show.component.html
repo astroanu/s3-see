@@ -1,3 +1,5 @@
 <div *ngIf="currentFile" class="slider-overlay" (click)="hideOverlay()">
-  <div class="image-box" [style.background-image]="'url(' + currentFile.fullUrl + ')'"></div>
+  <i *ngIf="isLoading" class="pi pi-spin pi-spinner"></i>
+
+  <div class="image-box" *ngIf="!isLoading" [style.background-image]="'url(' + currentFile.fullUrl + ')'"></div>
 </div>

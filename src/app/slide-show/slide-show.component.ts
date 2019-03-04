@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SlideShowComponent implements OnInit {
   private currentFile;
+  isLoading: boolean = false;
 
   @Input() set file(file: any) {
     this.currentFile = file;

@@ -13,6 +13,10 @@
     <p-progressSpinner></p-progressSpinner>
   </div>
 
+  <div *ngIf="!filesShown.length && !loading" class="placeholder">
+    No files to show
+  </div>
+
   <div *ngIf="listView">
     <p-table
       dataKey="key"
@@ -49,6 +53,7 @@
         [style.height.px]="thumbSize"
       >
         <img *ngIf="file.thumbUrl" [style.width.%]="100" [style.height.%]="100" src="{{ file.thumbUrl }}" />
+        <i *ngIf="!file.thumbUrl" class="pi pi-spin pi-spinner"></i>
       </div>
 
       <div class="ui-helper-clearfix"></div>

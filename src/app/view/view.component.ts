@@ -20,7 +20,7 @@ export class ViewComponent implements OnInit {
 
   @Input() set folder(node: any) {
     if (node) {
-      this.filesShown = [];
+      this.resetFilesShown();
 
       this.getFiles(node.prefix).then(() => {
         console.log('Files loaded');
@@ -29,8 +29,8 @@ export class ViewComponent implements OnInit {
   }
 
   @Input() set bucket(buckteName: any) {
-    console.log(buckteName);
     if (buckteName) {
+      this.resetFilesShown();
       this.fileService.setBucket(buckteName);
     }
   }
@@ -38,6 +38,12 @@ export class ViewComponent implements OnInit {
   setSelectedFile(file) {
     this.selectedFile = file;
   }
+
+  private resetFilesShown() {
+    this.filesShownTotalSize = 0;
+    this.filesShown = [];
+  }
+
   private viewList() {
     this.listView = true;
   }

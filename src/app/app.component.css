@@ -2,3 +2,10 @@
   margin-bottom: 15px;
   display: block;
 }
+
+:host >>> .ui-dropdown {
+  width: 100% !important;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+}

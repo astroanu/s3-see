@@ -1,12 +1,16 @@
-<div class="ui-g">
-  <div class="ui-md-3">
-    <p-menubar class="menubar" [model]="menuItems"></p-menubar>
+<div class="p-grid p-align-stretch vertical-container">
+  <div class="p-col-3">
+    <div class="box box-stretched">
+      <p-menubar class="menubar" [model]="menuItems"></p-menubar>
 
-    <p-dropdown [options]="buckets" [(ngModel)]="currentBucket"></p-dropdown>
+      <p-dropdown [options]="buckets" [(ngModel)]="currentBucket"></p-dropdown>
 
-    <app-dir-tree [bucket]="currentBucket" (selected)="onSelected($event)"></app-dir-tree>
+      <app-dir-tree [bucket]="currentBucket" (selected)="onSelected($event)"></app-dir-tree>
+    </div>
   </div>
-  <div class="ui-md-9">
-    <app-view [bucket]="currentBucket" [folder]="currentFolder"></app-view>
+  <div class="p-col-9">
+    <div class="box box-stretched">
+      <app-view [bucket]="currentBucket" [folder]="currentFolder"></app-view>
+    </div>
   </div>
 </div>
