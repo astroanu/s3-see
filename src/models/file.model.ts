@@ -6,7 +6,9 @@ import { ConfigService } from '../services/config.service';
 const config = new ConfigService();
 
 export class File {
-  private url: string = null;
+  private thumbUrl: string = null;
+  private fullUrl: string = null;
+
   private bucketName = config.currentBucket;
   private s3: S3;
 
@@ -47,10 +49,6 @@ export class File {
     });
   }
 
-  get signedUrl(): string {
-    return this.url;
-  }
-
   get fileName(): string {
     return this.key.replace(/^.*[\\\/]/, '');
   }
@@ -62,8 +60,12 @@ export class File {
       const ext = this.key.split('.').pop();
       const thumbKey = this.key.replace(this.fileName, `_thumbs/${this.fileName.toLowerCase().replace(ext, 'jpg')}`);
 
+      this.getSignedUrl(this.key).then((url: string) => {
+        this.fullUrl = url;
+      });
+
       this.getSignedUrl(thumbKey).then((url: string) => {
-        this.url = url;
+        this.thumbUrl = url;
       });
     }
   }

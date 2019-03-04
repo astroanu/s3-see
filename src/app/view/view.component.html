@@ -42,11 +42,17 @@
 
   <div *ngIf="!listView" class="ui-dataview-content ui-widget-content">
     <div class="ui-md-12">
-      <div *ngFor="let file of filesShown" class="ui-md-3 thumbnail" [style.height.px]="thumbSize">
-        <img *ngIf="file.signedUrl" [style.width.%]="100" [style.height.%]="100" src="{{ file.signedUrl }}" />
+      <div
+        *ngFor="let file of filesShown"
+        class="ui-md-3 thumbnail"
+        (click)="setSelectedFile(file)"
+        [style.height.px]="thumbSize"
+      >
+        <img *ngIf="file.thumbUrl" [style.width.%]="100" [style.height.%]="100" src="{{ file.thumbUrl }}" />
       </div>
 
       <div class="ui-helper-clearfix"></div>
     </div>
   </div>
 </div>
+<app-slide-show [(file)]="selectedFile"></app-slide-show>

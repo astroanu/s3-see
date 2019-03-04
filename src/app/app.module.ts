@@ -13,9 +13,10 @@ import { ConfigService } from '../services/config.service';
 import { AppComponent } from './app.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { ViewComponent } from './view/view.component';
+import { SlideShowComponent } from './slide-show/slide-show.component';
 
 @NgModule({
-  declarations: [AppComponent, DirTreeComponent, ViewComponent],
+  declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

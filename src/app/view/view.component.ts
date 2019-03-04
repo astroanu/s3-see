@@ -26,6 +26,10 @@ export class ViewComponent implements OnInit {
       });
     }
   }
+
+  setSelectedFile(file) {
+    this.selectedFile = file;
+  }
   private viewList() {
     this.listView = true;
   }
