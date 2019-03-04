@@ -1,6 +1,7 @@
 import { S3 } from 'aws-sdk';
 import * as AWS from 'aws-sdk';
 
+import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config.service';
 
 const config = new ConfigService();
@@ -13,18 +14,9 @@ export class File {
   private s3: S3;
 
   get sizePretty(): string {
-    let bytes = this.size;
-    const thresh = 1000;
-    if (Math.abs(bytes) < thresh) {
-      return bytes + ' B';
-    }
-    const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    let u = -1;
-    do {
-      bytes /= thresh;
-      ++u;
-    } while (Math.abs(bytes) >= thresh && u < units.length - 1);
-    return bytes.toFixed(1) + ' ' + units[u];
+    const pipe = new PrettySizePipe();
+
+    return pipe.transform(this.size);
   }
 
   get size(): number {

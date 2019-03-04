@@ -1,9 +1,16 @@
 .thumbnail {
   float: left;
+  padding: 0px;
 }
 
 .thumbnail img {
   object-fit: cover;
+  cursor: pointer;
+  border: thick solid transparent;
+}
+
+.thumbnail img:hover {
+  border: thick solid #eaeaea;
 }
 
 .ui-dataview-content {

@@ -16,6 +16,7 @@ export class ViewComponent implements OnInit {
   listView: boolean = false;
   loading: boolean = false;
   selectedFile: File = null;
+  filesShownTotalSize = 0;
 
   @Input() set folder(node: any) {
     if (node) {
@@ -47,6 +48,7 @@ export class ViewComponent implements OnInit {
             const pathParts = file.key.replace(prefix, '.').split('/');
             if (pathParts.length === 2 && pathParts[1].length) {
               this.filesShown.push(file);
+              this.filesShownTotalSize = this.filesShownTotalSize + file.size;
             }
           });
         }

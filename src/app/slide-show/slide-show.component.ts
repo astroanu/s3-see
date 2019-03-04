@@ -9,7 +9,6 @@ export class SlideShowComponent implements OnInit {
   private currentFile;
 
   @Input() set file(file: any) {
-    console.log(file);
     this.currentFile = file;
   }
 

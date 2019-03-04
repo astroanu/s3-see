@@ -3,9 +3,9 @@
     <div class="ui-toolbar-group-left"></div>
 
     <div class="ui-toolbar-group-right">
-      {{ filesShown.length }} Files
-      <p-button icon="pi pi-bars" (onClick)="viewList()" [disabled]="listView"></p-button>
-      <p-button icon="pi pi-th-large" (onClick)="viewThumbs()" [disabled]="!listView"></p-button>
+      {{ filesShown.length }} Files ({{ filesShownTotalSize | prettySize }})
+      <p-button icon="pi pi-bars" (onClick)="viewList()" *ngIf="!listView"></p-button>
+      <p-button icon="pi pi-th-large" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
     </div>
   </p-toolbar>
 
