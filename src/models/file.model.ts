@@ -10,7 +10,6 @@ export class File {
   private thumbUrl: string = null;
   private fullUrl: string = null;
 
-  private bucketName = config.currentBucket;
   private s3: S3;
 
   get sizePretty(): string {
@@ -45,8 +44,8 @@ export class File {
     return this.key.replace(/^.*[\\\/]/, '');
   }
 
-  constructor(private file: S3.Types.Object) {
-    this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
+  constructor(private bucketName, private file: S3.Types.Object) {
+    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(bucketName)));
 
     if (!this.key.includes('_thumbs')) {
       const ext = this.key.split('.').pop();

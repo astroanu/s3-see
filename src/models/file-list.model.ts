@@ -17,9 +17,9 @@ export class FileList {
 
   get files(): Array<File> {
     return this.list.Contents.map((file) => {
-      return new File(file);
+      return new File(this.bucketName, file);
     });
   }
 
-  constructor(private list: S3.Types.ListObjectsV2Output) {}
+  constructor(private bucketName, private list: S3.Types.ListObjectsV2Output) {}
 }

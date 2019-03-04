@@ -14,7 +14,17 @@ export class FileService {
   private s3: AWS.S3;
 
   constructor() {
+    this.initializeS3Object();
+  }
+
+  private initializeS3Object() {
     this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
+  }
+
+  setBucket(bucketName) {
+    config.currentBucket = bucketName;
+    this.initializeS3Object();
+    this.bucketName = bucketName;
   }
 
   listObjects(prefix: any, continuationToken = null) {
@@ -34,7 +44,7 @@ export class FileService {
         if (err) {
           reject(err);
         } else {
-          resolve(new FileList(data));
+          resolve(new FileList(this.bucketName, data));
         }
       });
     });

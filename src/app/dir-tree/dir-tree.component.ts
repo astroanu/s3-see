@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
 
 import { FileList } from '../../models/file-list.model';
@@ -13,10 +13,26 @@ import { FileService } from '../../services/file.service';
 export class DirTreeComponent implements OnInit {
   @Output() selected = new EventEmitter<any>();
 
+  @Input() set bucket(bucketName: any) {
+    if (bucketName) {
+      this.fileService.setBucket(bucketName);
+      this.initializeDirPane();
+    }
+  }
+
   selectedFiles: Array<any> = [];
   fileCache: Array<object> = [];
   fileTree: Array<object> = [];
   folderStructor: Object = {};
+
+  private initializeDirPane() {
+    this.selectedFiles = [];
+    this.fileTree = [];
+    this.folderStructor = {};
+    this.getFileStructure().then(() => {
+      console.log('Dir listing complete');
+    });
+  }
 
   selectNode(event) {
     const node = event.node;
@@ -81,8 +97,6 @@ export class DirTreeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getFileStructure().then(() => {
-      console.log('Dir listing complete');
-    });
+    this.initializeDirPane();
   }
 }

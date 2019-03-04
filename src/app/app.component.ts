@@ -9,6 +9,8 @@ import { ConfigService } from '../services/config.service';
 })
 export class AppComponent {
   private currentFolder: DocumentEvent;
+  private currentBucket;
+  private buckets: Array<object>;
 
   menuItems = [
     {
@@ -21,6 +23,12 @@ export class AppComponent {
   }
 
   constructor(private config: ConfigService) {
-    this.config.currentBucket = config.buckets[0];
+    this.buckets = this.config.buckets.map((bucket) => {
+      return {
+        label: bucket.label,
+        value: bucket.bucketName
+      };
+    });
+    this.currentBucket = config.buckets[0].bucketName;
   }
 }

@@ -28,6 +28,13 @@ export class ViewComponent implements OnInit {
     }
   }
 
+  @Input() set bucket(buckteName: any) {
+    console.log(buckteName);
+    if (buckteName) {
+      this.fileService.setBucket(buckteName);
+    }
+  }
+
   setSelectedFile(file) {
     this.selectedFile = file;
   }
