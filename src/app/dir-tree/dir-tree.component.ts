@@ -26,7 +26,7 @@ export class DirTreeComponent implements OnInit {
   folderStructor: Object = {};
   loading: boolean = true;
 
-  private initializeDirPane() {
+  initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
     this.folderStructor = {};
@@ -36,7 +36,7 @@ export class DirTreeComponent implements OnInit {
     });
   }
 
-  selectNode(event) {
+  private selectNode(event) {
     const node = event.node;
 
     this.selected.emit(node);
@@ -44,12 +44,12 @@ export class DirTreeComponent implements OnInit {
 
   constructor(private fileService: FileService) {}
 
-  buildTree() {
+  private buildTree() {
     this.loading = false;
     this.fileTree = this.objectToNodeArray(this.folderStructor);
   }
 
-  objectToNodeArray(obj, parent = null) {
+  private objectToNodeArray(obj, parent = null) {
     return Object.entries(obj).map(([label, children]) => {
       return {
         label: label,
@@ -59,7 +59,7 @@ export class DirTreeComponent implements OnInit {
     });
   }
 
-  childrenToNode(children, label) {
+  private childrenToNode(children, label) {
     if (typeof children === 'object' && children !== null) {
       return this.objectToNodeArray(children, label);
     } else {
@@ -67,7 +67,7 @@ export class DirTreeComponent implements OnInit {
     }
   }
 
-  getFileStructure(prefix = null, NextContinuationToken = null) {
+  private getFileStructure(prefix = null, NextContinuationToken = null) {
     return new Promise((resolve, reject) => {
       return this.fileService.listObjects(prefix, NextContinuationToken).then((list: FileList) => {
         if (list.hasFiles) {

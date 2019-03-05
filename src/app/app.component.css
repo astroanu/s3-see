@@ -14,3 +14,8 @@
   border-bottom-right-radius: 0;
   border-bottom-color: transparent;
 }
+
+:host >>> .ui-menubar-custom {
+  margin-top: 4px;
+  margin-right: 4px;
+}

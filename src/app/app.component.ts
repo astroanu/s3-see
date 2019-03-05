@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { ConfigService } from '../services/config.service';
+import { DirTreeComponent } from './dir-tree/dir-tree.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,12 @@ export class AppComponent {
       icon: 'pi pi-fw pi-eye'
     }
   ];
+
+  @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
+
+  refreshTree() {
+    this.dirTree.initializeDirPane();
+  }
 
   onSelected(event: DocumentEvent) {
     this.currentFolder = event;
