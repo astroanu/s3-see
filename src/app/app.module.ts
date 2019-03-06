@@ -9,6 +9,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
+import { SliderModule } from 'primeng/slider';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config.service';
@@ -27,6 +28,7 @@ export const FileServiceSingleton = new FileService();
     BrowserModule,
     BrowserAnimationsModule,
     ToolbarModule,
+    SliderModule,
     ButtonModule,
     FormsModule,
     DropdownModule,

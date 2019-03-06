@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 
 import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
 
 import { FileService } from '../../services/file.service';
+import { range } from 'rxjs';
 
 @Component({
   selector: 'app-view',
@@ -12,12 +13,23 @@ import { FileService } from '../../services/file.service';
 })
 export class ViewComponent {
   columns: Array<object> = [
-    { field: 'fileName', header: 'File' },
-    { field: 'sizePretty', header: 'Size' },
-    { field: 'lastModified', header: 'Last Modified' }
+    {
+      field: 'fileName',
+      header: 'File'
+    },
+    {
+      field: 'sizePretty',
+      header: 'Size'
+    },
+    {
+      field: 'lastModified',
+      header: 'Last Modified'
+    }
   ];
 
-  thumbSize: number = 200;
+  thumbH: number = 200;
+  thumbW: number = 25;
+  thumbMultiplier: number = 10;
   filesShown: Array<File> = [];
   listView: boolean = false;
   loading: boolean = false;
@@ -27,6 +39,7 @@ export class ViewComponent {
   @Input() set currentNode(node: Directory) {
     if (node) {
       this.resetFilesShown();
+      this.setThumbSize();
 
       node.loadFiles().then(() => {
         this.filesShown = node.files;
@@ -34,8 +47,21 @@ export class ViewComponent {
     }
   }
 
+  onZoomChange() {
+    this.setThumbSize();
+  }
+
   setSelectedFile(file) {
     this.selectedFile = file;
+  }
+
+  setThumbSize() {
+    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+
+    const containerWidth = dataViewEl.offsetWidth - 14;
+
+    this.thumbW = 100 / this.thumbMultiplier;
+    this.thumbH = containerWidth / this.thumbMultiplier;
   }
 
   public resetFilesShown() {
@@ -51,5 +77,5 @@ export class ViewComponent {
     this.listView = false;
   }
 
-  constructor(private fileService: FileService) {}
+  constructor(private fileService: FileService, private el: ElementRef) {}
 }
