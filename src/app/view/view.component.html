@@ -52,7 +52,7 @@
         (click)="setSelectedFile(file)"
         [style.height.px]="thumbSize"
       >
-        <img *ngIf="file.thumbUrl" [style.width.%]="100" [style.height.%]="100" src="{{ file.thumbUrl }}" />
+        <img *ngIf="file.thumbUrl" [style.width.%]="100" [style.height.%]="100" [src]="file.thumbUrl" />
         <i *ngIf="!file.thumbUrl" class="pi pi-spin pi-spinner"></i>
       </div>
 

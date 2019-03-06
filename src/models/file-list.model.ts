@@ -31,7 +31,12 @@ export class FileList {
   }
 
   get files(): Array<File> {
-    return this.list.Contents.map((file) => {
+    return this.list.Contents.filter((file) => {
+      const fileName = path.basename(file.Key);
+      const ext = fileName.split('.').pop();
+
+      return ext !== fileName;
+    }).map((file) => {
       return new File(this.fileService, file);
     });
   }

@@ -8,6 +8,7 @@ export class Directory {
   public children = [];
   public files = [];
   public icon = 'pi pi-folder';
+  public expanded = false;
 
   public loadFiles() {
     return new Promise((resolve, reject) => {
@@ -30,6 +31,8 @@ export class Directory {
       } else {
         return this.fileService.listDirectories(this.key).then((list: FileList) => {
           this.children = list.directories;
+
+          this.expanded = this.children.length > 0;
 
           resolve();
         });

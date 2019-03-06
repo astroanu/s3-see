@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { TreeNode } from 'primeng/api';
 
 import { FileList } from '../../models/file-list.model';
-import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
 
-import { FileService } from '../../services/file.service';
 import { TreeService } from '../../services/tree.service';
 
 @Component({
