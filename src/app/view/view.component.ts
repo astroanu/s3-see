@@ -4,7 +4,6 @@ import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
 
 import { FileService } from '../../services/file.service';
-import { range } from 'rxjs';
 
 @Component({
   selector: 'app-view',
@@ -43,6 +42,11 @@ export class ViewComponent {
 
       node.loadFiles().then(() => {
         this.filesShown = node.files;
+        const fileSizes = this.filesShown.map((file) => {
+          return file.size;
+        });
+
+        this.filesShownTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
       });
     }
   }
