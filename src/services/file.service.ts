@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
-import { FileList } from '../models/file-list';
+import { FileList } from '../models/file-list.model';
 import { ConfigService } from './config.service';
 
 const config = new ConfigService();
@@ -34,6 +34,7 @@ export class FileService {
       if (prefix) {
         params['Prefix'] = `${prefix}`;
       }
+
       params['Delimiter'] = '/';
 
       if (continuationToken) {
@@ -54,10 +55,11 @@ export class FileService {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 
-      //if (prefix) {
-      //params['Prefix'] = `${prefix}/`;
+      if (prefix) {
+        params['Prefix'] = `${prefix}`;
+      }
+
       params['Delimiter'] = '/';
-      //}
 
       if (continuationToken) {
         params['ContinuationToken'] = continuationToken;

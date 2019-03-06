@@ -1,7 +1,7 @@
 import { S3 } from 'aws-sdk';
 
-import { File } from './file';
-import { Directory } from './directory';
+import { File } from './file.model';
+import { Directory } from './directory.model';
 import { FileService } from 'src/services/file.service';
 import * as path from 'path';
 

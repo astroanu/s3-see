@@ -1,10 +1,7 @@
 <p-tree
-  *ngIf="!loading"
   class="dir-tree"
   [value]="fileTree"
   selectionMode="single"
   (onNodeSelect)="selectNode($event)"
+  [loading]="loading"
 ></p-tree>
-<div *ngIf="loading" class="ui-tree ui-widget ui-widget-content ui-corner-all ui-tree-selectable ng-star-inserted">
-  <i class="pi pi-spin pi-spinner"></i> Reading directory structure
-</div>

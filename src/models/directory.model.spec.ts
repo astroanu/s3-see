@@ -1,4 +1,4 @@
-import { Directory } from './directory';
+import { Directory } from './directory.model';
 import { describe, expect, it } from 'karma-jasmine';
 
 describe('Directory', () => {

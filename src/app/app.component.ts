@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 
 import { ConfigService } from '../services/config.service';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { ViewComponent } from './view/view.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { DirTreeComponent } from './dir-tree/dir-tree.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private currentFolder: DocumentEvent;
+  private currentNode: DocumentEvent;
   private currentBucket;
   private buckets: Array<object>;
 
@@ -21,22 +22,32 @@ export class AppComponent {
   ];
 
   @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
+  @ViewChild(ViewComponent) view: ViewComponent;
 
   refreshTree() {
+    this.view.resetFilesShown();
     this.dirTree.initializeDirPane();
   }
 
   onSelected(event: DocumentEvent) {
-    this.currentFolder = event;
+    this.currentNode = event;
   }
 
-  constructor(private config: ConfigService) {
+  private initializeBucktesList() {
     this.buckets = this.config.buckets.map((bucket) => {
       return {
         label: bucket.label,
         value: bucket.bucketName
       };
     });
-    this.currentBucket = config.buckets[0].bucketName;
+  }
+
+  private setDefaultBucket() {
+    this.currentBucket = this.config.buckets[0].bucketName;
+  }
+
+  constructor(private config: ConfigService) {
+    this.initializeBucktesList();
+    this.setDefaultBucket();
   }
 }

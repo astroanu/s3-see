@@ -1,9 +1,9 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 
-import { FileList } from '../../models/file-list';
-import { File } from '../../models/file';
-import { Directory } from '../../models/directory';
+import { FileList } from '../../models/file-list.model';
+import { File } from '../../models/file.model';
+import { Directory } from '../../models/directory.model';
 
 import { FileService } from '../../services/file.service';
 
@@ -21,28 +21,13 @@ export class ViewComponent implements OnInit {
   selectedFile: File = null;
   filesShownTotalSize = 0;
 
-  @Input() set folder(node: TreeNode) {
+  @Input() set currentNode(node: Directory) {
     if (node) {
       this.resetFilesShown();
 
-      //const directory: Directory = node.data;
-
-      //console.log(node);
-
-      /*directory.loadSubdirectories().then((directory) => {
-        this.directoryLoaded.emit(directory);
+      node.loadFiles().then(() => {
+        this.filesShown = node.files;
       });
-
-      /*this.getFiles(node.prefix).then(() => {
-        console.log('Files loaded');
-      });*/
-    }
-  }
-
-  @Input() set bucket(buckteName: any) {
-    if (buckteName) {
-      this.resetFilesShown();
-      this.fileService.setBucket(buckteName);
     }
   }
 
@@ -50,7 +35,7 @@ export class ViewComponent implements OnInit {
     this.selectedFile = file;
   }
 
-  private resetFilesShown() {
+  public resetFilesShown() {
     this.filesShownTotalSize = 0;
     this.filesShown = [];
   }

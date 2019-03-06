@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 
-import { FileList } from '../../models/file-list';
-import { File } from '../../models/file';
-import { Directory } from '../../models/directory';
+import { FileList } from '../../models/file-list.model';
+import { File } from '../../models/file.model';
+import { Directory } from '../../models/directory.model';
 
 import { FileService } from '../../services/file.service';
 import { TreeService } from '../../services/tree.service';
@@ -34,9 +34,10 @@ export class DirTreeComponent {
     this.selectedFiles = [];
     this.fileTree = [];
     this.folderStructor = {};
-    this.loading = false;
+    this.loading = true;
 
     this.getDirStructure().then(() => {
+      this.loading = false;
       console.log('Dir listing complete');
     });
   }
@@ -50,8 +51,6 @@ export class DirTreeComponent {
 
     this.selected.emit(node);
   }
-
-  constructor(private treeService: TreeService) {}
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {
     return new Promise((resolve, reject) => {
@@ -71,25 +70,5 @@ export class DirTreeComponent {
     });
   }
 
-  /* private getFileStructure(prefix = null, NextContinuationToken = null) {
-    return new Promise((resolve, reject) => {
-      return this.fileService.listObjects(prefix, NextContinuationToken).then((list: FileList) => {
-        if (list.hasFiles) {
-          list.files.forEach((file: File) => {
-            if (!file.key.includes('_thumbs')) {
-              this.addFileToTree(file);
-              // this.fileCache.push(file);
-            }
-          });
-        }
-
-        if (list.hasMore) {
-          return this.getFileStructure(prefix, list.nextContinuationToken);
-        } else {
-          this.buildTree();
-          resolve();
-        }
-      });
-    });
-  }*/
+  constructor(private treeService: TreeService) {}
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileList } from '../models/file-list';
+import { FileList } from '../models/file-list.model';
 import { FileService } from './file.service';
 
 @Injectable({
