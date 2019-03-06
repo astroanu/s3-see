@@ -1,21 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as _ from 'lodash';
+import { TreeNode } from 'primeng/api';
 
-import { FileList } from '../../models/file-list.model';
-import { File } from '../../models/file.model';
+import { FileList } from '../../models/file-list';
+import { File } from '../../models/file';
+import { Directory } from '../../models/directory';
+
 import { FileService } from '../../services/file.service';
+import { TreeService } from '../../services/tree.service';
 
 @Component({
   selector: 'app-dir-tree',
   templateUrl: './dir-tree.component.html',
   styleUrls: ['./dir-tree.component.css']
 })
-export class DirTreeComponent implements OnInit {
+export class DirTreeComponent {
   @Output() selected = new EventEmitter<any>();
 
   @Input() set bucket(bucketName: any) {
     if (bucketName) {
-      this.fileService.setBucket(bucketName);
+      this.treeService.fileService.setBucket(bucketName);
       this.initializeDirPane();
     }
   }
@@ -30,44 +34,44 @@ export class DirTreeComponent implements OnInit {
     this.selectedFiles = [];
     this.fileTree = [];
     this.folderStructor = {};
-    this.loading = true;
-    this.getFileStructure().then(() => {
+    this.loading = false;
+
+    this.getDirStructure().then(() => {
       console.log('Dir listing complete');
     });
   }
 
   private selectNode(event) {
-    const node = event.node;
+    const node: Directory = event.node;
+
+    node.loadSubdirectories().then(() => {
+      console.log('subdirectories loaded');
+    });
 
     this.selected.emit(node);
   }
 
-  constructor(private fileService: FileService) {}
+  constructor(private treeService: TreeService) {}
 
-  private buildTree() {
-    this.loading = false;
-    this.fileTree = this.objectToNodeArray(this.folderStructor);
-  }
+  private getDirStructure(prefix = null, NextContinuationToken = null) {
+    return new Promise((resolve, reject) => {
+      return this.treeService.listDirectories(prefix, NextContinuationToken).then((list: FileList) => {
+        if (list.hasDirectories) {
+          list.directories.forEach((directory: Directory) => {
+            this.fileTree.push(directory);
+          });
+        }
 
-  private objectToNodeArray(obj, parent = null) {
-    return Object.entries(obj).map(([label, children]) => {
-      return {
-        label: label,
-        prefix: `${parent ? parent + '/' : ''}${label}`,
-        children: this.childrenToNode(children, label)
-      };
+        if (list.hasMore) {
+          return this.getDirStructure(prefix, list.nextContinuationToken);
+        } else {
+          resolve();
+        }
+      });
     });
   }
 
-  private childrenToNode(children, label) {
-    if (typeof children === 'object' && children !== null) {
-      return this.objectToNodeArray(children, label);
-    } else {
-      return children;
-    }
-  }
-
-  private getFileStructure(prefix = null, NextContinuationToken = null) {
+  /* private getFileStructure(prefix = null, NextContinuationToken = null) {
     return new Promise((resolve, reject) => {
       return this.fileService.listObjects(prefix, NextContinuationToken).then((list: FileList) => {
         if (list.hasFiles) {
@@ -87,19 +91,5 @@ export class DirTreeComponent implements OnInit {
         }
       });
     });
-  }
-
-  private createTreeFolder(path: Array<string>) {
-    _.set(this.folderStructor, path, {});
-  }
-
-  private addFileToTree(file: any) {
-    const keyParts = file.key.split('/');
-
-    this.createTreeFolder(keyParts.slice(0, -1));
-  }
-
-  ngOnInit() {
-    this.initializeDirPane();
-  }
+  }*/
 }

@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { TreeNode } from 'primeng/api';
 
-import { FileList } from '../../models/file-list.model';
-import { File } from '../../models/file.model';
+import { FileList } from '../../models/file-list';
+import { File } from '../../models/file';
+import { Directory } from '../../models/directory';
+
 import { FileService } from '../../services/file.service';
 
 @Component({
@@ -18,13 +21,21 @@ export class ViewComponent implements OnInit {
   selectedFile: File = null;
   filesShownTotalSize = 0;
 
-  @Input() set folder(node: any) {
+  @Input() set folder(node: TreeNode) {
     if (node) {
       this.resetFilesShown();
 
-      this.getFiles(node.prefix).then(() => {
-        console.log('Files loaded');
+      //const directory: Directory = node.data;
+
+      //console.log(node);
+
+      /*directory.loadSubdirectories().then((directory) => {
+        this.directoryLoaded.emit(directory);
       });
+
+      /*this.getFiles(node.prefix).then(() => {
+        console.log('Files loaded');
+      });*/
     }
   }
 

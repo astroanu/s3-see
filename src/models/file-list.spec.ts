@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'karma-jasmine';
 
-import { FileList } from './file-list.model';
+import { FileList } from './file-list';
 
 describe('FileList', () => {
   it('should create an instance', () => {

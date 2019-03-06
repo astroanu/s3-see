@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
-import { FileList } from '../models/file-list.model';
+import { FileList } from '../models/file-list';
 import { ConfigService } from './config.service';
 
 const config = new ConfigService();
@@ -10,7 +10,7 @@ const config = new ConfigService();
   providedIn: 'root'
 })
 export class FileService {
-  private bucketName = config.currentBucket;
+  public bucketName = config.currentBucket;
   private s3: AWS.S3;
 
   constructor() {
@@ -27,14 +27,14 @@ export class FileService {
     this.bucketName = bucketName;
   }
 
-  listObjects(prefix: any, continuationToken = null) {
+  listDirectories(prefix: any, continuationToken = null): Promise<FileList> {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 
       if (prefix) {
-        params['Prefix'] = `${prefix}/`;
-        params['Delimiter'] = prefix;
+        params['Prefix'] = `${prefix}`;
       }
+      params['Delimiter'] = '/';
 
       if (continuationToken) {
         params['ContinuationToken'] = continuationToken;
@@ -44,7 +44,30 @@ export class FileService {
         if (err) {
           reject(err);
         } else {
-          resolve(new FileList(this.bucketName, data));
+          resolve(new FileList(this, data));
+        }
+      });
+    });
+  }
+
+  listObjects(prefix: any, continuationToken = null) {
+    return new Promise((resolve, reject) => {
+      const params = { Bucket: this.bucketName };
+
+      //if (prefix) {
+      //params['Prefix'] = `${prefix}/`;
+      params['Delimiter'] = '/';
+      //}
+
+      if (continuationToken) {
+        params['ContinuationToken'] = continuationToken;
+      }
+
+      this.s3.listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(new FileList(this, data));
         }
       });
     });

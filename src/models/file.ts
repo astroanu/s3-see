@@ -3,6 +3,7 @@ import * as AWS from 'aws-sdk';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config.service';
+import { FileService } from 'src/services/file.service';
 
 const config = new ConfigService();
 
@@ -19,16 +20,12 @@ export class File {
   }
 
   get size(): number {
-    return this.file.Size;
-  }
-
-  get key(): string {
-    return this.file.Key;
+    return this.entity.Size;
   }
 
   private getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
-      const params = { Bucket: this.bucketName, Key: key };
+      const params = { Bucket: this.fileService.bucketName, Key: key };
 
       this.s3.getSignedUrl('getObject', params, (err, data) => {
         if (err) {
@@ -44,8 +41,8 @@ export class File {
     return this.key.replace(/^.*[\\\/]/, '');
   }
 
-  constructor(private bucketName, private file: S3.Types.Object) {
-    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(bucketName)));
+  private createSignedUrls() {
+    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(this.fileService.bucketName)));
 
     if (!this.key.includes('_thumbs')) {
       const ext = this.key.split('.').pop();
@@ -59,5 +56,13 @@ export class File {
         this.thumbUrl = url;
       });
     }
+  }
+
+  get key(): string {
+    return this.entity.Key;
+  }
+
+  constructor(public fileService: FileService, public entity: S3.Types.Object) {
+    this.createSignedUrls();
   }
 }

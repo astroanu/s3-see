@@ -17,6 +17,10 @@ import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { ViewComponent } from './view/view.component';
 
+import { FileService } from '../services/file.service';
+
+export const FileServiceSingleton = new FileService();
+
 @NgModule({
   declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent, PrettySizePipe],
   imports: [
