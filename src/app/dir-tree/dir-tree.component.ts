@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import * as _ from 'lodash';
 
-import { FileList } from '../../models/file-list.model';
 import { Directory } from '../../models/directory.model';
-
+import { FileList } from '../../models/file-list.model';
 import { TreeService } from '../../services/tree.service';
 
 @Component({
@@ -44,9 +42,8 @@ export class DirTreeComponent {
 
     node.loadSubdirectories().then(() => {
       console.log('subdirectories loaded');
+      this.selected.emit(node);
     });
-
-    this.selected.emit(node);
   }
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {

@@ -1,13 +1,17 @@
 import { S3 } from 'aws-sdk';
-import { TreeNode } from 'primeng/api';
-import { FileList } from './file-list.model';
-import { FileService } from 'src/services/file.service';
 import * as path from 'path';
+import { TreeNode } from 'primeng/api';
+import { FileService } from 'src/services/file.service';
+
+import { FileList } from './file-list.model';
+
+const FOLDER_ICON_NORMAL = 'pi pi-folder';
+const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
+const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
 
 export class Directory {
   public children = [];
   public files = [];
-  public icon = 'pi pi-folder';
   public expanded = false;
 
   public loadFiles() {
@@ -38,6 +42,10 @@ export class Directory {
         });
       }
     });
+  }
+
+  get icon() {
+    return this.expanded ? FOLDER_ICON_EXPANDED : FOLDER_ICON_NORMAL;
   }
 
   get leaf() {
