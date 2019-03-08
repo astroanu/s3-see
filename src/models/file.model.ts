@@ -1,10 +1,11 @@
 import { S3 } from 'aws-sdk';
 import * as AWS from 'aws-sdk';
+import { DateFormatPipe } from 'ngx-moment';
 import * as path from 'path';
+import { FileService } from 'src/services/file.service';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config.service';
-import { FileService } from 'src/services/file.service';
 
 const config = new ConfigService();
 
@@ -25,7 +26,8 @@ export class File {
   }
 
   get lastModified() {
-    return this.entity.LastModified;
+    const pipe = new DateFormatPipe();
+    return pipe.transform(this.entity.LastModified, 'Do MMM YYYY, h:mm a');
   }
 
   get fileName(): string {

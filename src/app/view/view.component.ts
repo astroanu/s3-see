@@ -1,8 +1,7 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 
-import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
-
+import { File } from '../../models/file.model';
 import { FileService } from '../../services/file.service';
 
 @Component({
