@@ -53,7 +53,7 @@ export class Directory {
   }
 
   get label() {
-    return path.basename(this.key);
+    return path.basename(this.key).replace('_', ' ');
   }
 
   constructor(public fileService: FileService, public key: S3.Types.Prefix) {}

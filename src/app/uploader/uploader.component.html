@@ -1,0 +1,15 @@
+<p-dialog header="Upload images" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
+  <input (change)="onDirectorySelect($event)" type="file" webkitdirectory mozdirectory />
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="display = false" label="Yes"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-close"
+      (click)="display = false"
+      label="No"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>
