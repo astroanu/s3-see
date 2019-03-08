@@ -46,16 +46,21 @@
   border-right: thin solid #c8c8c8;
   border-bottom: thin solid #c8c8c8;
 }
-:host >>> .ui-toolbar-group-right .control-block {
+
+:host >>> .control-block {
   display: inline-block;
   margin-left: 15px;
+  margin: 4px 0;
 }
 
-:host >>> .ui-toolbar-group-right .control-block .pi:before {
+:host >>> .control-block .pi:before {
   position: relative;
   top: 5px;
 }
 
+:host >>> .control-block h4 {
+  margin: 0 15px 0 0;
+}
 .zoom-controller {
   display: inline-block;
   width: 100px;

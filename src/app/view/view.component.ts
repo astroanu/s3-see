@@ -27,20 +27,23 @@ export class ViewComponent {
 
   thumbH: number = 200;
   thumbW: number = 25;
-  thumbMultiplier: number = 10;
+  thumbMultiplier: number = 7;
   filesShown: Array<File> = [];
   listView: boolean = false;
   loading: boolean = false;
   selectedFile: File = null;
   filesShownTotalSize = 0;
+  currentDirectory: Directory;
 
   @Input() set currentNode(node: Directory) {
     if (node) {
       this.resetFilesShown();
       this.setThumbSize();
 
-      node.loadFiles().then(() => {
-        this.filesShown = node.files;
+      this.currentDirectory = node;
+
+      this.currentDirectory.loadFiles().then(() => {
+        this.filesShown = this.currentDirectory.files;
         const fileSizes = this.filesShown.map((file) => {
           return file.size;
         });
