@@ -2,6 +2,11 @@
 
 S3See is a image browser for files stored on s3 buckets. It supports multiple buckets and multiple aws credentials.
 
+### Requirements 
+
+- Image folders should have a sub folder by the name `_thumbs`, and the key name of the files in the `_thumbs` folder needs to be lowercase
+- Thumbnail files could be any size, the smaller the faster they will load in the viewer.
+
 ### How to use
 
 - Clone repo
