@@ -4,22 +4,23 @@ import { TreeNode } from 'primeng/api';
 import { FileService } from 'src/services/file.service';
 
 import { FileList } from './file-list.model';
+import { File } from './file.model';
 
-const FOLDER_ICON_NORMAL = 'pi pi-folder';
-const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
-const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
+export const FOLDER_ICON_NORMAL = 'pi pi-folder';
+export const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
+export const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
 
 export class Directory {
-  public children = [];
-  public files = [];
-  public expanded = false;
+  public children: Array<TreeNode> = [];
+  public files: Array<File> = [];
+  public expanded: boolean = false;
 
   public loadFiles() {
     return new Promise((resolve, reject) => {
       if (this.files.length) {
         resolve();
       } else {
-        return this.fileService.listObjects(this.key).then((list: FileList) => {
+        return this.fileService.listObjects(this.prefix).then((list: FileList) => {
           this.files = list.files;
 
           resolve();
@@ -33,7 +34,7 @@ export class Directory {
       if (this.children.length) {
         resolve();
       } else {
-        return this.fileService.listDirectories(this.key).then((list: FileList) => {
+        return this.fileService.listDirectories(this.prefix).then((list: FileList) => {
           this.children = list.directories;
 
           this.expanded = this.children.length > 0;
@@ -53,8 +54,8 @@ export class Directory {
   }
 
   get label() {
-    return path.basename(this.key).replace('_', ' ');
+    return path.basename(this.prefix).replace('_', ' ');
   }
 
-  constructor(public fileService: FileService, public key: S3.Types.Prefix) {}
+  constructor(public fileService: FileService, public prefix: S3.Types.Prefix) {}
 }

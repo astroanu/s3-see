@@ -10,7 +10,7 @@ const config = new ConfigService();
   providedIn: 'root'
 })
 export class FileService {
-  public bucketName = config.currentBucket;
+  private bucketName = config.currentBucket;
   private s3: AWS.S3;
 
   constructor() {
@@ -19,6 +19,10 @@ export class FileService {
 
   private initializeS3Object() {
     this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
+  }
+
+  getBucketName() {
+    return this.bucketName;
   }
 
   setBucket(bucketName) {

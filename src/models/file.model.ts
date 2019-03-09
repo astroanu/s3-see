@@ -36,7 +36,7 @@ export class File {
 
   private getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
-      const params = { Bucket: this.fileService.bucketName, Key: key };
+      const params = { Bucket: this.fileService.getBucketName(), Key: key };
 
       this.s3.getSignedUrl('getObject', params, (err, data) => {
         if (err) {
@@ -49,7 +49,7 @@ export class File {
   }
 
   private createSignedUrls() {
-    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(this.fileService.bucketName)));
+    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(this.fileService.getBucketName())));
 
     if (!this.key.includes('_thumbs')) {
       const ext = this.fileName.split('.').pop();
