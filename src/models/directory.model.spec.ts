@@ -1,7 +1,5 @@
-import { Directory } from './directory.model';
-import { describe, expect, it } from 'karma-jasmine';
-
 import { FileService } from '../services/file.service';
+import { Directory } from './directory.model';
 
 describe('Directory', () => {
   it('should create an instance', () => {

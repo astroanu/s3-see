@@ -14,7 +14,7 @@
     "target": "es5",
     "esModuleInterop": true,
     "typeRoots": ["node_modules/@types"],
-    "types": ["node"],
+    "types": ["jasmine", "node"],
     "lib": ["es2018", "dom"]
   }
 }

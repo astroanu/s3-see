@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'karma-jasmine';
 
 import { SlideShowComponent } from './slide-show.component';
 

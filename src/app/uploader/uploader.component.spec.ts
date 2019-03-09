@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'karma-jasmine';
+import { DialogModule } from 'primeng/dialog';
 
 import { UploaderComponent } from './uploader.component';
 
@@ -9,7 +9,8 @@ describe('UploaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UploaderComponent]
+      declarations: [UploaderComponent],
+      imports: [DialogModule]
     }).compileComponents();
   }));
 

@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'karma-jasmine';
-
 import { PrettySizePipe } from './pretty-size.pipe';
 
 describe('PrettySizePipe', () => {
