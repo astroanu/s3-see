@@ -1,33 +1,37 @@
 import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
-import { FileList } from '../models/file-list.model';
-import { ConfigService } from './config.service';
-
-const config = new ConfigService();
+import { FileList } from '../../models/file-list/file-list.model';
+import { FileListInterface } from '../../models/file-list/file-list.interface';
+import { ConfigService } from '../config/config.service';
+import { FileServiceInterface } from './file.service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FileService {
-  public bucketName = config.currentBucket;
+export class FileService implements FileServiceInterface {
+  private bucketName = this.config.defaultBucket;
   private s3: AWS.S3;
 
-  constructor() {
+  constructor(private config: ConfigService) {
     this.initializeS3Object();
   }
 
   private initializeS3Object() {
-    this.s3 = new AWS.S3(new AWS.Config(config.currentBucketConfig));
+    console.log(this.config);
+    this.s3 = new AWS.S3(new AWS.Config(this.config.getBucketCredentials(this.bucketName)));
   }
 
-  setBucket(bucketName) {
-    config.currentBucket = bucketName;
-    this.initializeS3Object();
+  getBucketName(): string {
+    return this.bucketName;
+  }
+
+  setBucket(bucketName: string): void {
     this.bucketName = bucketName;
+    this.initializeS3Object();
   }
 
-  listDirectories(prefix: any, continuationToken = null): Promise<FileList> {
+  listDirectories(prefix: string, continuationToken: null | string = null): Promise<FileListInterface> {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 
@@ -51,7 +55,7 @@ export class FileService {
     });
   }
 
-  listObjects(prefix: any, continuationToken = null) {
+  listObjects(prefix: any, continuationToken = null): Promise<FileListInterface> {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 

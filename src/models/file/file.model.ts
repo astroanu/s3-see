@@ -1,15 +1,15 @@
-import { S3 } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
-import { DateFormatPipe } from 'ngx-moment';
+import { S3, Config as AWSConfig } from 'aws-sdk';
 import * as path from 'path';
-import { FileService } from 'src/services/file.service';
 
-import { PrettySizePipe } from '../pipes/pretty-size.pipe';
-import { ConfigService } from '../services/config.service';
+import { DateFormatPipe } from 'ngx-moment';
+import { FileService } from '../../services/file/file.service';
+import { FileInterface } from './file.interface';
+import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
+import { ConfigService } from '../../services/config/config.service';
 
 const config = new ConfigService();
 
-export class File {
+export class File implements FileInterface {
   private thumbUrl: string = null;
   private fullUrl: string = null;
 
@@ -36,7 +36,7 @@ export class File {
 
   private getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
-      const params = { Bucket: this.fileService.bucketName, Key: key };
+      const params = { Bucket: this.fileService.getBucketName(), Key: key };
 
       this.s3.getSignedUrl('getObject', params, (err, data) => {
         if (err) {
@@ -49,7 +49,7 @@ export class File {
   }
 
   private createSignedUrls() {
-    this.s3 = new AWS.S3(new AWS.Config(config.getBucketConfig(this.fileService.bucketName)));
+    this.s3 = new S3(new AWSConfig(config.getBucketCredentials(this.fileService.getBucketName())));
 
     if (!this.key.includes('_thumbs')) {
       const ext = this.fileName.split('.').pop();

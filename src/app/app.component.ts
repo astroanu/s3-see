@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { ConfigService } from '../services/config.service';
+import { ConfigService } from '../services/config/config.service';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';

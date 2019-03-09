@@ -14,15 +14,14 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
-import { ConfigService } from '../services/config.service';
-import { FileService } from '../services/file.service';
+import { ConfigService } from '../services/config/config.service';
+import { TreeService } from '../services/tree/tree.service';
+import { FileService } from '../services/file/file.service';
 import { AppComponent } from './app.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
-
-export const FileServiceSingleton = new FileService();
 
 @NgModule({
   declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent, PrettySizePipe, UploaderComponent],
@@ -41,7 +40,7 @@ export const FileServiceSingleton = new FileService();
     MomentModule,
     MenubarModule
   ],
-  providers: [ConfigService],
+  providers: [ConfigService, FileService, TreeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
