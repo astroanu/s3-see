@@ -2,11 +2,12 @@ import { S3 } from 'aws-sdk';
 import { TestBed } from '@angular/core/testing';
 import { FileService } from '../../services/file/file.service';
 import { Directory, FOLDER_ICON_EXPANDED, FOLDER_ICON_NORMAL } from './directory.model';
+import { DirectoryInterface } from './directory.interface';
 
 describe('Directory', () => {
   let prefix: S3.Types.Prefix;
 
-  let directory: Directory;
+  let directory: DirectoryInterface;
 
   let service: FileService;
 

@@ -3,13 +3,14 @@ import { TestBed } from '@angular/core/testing';
 
 import { FileService } from '../../services/file/file.service';
 import { FileList } from './file-list.model';
+import { FileListInterface } from './file-list.interface';
 
 describe('FileList', () => {
   let sOutput: S3.ListObjectsV2Output;
 
   let s3Object: S3.Types.Object;
 
-  let fileList: FileList;
+  let fileList: FileListInterface;
 
   let date: Date;
 

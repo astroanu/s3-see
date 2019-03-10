@@ -5,11 +5,12 @@ import { TestBed } from '@angular/core/testing';
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { FileService } from '../../services/file/file.service';
 import { File } from './file.model';
+import { FileInterface } from './file.interface';
 
 describe('File', () => {
   let s3Object: S3.Types.Object;
 
-  let file: File;
+  let file: FileInterface;
 
   let date: Date;
 

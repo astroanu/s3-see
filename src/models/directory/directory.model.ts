@@ -1,6 +1,5 @@
 import { S3 } from 'aws-sdk';
 import * as path from 'path';
-import { TreeNode } from 'primeng/api';
 import { FileService } from '../../services/file/file.service';
 
 import { FileListInterface } from '../file-list/file-list.interface';
