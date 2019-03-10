@@ -7,12 +7,25 @@ import { Component } from '@angular/core';
 })
 export class UploaderComponent {
   displayDialog: boolean = false;
+  selectedFiles: null;
+  uploadDirectory: string;
+  overwriteExisting: boolean = false;
 
   onDirectorySelect(event) {
-    console.log(event.target.files);
+    if (event.target.files) {
+      this.selectedFiles = event.target.files;
+      this.adjustWindowPlacement();
+    }
   }
 
-  showDialog() {
+  private adjustWindowPlacement() {
+    this.displayDialog = false;
+    setTimeout(() => {
+      this.displayDialog = true;
+    }, 1);
+  }
+
+  showUploadDialog() {
     this.displayDialog = true;
   }
 }

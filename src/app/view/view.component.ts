@@ -35,6 +35,22 @@ export class ViewComponent {
   filesShownTotalSize = 0;
   currentDirectory: DirectoryInterface;
 
+  @Input() set files(files) {
+    if (files) {
+      this.resetFilesShown();
+      this.setThumbSize();
+
+      this.filesShown = Array.from(files);
+
+      console.log(this.filesShown);
+      const fileSizes = this.filesShown.map((file) => {
+        return file.size;
+      });
+
+      this.filesShownTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
+    }
+  }
+
   @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
       this.resetFilesShown();

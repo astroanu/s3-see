@@ -25,10 +25,10 @@ export class AppComponent {
       icon: 'pi pi-fw pi-eye',
       items: [
         {
-          label: 'Upload',
+          label: 'Upload files',
           icon: 'pi pi-fw pi-cloud-upload',
           command: () => {
-            this.uploader.showDialog();
+            this.uploader.showUploadDialog();
           }
         }
       ]
@@ -54,7 +54,7 @@ export class AppComponent {
   }
 
   private setDefaultBucket() {
-    this.currentBucket = this.config.buckets[0].bucketName;
+    this.currentBucket = this.config.defaultBucket;
   }
 
   constructor(private config: ConfigService) {

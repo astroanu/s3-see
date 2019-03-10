@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TreeNode } from 'primeng/api';
 
 import { DirectoryInterface } from '../../models/directory/directory.interface';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
@@ -20,21 +21,22 @@ export class DirTreeComponent {
   }
 
   selectedFiles: Array<any> = [];
-  fileCache: Array<object> = [];
-  fileTree: Array<object> = [];
-  folderStructor: Object = {};
+  fileTree: Array<TreeNode> = [];
   loading: boolean = true;
 
   initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
-    this.folderStructor = {};
     this.loading = true;
 
     this.getDirStructure().then(() => {
       this.loading = false;
       console.log('Dir listing complete');
     });
+  }
+
+  getFileTree(): Array<TreeNode> {
+    return this.fileTree;
   }
 
   private selectNode(event) {
