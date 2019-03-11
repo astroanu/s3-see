@@ -7,7 +7,7 @@ import { TreeService } from '../../services/tree.service';
 @Component({
   selector: 'app-dir-tree',
   templateUrl: './dir-tree.component.html',
-  styleUrls: ['./dir-tree.component.css']
+  styleUrls: ['./dir-tree.component.scss']
 })
 export class DirTreeComponent {
   @Output() selected = new EventEmitter<any>();
@@ -37,7 +37,7 @@ export class DirTreeComponent {
     });
   }
 
-  private selectNode(event) {
+  selectNode(event) {
     const node: Directory = event.node;
 
     node.loadSubdirectories().then(() => {

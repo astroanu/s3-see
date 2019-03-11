@@ -7,12 +7,12 @@ import { ViewComponent } from './view/view.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private currentNode: DocumentEvent;
-  private currentBucket;
-  private buckets: Array<object>;
+  currentNode: DocumentEvent;
+  currentBucket;
+  buckets: Array<object>;
 
   menuItems = [
     {

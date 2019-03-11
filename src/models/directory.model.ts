@@ -1,8 +1,8 @@
 import { S3 } from 'aws-sdk';
 import * as path from 'path';
 import { TreeNode } from 'primeng/api';
-import { FileService } from 'src/services/file.service';
 
+import { FileService } from '../services/file.service';
 import { FileList } from './file-list.model';
 
 const FOLDER_ICON_NORMAL = 'pi pi-folder';

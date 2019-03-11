@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import * as config from '../../config.json';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +32,25 @@ export class ConfigService {
   }
 
   constructor() {
-    this.config = config['default'];
+    this.config = {
+      appName: 'S3See',
+      buckets: [
+        {
+          label: 'Nice Name',
+          bucketName: 'img-man',
+          accessKeyId: 'AKIAIN5S6RL5DVQJ3RLQ',
+          secretAccessKey: '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',
+          region: 'us-east-1'
+        },
+        {
+          label: 'Private Bucket',
+          bucketName: 'astroanu-personal-assets',
+          accessKeyId: 'AKIAJ3NTRL3IGBD64GOQ',
+          secretAccessKey: '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',
+          region: 'us-east-1'
+        }
+      ]
+    };
     this.currentBucket = this.buckets[0].bucketName;
   }
 }

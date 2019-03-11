@@ -7,7 +7,7 @@
         </div>
       </p-menubar>
 
-      <p-dropdown [options]="buckets" [(ngModel)]="currentBucket"></p-dropdown>
+      <p-dropdown class="bucket-dropdown" [options]="buckets" [(ngModel)]="currentBucket"></p-dropdown>
 
       <app-dir-tree [bucket]="currentBucket" (selected)="onSelected($event)"></app-dir-tree>
     </div>

@@ -1,4 +1,4 @@
-:host >>> .pi-eye {
+.pi-eye {
   font-size: 2em;
   margin-right: 0 !important;
 }
@@ -8,14 +8,14 @@
   display: block;
 }
 
-:host >>> .ui-dropdown {
+:host ::ng-deep .ui-dropdown {
   width: 100% !important;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-color: transparent;
 }
 
-:host >>> .ui-menubar-custom {
+.ui-menubar-custom {
   margin-top: 4px;
   margin-right: 4px;
 }

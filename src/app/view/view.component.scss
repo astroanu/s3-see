@@ -13,20 +13,20 @@
   border: thick solid #eaeaea;
 }
 
-.ui-dataview-content {
+:host ::ng-deep .ui-dataview-content {
   padding: 0 !important;
 }
 
-:host >>> .ui-toolbar {
+:host ::ng-deep .ui-toolbar {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.ui-dataview-content {
+:host ::ng-deep .ui-dataview-content {
   border-top: none !important;
 }
 
-:host >>> .ui-table-wrapper th {
+:host ::ng-deep .ui-table-wrapper th {
   border-top: none !important;
   text-align: left;
 }
@@ -35,7 +35,7 @@
   text-align: center;
 }
 
-:host >>> .ui-button {
+:host ::ng-deep .ui-button {
   margin-left: 5px;
 }
 
@@ -46,12 +46,13 @@
   border-right: thin solid #c8c8c8;
   border-bottom: thin solid #c8c8c8;
 }
-:host >>> .ui-toolbar-group-right .control-block {
+
+:host ::ng-deep .ui-toolbar-group-right .control-block {
   display: inline-block;
   margin-left: 15px;
 }
 
-:host >>> .ui-toolbar-group-right .control-block .pi:before {
+:host ::ng-deep .ui-toolbar-group-right .control-block .pi:before {
   position: relative;
   top: 5px;
 }

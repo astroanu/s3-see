@@ -1,9 +1,9 @@
 import { S3 } from 'aws-sdk';
-
-import { File } from './file.model';
-import { Directory } from './directory.model';
-import { FileService } from 'src/services/file.service';
 import * as path from 'path';
+
+import { FileService } from '../services/file.service';
+import { Directory } from './directory.model';
+import { File } from './file.model';
 
 export class FileList {
   get nextContinuationToken() {

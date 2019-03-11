@@ -7,7 +7,7 @@ import { FileService } from '../../services/file.service';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  styleUrls: ['./view.component.scss']
 })
 export class ViewComponent {
   columns: Array<object> = [

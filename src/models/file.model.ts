@@ -2,10 +2,10 @@ import { S3 } from 'aws-sdk';
 import * as AWS from 'aws-sdk';
 import { DateFormatPipe } from 'ngx-moment';
 import * as path from 'path';
-import { FileService } from 'src/services/file.service';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config.service';
+import { FileService } from '../services/file.service';
 
 const config = new ConfigService();
 
