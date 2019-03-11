@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input } from '@angular/core';
 
-import { Directory } from '../../models/directory.model';
-import { File } from '../../models/file.model';
-import { FileService } from '../../services/file.service';
+import { DirectoryInterface } from '../../models/directory/directory.interface';
+import { FileInterface } from '../../models/file/file.interface';
+import { FileService } from '../../services/file/file.service';
 
 @Component({
   selector: 'app-view',
@@ -27,20 +27,23 @@ export class ViewComponent {
 
   thumbH: number = 200;
   thumbW: number = 25;
-  thumbMultiplier: number = 10;
-  filesShown: Array<File> = [];
+  thumbMultiplier: number = 7;
+  filesShown: Array<FileInterface> = [];
   listView: boolean = false;
   loading: boolean = false;
-  selectedFile: File = null;
+  selectedFile: FileInterface = null;
   filesShownTotalSize = 0;
+  currentDirectory: DirectoryInterface;
 
-  @Input() set currentNode(node: Directory) {
+  @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
       this.resetFilesShown();
       this.setThumbSize();
 
-      node.loadFiles().then(() => {
-        this.filesShown = node.files;
+      this.currentDirectory = node;
+
+      this.currentDirectory.loadFiles().then(() => {
+        this.filesShown = this.currentDirectory.files;
         const fileSizes = this.filesShown.map((file) => {
           return file.size;
         });

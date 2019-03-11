@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Directory } from '../../models/directory.model';
-import { FileList } from '../../models/file-list.model';
-import { TreeService } from '../../services/tree.service';
+import { DirectoryInterface } from '../../models/directory/directory.interface';
+import { FileListInterface } from '../../models/file-list/file-list.interface';
+import { TreeService } from '../../services/tree/tree.service';
 
 @Component({
   selector: 'app-dir-tree',
@@ -38,7 +38,7 @@ export class DirTreeComponent {
   }
 
   selectNode(event) {
-    const node: Directory = event.node;
+    const node: DirectoryInterface = event.node;
 
     node.loadSubdirectories().then(() => {
       console.log('subdirectories loaded');
@@ -48,9 +48,9 @@ export class DirTreeComponent {
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {
     return new Promise((resolve, reject) => {
-      return this.treeService.listDirectories(prefix, NextContinuationToken).then((list: FileList) => {
+      return this.treeService.listDirectories(prefix, NextContinuationToken).then((list: FileListInterface) => {
         if (list.hasDirectories) {
-          list.directories.forEach((directory: Directory) => {
+          list.directories.forEach((directory: DirectoryInterface) => {
             this.fileTree.push(directory);
           });
         }

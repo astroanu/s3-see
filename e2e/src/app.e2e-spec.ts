@@ -1,4 +1,3 @@
-import { afterEach, beforeEach, describe, expect, it, jasmine } from 'karma-jasmine';
 import { browser, logging } from 'protractor';
 
 import { AppPage } from './app.po';
@@ -10,9 +9,9 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display welcome message', async () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to s3-image-man!');
+    expect(await page.getPlaceholderText()).toEqual('No files to show');
   });
 
   afterEach(async () => {

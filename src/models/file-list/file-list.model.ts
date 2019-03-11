@@ -1,12 +1,15 @@
 import { S3 } from 'aws-sdk';
 import * as path from 'path';
 
-import { FileService } from '../services/file.service';
-import { Directory } from './directory.model';
-import { File } from './file.model';
+import { FileService } from '../../services/file/file.service';
+import { DirectoryInterface } from '../directory/directory.interface';
+import { Directory } from '../directory/directory.model';
+import { FileListInterface } from '../file-list/file-list.interface';
+import { FileInterface } from '../file/file.interface';
+import { File } from '../file/file.model';
 
-export class FileList {
-  get nextContinuationToken() {
+export class FileList implements FileListInterface {
+  get nextContinuationToken(): string {
     return this.list.NextContinuationToken;
   }
 
@@ -22,7 +25,7 @@ export class FileList {
     return this.list.IsTruncated;
   }
 
-  get directories(): Array<Directory> {
+  get directories(): Array<DirectoryInterface> {
     return this.list.CommonPrefixes.filter((directory: S3.Types.CommonPrefix) => {
       return path.basename(directory.Prefix) !== '_thumbs';
     }).map((directory: S3.Types.CommonPrefix) => {
@@ -30,7 +33,7 @@ export class FileList {
     });
   }
 
-  get files(): Array<File> {
+  get files(): Array<FileInterface> {
     return this.list.Contents.filter((file) => {
       const fileName = path.basename(file.Key);
       const ext = fileName.split('.').pop();

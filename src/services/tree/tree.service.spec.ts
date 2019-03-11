@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'karma-jasmine';
 
 import { TreeService } from './tree.service';
 

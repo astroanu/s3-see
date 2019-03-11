@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { ConfigService } from '../services/config.service';
+import { ConfigService } from '../services/config/config.service';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
 
 @Component({
@@ -14,15 +15,25 @@ export class AppComponent {
   currentBucket;
   buckets: Array<object>;
 
+  @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
+  @ViewChild(ViewComponent) view: ViewComponent;
+  @ViewChild(UploaderComponent) uploader: UploaderComponent;
+
   menuItems = [
     {
       label: this.config.appName,
-      icon: 'pi pi-fw pi-eye'
+      icon: 'pi pi-fw pi-eye',
+      items: [
+        {
+          label: 'Upload',
+          icon: 'pi pi-fw pi-cloud-upload',
+          command: () => {
+            this.uploader.showDialog();
+          }
+        }
+      ]
     }
   ];
-
-  @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
-  @ViewChild(ViewComponent) view: ViewComponent;
 
   refreshTree() {
     this.view.resetFilesShown();

@@ -1,6 +1,14 @@
 <div class="ui-dataview ui-widget ui-dataview-grid" (window:resize)="setThumbSize()">
   <p-toolbar>
-    <div class="ui-toolbar-group-left"></div>
+    <div class="ui-toolbar-group-left">
+      <span class="control-block" *ngIf="currentDirectory">
+        <h4>{{ currentDirectory.label }}</h4>
+      </span>
+      <span class="control-block">
+        {{ filesShown.length }} Files (<i>{{ filesShownTotalSize | prettySize }}</i
+        >)
+      </span>
+    </div>
 
     <div class="ui-toolbar-group-right">
       <span class="control-block">
@@ -16,7 +24,6 @@
         </span>
         <i class="pi pi-minus-circle"></i>
       </span>
-      <span class="control-block">{{ filesShown.length }} Files ({{ filesShownTotalSize | prettySize }})</span>
       <p-button icon="pi pi-bars" (onClick)="viewList()" *ngIf="!listView"></p-button>
       <p-button icon="pi pi-th-large" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
     </div>
