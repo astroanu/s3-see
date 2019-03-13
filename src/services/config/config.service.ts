@@ -40,7 +40,7 @@ export class ConfigService implements ConfigServiceInterface {
       appName: 'S3See',
       buckets: []
     };
-    this.defaultBucket = this.buckets[0].bucketName;
+    this.defaultBucket = this.buckets[0] ? this.buckets[0].bucketName : null;
   }
 }
 
