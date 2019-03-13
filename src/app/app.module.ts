@@ -4,8 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SliderModule } from 'primeng/slider';
@@ -15,23 +17,33 @@ import { TreeModule } from 'primeng/tree';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
-import { TreeService } from '../services/tree/tree.service';
 import { FileService } from '../services/file/file.service';
+import { TreeService } from '../services/tree/tree.service';
 import { AppComponent } from './app.component';
+import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
-import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 
 @NgModule({
-  declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent, PrettySizePipe, UploaderComponent, BucketManageComponent],
+  declarations: [
+    AppComponent,
+    DirTreeComponent,
+    ViewComponent,
+    SlideShowComponent,
+    PrettySizePipe,
+    UploaderComponent,
+    BucketManageComponent
+  ],
   imports: [
     BrowserModule,
     DialogModule,
     BrowserAnimationsModule,
     ToolbarModule,
     SliderModule,
+    CardModule,
+    InputTextModule,
     ButtonModule,
     FormsModule,
     DropdownModule,
