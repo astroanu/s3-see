@@ -1,9 +1,27 @@
 <p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
   <div class="p-grid p-align-stretch vertical-container">
     <div class="p-col-3" *ngFor="let bucket of buckets">
-      <p-card class="box box-stretched" (click)="editBucket(bucket)">
+      <p-card class="box box-stretched">
         <h4>{{ bucket.label }}</h4>
         <p>{{ bucket.bucketName }} ({{ bucket.region }})</p>
+        <p-footer>
+          <button
+            pButton
+            type="button"
+            (click)="editBucket(bucket)"
+            label="Save"
+            icon="pi pi-check"
+            style="margin-right: .25em"
+          ></button>
+          <button
+            pButton
+            type="button"
+            (click)="editBucket(bucket)"
+            label="Cancel"
+            icon="pi pi-times"
+            class="ui-button-secondary"
+          ></button>
+        </p-footer>
       </p-card>
     </div>
   </div>
