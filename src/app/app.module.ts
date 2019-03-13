@@ -22,9 +22,10 @@ import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
+import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 
 @NgModule({
-  declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent, PrettySizePipe, UploaderComponent],
+  declarations: [AppComponent, DirTreeComponent, ViewComponent, SlideShowComponent, PrettySizePipe, UploaderComponent, BucketManageComponent],
   imports: [
     BrowserModule,
     DialogModule,

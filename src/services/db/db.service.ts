@@ -22,9 +22,19 @@ export class DbService {
   }
 
   update(id: string, value: object) {
-    /*return this.store.getByKey('id', id).then((result) => {
-      console.log(result);
-    });*/
+    return new Promise((resolve, reject) => {
+      return this.getDb().then((db: any) => {
+        return db.getByKey(this.storeName, id).then((result) => {
+          value[this.primaryKey] = id;
+
+          if (result) {
+            return db.update(this.storeName, value).then(() => resolve());
+          } else {
+            return db.add(this.storeName, value).then(() => resolve());
+          }
+        });
+      });
+    });
   }
 
   getDb() {
@@ -32,11 +42,11 @@ export class DbService {
       return this.db
         .openDatabase(DBVersion, (evt) => {
           this.store = evt.currentTarget.result.createObjectStore(this.storeName, {
-            keyPath: 'id',
-            autoIncrement: true
+            keyPath: this.primaryKey,
+            autoIncrement: false
           });
 
-          this.store.createIndex('id', 'id', {
+          this.store.createIndex(this.primaryKey, this.primaryKey, {
             unique: true
           });
         })
@@ -46,5 +56,5 @@ export class DbService {
     });
   }
 
-  constructor(private storeName: string) {}
+  constructor(private storeName: string, private primaryKey: string) {}
 }

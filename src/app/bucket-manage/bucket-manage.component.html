@@ -1,0 +1,32 @@
+<p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
+  <div class="p-grid p-align-stretch vertical-container">
+    <div class="p-col-3" *ngFor="let bucket of buckets">
+      <label for="label">label</label>
+      <input type="text" pInputText [(ngModel)]="bucket.label" />
+      <label for="bucketName">bucketName</label>
+      <input type="text" pInputText [(ngModel)]="bucket.bucketName" />
+      <label for="accessKeyId">accessKeyId</label>
+      <input type="text" pInputText [(ngModel)]="bucket.accessKeyId" />
+      <label for="secretAccessKey">secretAccessKey</label>
+      <input type="text" pInputText [(ngModel)]="bucket.secretAccessKey" />
+      <label for="region">region</label>
+      <input type="text" pInputText [(ngModel)]="bucket.region" />
+    </div>
+  </div>
+
+  <button pButton type="button" (click)="addBucket()" icon="pi pi-plus" label="Add"></button>
+
+  {{ buckets | json }}
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="saveBuckets()" label="Save"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-close"
+      (click)="display = false"
+      label="No"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
+</p-dialog>

@@ -11,6 +11,10 @@ export class ConfigService implements ConfigServiceInterface {
   public defaultBucket: string;
   private db: DbService;
 
+  public updateBucketConfig(buckets: Array<object>) {
+    return this.db.update('buckets', buckets).then(() => {});
+  }
+
   public getBucketCredentials(bucketName: string): object {
     if (this.getBucket(bucketName)) {
       return this.getBucket(bucketName).getCredentials();
@@ -46,7 +50,8 @@ export class ConfigService implements ConfigServiceInterface {
   }
 
   constructor() {
-    this.db = new DbService('config');
+    this.db = new DbService('config', 'key');
+
     this.getBuckets().then((buckets) => {
       if (buckets.length) {
         this.defaultBucket = buckets[0].bucketName;

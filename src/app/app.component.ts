@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { ConfigService } from '../services/config/config.service';
+import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
@@ -18,6 +19,7 @@ export class AppComponent {
   @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
   @ViewChild(ViewComponent) view: ViewComponent;
   @ViewChild(UploaderComponent) uploader: UploaderComponent;
+  @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
 
   menuItems = [
     {
@@ -29,6 +31,13 @@ export class AppComponent {
           icon: 'pi pi-fw pi-cloud-upload',
           command: () => {
             this.uploader.showDialog();
+          }
+        },
+        {
+          label: 'Buckets',
+          icon: 'pi pi-fw pi-folder',
+          command: () => {
+            this.bucketManager.showDialog();
           }
         }
       ]
@@ -46,6 +55,10 @@ export class AppComponent {
 
   private initializeBucktesList() {
     this.config.getBuckets().then((buckets) => {
+      if (!buckets.length) {
+        this.bucketManager.showDialog();
+      }
+
       this.buckets = buckets.map((bucket) => {
         return {
           label: bucket.label,
