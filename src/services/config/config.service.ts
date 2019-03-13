@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { DbService } from '../db/db.service';
 import { ConfigServiceInterface } from './config.service.interface';
 
 @Injectable({
@@ -8,39 +9,49 @@ import { ConfigServiceInterface } from './config.service.interface';
 export class ConfigService implements ConfigServiceInterface {
   private config: any;
   public defaultBucket: string;
+  private db: DbService;
 
   public getBucketCredentials(bucketName: string): object {
-    return this.getBucket(bucketName).getCredentials();
+    if (this.getBucket(bucketName)) {
+      return this.getBucket(bucketName).getCredentials();
+    }
   }
 
   public getBucket(bucketName: string): Bucket {
-    const currentBucket = this.buckets.filter((bucket: Bucket) => {
-      return bucket.bucketName === bucketName;
+    const currentBucket = this.getBuckets().then((buckets: Array<Bucket>) => {
+      buckets.filter((bucket: Bucket) => {
+        return bucket.bucketName === bucketName;
+      });
     });
-
-    if (!currentBucket.length) {
-      throw Error(`specified bcuket ${bucketName} does not exist in the config`);
-    }
 
     return currentBucket[0];
   }
 
-  public get buckets(): Array<Bucket> {
-    return this.config.buckets.map((config: BucketConfig) => {
-      return new Bucket(config);
+  public getBuckets(): Promise<Array<Bucket>> {
+    return new Promise((resolve, reject) => {
+      return this.db.get('buckets').then((buckets: Array<object>) => {
+        return resolve(
+          buckets
+            ? buckets.map((config: BucketConfig) => {
+                return new Bucket(config);
+              })
+            : []
+        );
+      });
     });
   }
 
   public get appName(): string {
-    return this.config.appName;
+    return 's3 See';
   }
 
   constructor() {
-    this.config = {
-      appName: 'S3See',
-      buckets: []
-    };
-    this.defaultBucket = this.buckets[0] ? this.buckets[0].bucketName : null;
+    this.db = new DbService('config');
+    this.getBuckets().then((buckets) => {
+      if (buckets.length) {
+        this.defaultBucket = buckets[0].bucketName;
+      }
+    });
   }
 }
 

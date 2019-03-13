@@ -18,7 +18,6 @@ export class FileService implements FileServiceInterface {
   }
 
   private initializeS3Object() {
-    console.log(this.config);
     this.s3 = new AWS.S3(new AWS.Config(this.config.getBucketCredentials(this.bucketName)));
   }
 

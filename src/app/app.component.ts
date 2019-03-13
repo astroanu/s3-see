@@ -45,16 +45,18 @@ export class AppComponent {
   }
 
   private initializeBucktesList() {
-    this.buckets = this.config.buckets.map((bucket) => {
-      return {
-        label: bucket.label,
-        value: bucket.bucketName
-      };
+    this.config.getBuckets().then((buckets) => {
+      this.buckets = buckets.map((bucket) => {
+        return {
+          label: bucket.label,
+          value: bucket.bucketName
+        };
+      });
     });
   }
 
   private setDefaultBucket() {
-    this.currentBucket = this.config.buckets[0].bucketName;
+    this.currentBucket = this.config.defaultBucket;
   }
 
   constructor(private config: ConfigService) {
