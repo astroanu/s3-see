@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
@@ -44,6 +44,7 @@ import { ViewComponent } from './view/view.component';
     SliderModule,
     CardModule,
     InputTextModule,
+    ReactiveFormsModule,
     ButtonModule,
     FormsModule,
     DropdownModule,

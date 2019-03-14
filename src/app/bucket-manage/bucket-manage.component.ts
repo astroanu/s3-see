@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ConfigService } from '../../services/config/config.service';
 
@@ -11,9 +12,16 @@ export class BucketManageComponent {
   public displayDialog: boolean = false;
   public displayForm: boolean = false;
   public buckets: Array<object> = [];
-  public currentItem: any = {};
+  public itemForm: FormGroup = new FormGroup({
+    label: new FormControl(null, [Validators.required]),
+    bucketName: new FormControl(null, [Validators.required]),
+    accessKeyId: new FormControl(null, [Validators.required]),
+    secretAccessKey: new FormControl(null, [Validators.required]),
+    region: new FormControl(null, [Validators.required])
+  });
 
   showDialog() {
+    this.loadBuckets();
     this.displayDialog = true;
   }
 
@@ -27,21 +35,22 @@ export class BucketManageComponent {
 
   hideForm() {
     this.displayForm = false;
-    this.currentItem = null;
+    this.itemForm = null;
   }
 
   showAddBucketDialog() {
-    this.currentItem = {};
+    this.itemForm.reset();
     this.showForm();
   }
 
   editBucket(bucket) {
-    this.currentItem = Object.assign(bucket, {});
+    this.itemForm.reset(bucket);
+
     this.showForm();
   }
 
   addBucket() {
-    this.buckets.push(this.currentItem);
+    this.buckets.push(this.itemForm.value);
     this.hideForm();
   }
 
@@ -50,7 +59,7 @@ export class BucketManageComponent {
     this.hideDialog();
   }
 
-  constructor(private config: ConfigService) {
+  loadBuckets() {
     this.config.getBuckets().then((buckets) => {
       this.buckets = buckets.map((bucket) => {
         return Object.assign(bucket.getCredentials(), {
@@ -60,4 +69,6 @@ export class BucketManageComponent {
       });
     });
   }
+
+  constructor(private config: ConfigService) {}
 }

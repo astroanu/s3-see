@@ -1,70 +1,95 @@
 <p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
+  <div *ngIf="!buckets.length" class="placeholder">
+    No buckets configured
+  </div>
+
   <div class="p-grid p-align-stretch vertical-container">
     <div class="p-col-3" *ngFor="let bucket of buckets">
       <p-card class="box box-stretched">
         <h4>{{ bucket.label }}</h4>
         <p>{{ bucket.bucketName }} ({{ bucket.region }})</p>
         <p-footer>
-          <button
-            pButton
-            type="button"
-            (click)="editBucket(bucket)"
-            label="Save"
-            icon="pi pi-check"
-            style="margin-right: .25em"
-          ></button>
-          <button
-            pButton
-            type="button"
-            (click)="editBucket(bucket)"
-            label="Cancel"
-            icon="pi pi-times"
-            class="ui-button-secondary"
-          ></button>
+          <button pButton type="button" class="ui-button-danger" (click)="editBucket(bucket)" label="Delete"></button>
+          <button pButton type="button" (click)="editBucket(bucket)" label="Edit" class="ui-button-secondary"></button>
         </p-footer>
       </p-card>
     </div>
   </div>
 
-  <button pButton type="button" (click)="showAddBucketDialog()" icon="pi pi-plus" label="Add"></button>
-
-  {{ buckets | json }}
+  <button
+    class="add-button"
+    pButton
+    type="button"
+    (click)="showAddBucketDialog()"
+    icon="pi pi-plus"
+    label="Add"
+  ></button>
 
   <p-footer>
     <button type="button" pButton icon="pi pi-save" (click)="saveBuckets()" label="Save"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-close"
-      (click)="hideDialog()"
-      label="No"
-      class="ui-button-secondary"
-    ></button>
+    <button type="button" pButton (click)="hideDialog()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
 
-<p-dialog header="Title" [(visible)]="displayForm" [modal]="true" *ngIf="displayForm && currentItem">
-  <label for="label">label</label>
-  <input type="text" pInputText [(ngModel)]="currentItem.label" />
-  <label for="bucketName">bucketName</label>
-  <input type="text" pInputText [(ngModel)]="currentItem.bucketName" />
-  <label for="accessKeyId">accessKeyId</label>
-  <input type="text" pInputText [(ngModel)]="currentItem.accessKeyId" />
-  <label for="secretAccessKey">secretAccessKey</label>
-  <input type="text" pInputText [(ngModel)]="currentItem.secretAccessKey" />
-  <label for="region">region</label>
-  <input type="text" pInputText [(ngModel)]="currentItem.region" />
+<p-dialog
+  header="Title"
+  [style]="{ width: '400px' }"
+  [(visible)]="displayForm"
+  [modal]="true"
+  *ngIf="displayForm && itemForm"
+>
+  <div class="form">
+    {{ itemForm.status }}
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="p-grid">
+        <label class="p-col-6">Label</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="label" />
 
-  {{ currentItem | json }}
+        <div *ngIf="itemForm.errors?.label && (itemForm.touched || itemForm.dirty)">
+          Name cannot match alter ego.
+        </div>
+
+        <div class="p-col-12 form-control-feedback">
+          <p *ngIf="itemForm.label && itemForm.label.valid">This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-6">BucketName</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="bucketName" />
+
+        <div class="p-col-12 form-control-feedback">
+          <p *ngIf="itemForm.bucketName && itemForm.bucketName.valid">This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-6">Access Key ID</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="accessKeyId" />
+
+        <div class="p-col-12 form-control-feedback">
+          <p *ngIf="itemForm.accessKeyId && itemForm.accessKeyId.valid">This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-6">Secret Access Key</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="secretAccessKey" />
+
+        <div class="p-col-12 form-control-feedback">
+          <p *ngIf="itemForm.secretAccessKey && itemForm.secretAccessKey.valid">This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-6">Region</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="region" />
+
+        <div class="p-col-12 form-control-feedback">
+          <p *ngIf="itemForm.region && itemForm.region.valid">This field is required</p>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <p-footer>
-    <button type="button" pButton icon="pi pi-add" (click)="addBucket()" label="Add"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-close"
-      (click)="hideForm()"
-      label="No"
-      class="ui-button-secondary"
-    ></button>
+    <button type="button" pButton [disabled]="!itemForm.valid" (click)="addBucket()" label="Add"></button>
+    <button type="button" pButton (click)="hideForm()" label="No" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
