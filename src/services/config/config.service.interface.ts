@@ -3,7 +3,7 @@ import { Bucket } from './config.service';
 export interface ConfigServiceInterface {
   getBucketCredentials(bucketName: string): object;
 
-  getBucket(bucketName: string): Bucket;
+  getBucket(bucketName: string): Promise<Bucket>;
 
   getBuckets(): Promise<Array<Bucket>>;
 

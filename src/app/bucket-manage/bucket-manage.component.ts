@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ConfigService } from '../../services/config/config.service';
@@ -9,9 +9,14 @@ import { ConfigService } from '../../services/config/config.service';
   styleUrls: ['./bucket-manage.component.scss']
 })
 export class BucketManageComponent {
+  @Output() bucketsUpdated = new EventEmitter<any>();
+
   public displayDialog: boolean = false;
+
   public displayForm: boolean = false;
+
   public buckets: Array<object> = [];
+
   public itemForm: FormGroup = new FormGroup({
     label: new FormControl(null, [Validators.required]),
     bucketName: new FormControl(null, [Validators.required]),
@@ -19,6 +24,8 @@ export class BucketManageComponent {
     secretAccessKey: new FormControl(null, [Validators.required]),
     region: new FormControl(null, [Validators.required])
   });
+
+  private editIndex = null;
 
   showDialog() {
     this.loadBuckets();
@@ -35,27 +42,40 @@ export class BucketManageComponent {
 
   hideForm() {
     this.displayForm = false;
-    this.itemForm = null;
   }
 
   showAddBucketDialog() {
+    this.editIndex = null;
     this.itemForm.reset();
     this.showForm();
   }
 
-  editBucket(bucket) {
-    this.itemForm.reset(bucket);
+  editBucket(index) {
+    this.editIndex = index;
+    this.itemForm.reset(this.buckets[this.editIndex]);
 
     this.showForm();
   }
 
+  deleteBucket(index) {
+    this.buckets.splice(index, 1);
+  }
+
   addBucket() {
-    this.buckets.push(this.itemForm.value);
+    if (this.editIndex) {
+      this.buckets[this.editIndex] = this.itemForm.value;
+    } else {
+      this.buckets.push(this.itemForm.value);
+    }
+
     this.hideForm();
   }
 
   saveBuckets() {
-    this.config.updateBucketConfig(this.buckets);
+    this.config.updateBucketConfig(this.buckets).then(() => {
+      this.bucketsUpdated.emit();
+    });
+
     this.hideDialog();
   }
 
@@ -68,6 +88,26 @@ export class BucketManageComponent {
         });
       });
     });
+  }
+
+  get label() {
+    return this.itemForm.get('label');
+  }
+
+  get bucketName() {
+    return this.itemForm.get('bucketName');
+  }
+
+  get accessKeyId() {
+    return this.itemForm.get('accessKeyId');
+  }
+
+  get secretAccessKey() {
+    return this.itemForm.get('secretAccessKey');
+  }
+
+  get region() {
+    return this.itemForm.get('region');
   }
 
   constructor(private config: ConfigService) {}

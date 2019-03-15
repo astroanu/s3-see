@@ -17,17 +17,26 @@ export class FileService implements FileServiceInterface {
     this.initializeS3Object();
   }
 
-  private initializeS3Object() {
-    this.s3 = new AWS.S3(new AWS.Config(this.config.getBucketCredentials(this.bucketName)));
+  initializeS3Object(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      return this.config.getBucketCredentials(this.bucketName).then((credentials) => {
+        this.s3 = new AWS.S3(new AWS.Config(credentials));
+        resolve();
+      });
+    });
   }
 
   getBucketName(): string {
     return this.bucketName;
   }
 
-  setBucket(bucketName: string): void {
-    this.bucketName = bucketName;
-    this.initializeS3Object();
+  setBucket(bucketName: string): Promise<void> {
+    if (bucketName) {
+      this.bucketName = bucketName;
+
+      return this.initializeS3Object();
+    }
+    return Promise.reject();
   }
 
   listDirectories(prefix: string, continuationToken: null | string = null): Promise<FileListInterface> {

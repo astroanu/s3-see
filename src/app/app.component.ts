@@ -12,14 +12,14 @@ import { ViewComponent } from './view/view.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  currentNode: DocumentEvent;
-  currentBucket;
-  buckets: Array<object>;
-
   @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
   @ViewChild(ViewComponent) view: ViewComponent;
   @ViewChild(UploaderComponent) uploader: UploaderComponent;
   @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
+
+  currentNode: DocumentEvent;
+  currentBucket;
+  buckets: Array<object>;
 
   menuItems = [
     {
@@ -54,9 +54,10 @@ export class AppComponent {
   }
 
   private initializeBucktesList() {
-    this.config.getBuckets().then((buckets) => {
+    return this.config.getBuckets().then((buckets) => {
       if (!buckets.length) {
         this.bucketManager.showDialog();
+        return;
       }
 
       this.buckets = buckets.map((bucket) => {
@@ -65,15 +66,17 @@ export class AppComponent {
           value: bucket.bucketName
         };
       });
+
+      this.setDefaultBucket();
     });
   }
 
   private setDefaultBucket() {
-    this.currentBucket = this.config.defaultBucket;
+    const firstBucket: any = this.buckets[0];
+    this.currentBucket = firstBucket.value;
   }
 
   constructor(private config: ConfigService) {
     this.initializeBucktesList();
-    this.setDefaultBucket();
   }
 }

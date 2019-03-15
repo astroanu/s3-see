@@ -14,15 +14,20 @@ export class DirTreeComponent {
 
   @Input() set bucket(bucketName: any) {
     if (bucketName) {
-      this.treeService.fileService.setBucket(bucketName);
-      this.initializeDirPane();
+      this.treeService.fileService.setBucket(bucketName).then(() => {
+        this.initializeDirPane();
+      });
     }
   }
 
   selectedFiles: Array<any> = [];
+
   fileCache: Array<object> = [];
+
   fileTree: Array<object> = [];
+
   folderStructor: Object = {};
+
   loading: boolean = true;
 
   initializeDirPane() {
@@ -33,7 +38,7 @@ export class DirTreeComponent {
 
     this.getDirStructure().then(() => {
       this.loading = false;
-      console.log('Dir listing complete');
+      console.info('Dir listing complete');
     });
   }
 
@@ -41,7 +46,7 @@ export class DirTreeComponent {
     const node: DirectoryInterface = event.node;
 
     node.loadSubdirectories().then(() => {
-      console.log('subdirectories loaded');
+      console.info('subdirectories loaded');
       this.selected.emit(node);
     });
   }

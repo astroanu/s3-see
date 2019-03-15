@@ -7,7 +7,6 @@ import { ConfigServiceInterface } from './config.service.interface';
   providedIn: 'root'
 })
 export class ConfigService implements ConfigServiceInterface {
-  private config: any;
   public defaultBucket: string;
   private db: DbService;
 
@@ -15,20 +14,32 @@ export class ConfigService implements ConfigServiceInterface {
     return this.db.update('buckets', buckets).then(() => {});
   }
 
-  public getBucketCredentials(bucketName: string): object {
-    if (this.getBucket(bucketName)) {
-      return this.getBucket(bucketName).getCredentials();
-    }
-  }
-
-  public getBucket(bucketName: string): Bucket {
-    const currentBucket = this.getBuckets().then((buckets: Array<Bucket>) => {
-      buckets.filter((bucket: Bucket) => {
-        return bucket.bucketName === bucketName;
+  public getBucketCredentials(bucketName: string): Promise<object> {
+    return new Promise((resolve, reject) => {
+      return this.getBucket(bucketName).then((bucket) => {
+        if (bucket) {
+          resolve(bucket.getCredentials());
+        } else {
+          reject();
+        }
       });
     });
+  }
 
-    return currentBucket[0];
+  public getBucket(bucketName: string): Promise<Bucket> {
+    return new Promise((resolve, reject) => {
+      return this.getBuckets().then((buckets: Array<Bucket>) => {
+        const currentBucket = buckets.filter((bucket: Bucket) => {
+          return bucket.bucketName === bucketName;
+        });
+
+        if (currentBucket.length) {
+          resolve(currentBucket[0]);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   public getBuckets(): Promise<Array<Bucket>> {

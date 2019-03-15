@@ -4,18 +4,19 @@
   </div>
 
   <div class="p-grid p-align-stretch vertical-container">
-    <div class="p-col-3" *ngFor="let bucket of buckets">
-      <p-card class="box box-stretched">
+    <div class="p-col-4" *ngFor="let bucket of buckets; let i = index">
+      <p-card class="box box-stretched bucket-box">
         <h4>{{ bucket.label }}</h4>
-        <p>{{ bucket.bucketName }} ({{ bucket.region }})</p>
+        <p>
+          {{ bucket.bucketName }}<br /><I> ({{ bucket.region }})</I>
+        </p>
         <p-footer>
-          <button pButton type="button" class="ui-button-danger" (click)="editBucket(bucket)" label="Delete"></button>
-          <button pButton type="button" (click)="editBucket(bucket)" label="Edit" class="ui-button-secondary"></button>
+          <button pButton type="button" class="ui-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
+          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="ui-button-secondary"></button>
         </p-footer>
       </p-card>
     </div>
   </div>
-
   <button
     class="add-button"
     pButton
@@ -33,63 +34,68 @@
 
 <p-dialog
   header="Title"
-  [style]="{ width: '400px' }"
+  [style]="{ width: '600px' }"
   [(visible)]="displayForm"
   [modal]="true"
   *ngIf="displayForm && itemForm"
 >
   <div class="form">
-    {{ itemForm.status }}
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <div class="p-grid">
-        <label class="p-col-6">Label</label>
-        <input class="p-col-6" type="text" required pInputText formControlName="label" />
-
-        <div *ngIf="itemForm.errors?.label && (itemForm.touched || itemForm.dirty)">
-          Name cannot match alter ego.
-        </div>
-
-        <div class="p-col-12 form-control-feedback">
-          <p *ngIf="itemForm.label && itemForm.label.valid">This field is required</p>
+        <label class="p-col-4">Label</label>
+        <input class="p-col-4" type="text" required pInputText formControlName="label" />
+        <div class="p-col-4 form-control-feedback" *ngIf="label.invalid && (label.dirty || label.touched)">
+          <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-6">BucketName</label>
-        <input class="p-col-6" type="text" required pInputText formControlName="bucketName" />
+        <label class="p-col-4">BucketName</label>
+        <input class="p-col-4" type="text" required pInputText formControlName="bucketName" />
 
-        <div class="p-col-12 form-control-feedback">
-          <p *ngIf="itemForm.bucketName && itemForm.bucketName.valid">This field is required</p>
+        <div
+          class="p-col-4 form-control-feedback"
+          *ngIf="bucketName.invalid && (bucketName.dirty || bucketName.touched)"
+        >
+          <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-6">Access Key ID</label>
-        <input class="p-col-6" type="text" required pInputText formControlName="accessKeyId" />
+        <label class="p-col-4">Access Key ID</label>
+        <input class="p-col-4" type="text" required pInputText formControlName="accessKeyId" />
 
-        <div class="p-col-12 form-control-feedback">
-          <p *ngIf="itemForm.accessKeyId && itemForm.accessKeyId.valid">This field is required</p>
+        <div
+          class="p-col-4 form-control-feedback"
+          *ngIf="accessKeyId.invalid && (accessKeyId.dirty || accessKeyId.touched)"
+        >
+          <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-6">Secret Access Key</label>
-        <input class="p-col-6" type="text" required pInputText formControlName="secretAccessKey" />
+        <label class="p-col-4">Secret Access Key</label>
+        <input class="p-col-4" type="text" required pInputText formControlName="secretAccessKey" />
 
-        <div class="p-col-12 form-control-feedback">
-          <p *ngIf="itemForm.secretAccessKey && itemForm.secretAccessKey.valid">This field is required</p>
+        <div
+          class="p-col-4 form-control-feedback"
+          *ngIf="secretAccessKey.invalid && (secretAccessKey.dirty || secretAccessKey.touched)"
+        >
+          <p>
+            This field is required
+          </p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-6">Region</label>
-        <input class="p-col-6" type="text" required pInputText formControlName="region" />
+        <label class="p-col-4">Region</label>
+        <input class="p-col-4" type="text" required pInputText formControlName="region" />
 
-        <div class="p-col-12 form-control-feedback">
-          <p *ngIf="itemForm.region && itemForm.region.valid">This field is required</p>
+        <div class="p-col-4 form-control-feedback" *ngIf="region.invalid && (region.dirty || region.touched)">
+          <p>This field is required</p>
         </div>
       </div>
     </form>
   </div>
 
   <p-footer>
-    <button type="button" pButton [disabled]="!itemForm.valid" (click)="addBucket()" label="Add"></button>
+    <button type="button" pButton [disabled]="itemForm.invalid" (click)="addBucket()" label="Add"></button>
     <button type="button" pButton (click)="hideForm()" label="No" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>

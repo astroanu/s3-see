@@ -28,7 +28,11 @@ describe('FileService', () => {
 
     const bucket = new Bucket(testBucketConfig);
 
-    moqConfigService.setup((m) => m.buckets).returns(() => [bucket]);
+    moqConfigService
+      .setup((m) => m.getBuckets())
+      .returns(() => {
+        return Promise.resolve([bucket]);
+      });
 
     moqConfigService.setup((m) => m.getBucketCredentials('test')).returns(() => bucket.getCredentials());
 
