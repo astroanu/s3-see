@@ -14,11 +14,15 @@ import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
+import { ToastModule } from 'primeng/toast';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
 import { FileService } from '../services/file/file.service';
 import { TreeService } from '../services/tree/tree.service';
+
+import { MessageService } from 'primeng/components/common/messageservice';
+
 import { AppComponent } from './app.component';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
@@ -45,6 +49,7 @@ import { ViewComponent } from './view/view.component';
     CardModule,
     InputTextModule,
     ReactiveFormsModule,
+    ToastModule,
     ButtonModule,
     FormsModule,
     DropdownModule,
@@ -54,7 +59,7 @@ import { ViewComponent } from './view/view.component';
     MomentModule,
     MenubarModule
   ],
-  providers: [ConfigService, FileService, TreeService],
+  providers: [MessageService, ConfigService, FileService, TreeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

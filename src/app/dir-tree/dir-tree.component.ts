@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DirectoryInterface } from '../../models/directory/directory.interface';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { TreeService } from '../../services/tree/tree.service';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-dir-tree',
@@ -36,10 +37,25 @@ export class DirTreeComponent {
     this.folderStructor = {};
     this.loading = true;
 
-    this.getDirStructure().then(() => {
-      this.loading = false;
-      console.info('Dir listing complete');
-    });
+    this.getDirStructure()
+      .then(
+        () => {
+          this.loading = false;
+          console.info('Dir listing complete');
+        },
+        (e) => {
+          this.messageService.add({
+            key: 'tc',
+            severity: 'warn',
+            summary: 'Could not load directory structure',
+            detail: e.toString()
+          });
+          console.log(e.toString());
+        }
+      )
+      .catch((e) => {
+        console.log(e.toString());
+      });
   }
 
   selectNode(event) {
@@ -65,9 +81,9 @@ export class DirTreeComponent {
         } else {
           resolve();
         }
-      });
+      }, reject);
     });
   }
 
-  constructor(private treeService: TreeService) {}
+  constructor(private treeService: TreeService, private messageService: MessageService) {}
 }

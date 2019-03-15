@@ -1,5 +1,5 @@
 <div class="ui-dataview ui-widget ui-dataview-grid" (window:resize)="setThumbSize()">
-  <p-toolbar>
+  <p-toolbar class="toolbar">
     <div class="ui-toolbar-group-left">
       <span class="control-block" *ngIf="currentDirectory">
         <h4>{{ currentDirectory.label }}</h4>
@@ -10,7 +10,7 @@
       </span>
     </div>
 
-    <div class="ui-toolbar-group-right">
+    <div class="toolbar ui-toolbar-group-right">
       <span class="control-block">
         <i class="pi pi-plus-circle"></i>
         <span class="zoom-controller">
@@ -29,7 +29,7 @@
     </div>
   </p-toolbar>
 
-  <div *ngIf="loading" class="loading-bar ui-dataview-content ui-widget-content">
+  <div *ngIf="loading" class="loading-bar content-area ui-dataview-content ui-widget-content">
     <p-progressSpinner></p-progressSpinner>
   </div>
 
@@ -39,6 +39,7 @@
 
   <div *ngIf="listView && filesShown.length">
     <p-table
+      class="content-table"
       [resizableColumns]="true"
       dataKey="key"
       selectionMode="single"
@@ -65,7 +66,7 @@
     </p-table>
   </div>
 
-  <div *ngIf="!listView && filesShown.length" class="ui-dataview-content ui-widget-content">
+  <div *ngIf="!listView && filesShown.length" class="content-area ui-dataview-content ui-widget-content">
     <div class="ui-md-12">
       <div
         *ngFor="let file of filesShown"

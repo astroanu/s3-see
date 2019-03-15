@@ -53,13 +53,19 @@ export class FileService implements FileServiceInterface {
         params['ContinuationToken'] = continuationToken;
       }
 
-      this.s3.listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(new FileList(this, data));
-        }
-      });
+      this.s3
+        .listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(new FileList(this, data));
+          }
+        })
+        .on('complete', (response) => {
+          if (response.error) {
+            reject(response.error);
+          }
+        });
     });
   }
 

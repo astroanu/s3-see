@@ -34,7 +34,7 @@
 
 <p-dialog
   header="Title"
-  [style]="{ width: '600px' }"
+  [style]="{ width: '800px' }"
   [(visible)]="displayForm"
   [modal]="true"
   *ngIf="displayForm && itemForm"
@@ -42,40 +42,40 @@
   <div class="form">
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <div class="p-grid">
-        <label class="p-col-4">Label</label>
-        <input class="p-col-4" type="text" required pInputText formControlName="label" />
-        <div class="p-col-4 form-control-feedback" *ngIf="label.invalid && (label.dirty || label.touched)">
+        <label class="p-col-3">Label</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="label" />
+        <div class="p-col-3 form-control-feedback" *ngIf="label.invalid && (label.dirty || label.touched)">
           <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-4">BucketName</label>
-        <input class="p-col-4" type="text" required pInputText formControlName="bucketName" />
+        <label class="p-col-3">BucketName</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="bucketName" />
 
         <div
-          class="p-col-4 form-control-feedback"
+          class="p-col-3 form-control-feedback"
           *ngIf="bucketName.invalid && (bucketName.dirty || bucketName.touched)"
         >
           <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-4">Access Key ID</label>
-        <input class="p-col-4" type="text" required pInputText formControlName="accessKeyId" />
+        <label class="p-col-3">Access Key ID</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="accessKeyId" />
 
         <div
-          class="p-col-4 form-control-feedback"
+          class="p-col-3 form-control-feedback"
           *ngIf="accessKeyId.invalid && (accessKeyId.dirty || accessKeyId.touched)"
         >
           <p>This field is required</p>
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-4">Secret Access Key</label>
-        <input class="p-col-4" type="text" required pInputText formControlName="secretAccessKey" />
+        <label class="p-col-3">Secret Access Key</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="secretAccessKey" />
 
         <div
-          class="p-col-4 form-control-feedback"
+          class="p-col-3 form-control-feedback"
           *ngIf="secretAccessKey.invalid && (secretAccessKey.dirty || secretAccessKey.touched)"
         >
           <p>
@@ -84,10 +84,10 @@
         </div>
       </div>
       <div class="p-grid">
-        <label class="p-col-4">Region</label>
-        <input class="p-col-4" type="text" required pInputText formControlName="region" />
+        <label class="p-col-3">Region</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="region" />
 
-        <div class="p-col-4 form-control-feedback" *ngIf="region.invalid && (region.dirty || region.touched)">
+        <div class="p-col-3 form-control-feedback" *ngIf="region.invalid && (region.dirty || region.touched)">
           <p>This field is required</p>
         </div>
       </div>
@@ -96,6 +96,6 @@
 
   <p-footer>
     <button type="button" pButton [disabled]="itemForm.invalid" (click)="addBucket()" label="Add"></button>
-    <button type="button" pButton (click)="hideForm()" label="No" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="hideForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>

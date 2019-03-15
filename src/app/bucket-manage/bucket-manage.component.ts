@@ -28,8 +28,9 @@ export class BucketManageComponent {
   private editIndex = null;
 
   showDialog() {
-    this.loadBuckets();
-    this.displayDialog = true;
+    this.loadBuckets().then(() => {
+      this.displayDialog = true;
+    });
   }
 
   hideDialog() {
@@ -80,7 +81,7 @@ export class BucketManageComponent {
   }
 
   loadBuckets() {
-    this.config.getBuckets().then((buckets) => {
+    return this.config.getBuckets().then((buckets) => {
       this.buckets = buckets.map((bucket) => {
         return Object.assign(bucket.getCredentials(), {
           bucketName: bucket.bucketName,
