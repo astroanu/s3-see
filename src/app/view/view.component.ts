@@ -53,6 +53,15 @@ export class ViewComponent {
     }
   }
 
+  @Input() set files(files: any) {
+    if (files) {
+      this.resetFilesShown();
+      this.setThumbSize();
+
+      this.filesShown = files;
+    }
+  }
+
   onZoomChange() {
     this.setThumbSize();
   }

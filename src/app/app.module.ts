@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,17 +14,14 @@ import { MenubarModule } from 'primeng/menubar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
-import { ToastModule } from 'primeng/toast';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
 import { FileService } from '../services/file/file.service';
 import { TreeService } from '../services/tree/tree.service';
-
-import { MessageService } from 'primeng/components/common/messageservice';
-
 import { AppComponent } from './app.component';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
@@ -46,6 +45,7 @@ import { ViewComponent } from './view/view.component';
     BrowserAnimationsModule,
     ToolbarModule,
     SliderModule,
+    CheckboxModule,
     CardModule,
     InputTextModule,
     ReactiveFormsModule,

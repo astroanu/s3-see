@@ -13,10 +13,10 @@ function createWindow() {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    minHeight: 1000,
-    minWidth: 600,
-    width: 1000, //size.width,
-    height: 600, //size.height,
+    minHeight: 600,
+    minWidth: 800,
+    height: 60, //size.height,
+    width: 800, //size.width,
     icon: __dirname + `src/favicon.ico`
   });
 

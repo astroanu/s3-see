@@ -8,9 +8,22 @@ import { remote } from 'electron';
 })
 export class UploaderComponent {
   displayDialog: boolean = false;
+  selectedFiles: null;
+  uploadDirectory: string;
+  overwriteExisting: boolean = false;
 
   onDirectorySelect(event) {
-    console.log(event.target.files);
+    if (event.target.files) {
+      this.selectedFiles = event.target.files;
+      this.adjustWindowPlacement();
+    }
+  }
+
+  private adjustWindowPlacement() {
+    this.displayDialog = false;
+    setTimeout(() => {
+      this.displayDialog = true;
+    }, 1);
   }
 
   showDialog() {
