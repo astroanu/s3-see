@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { remote } from 'electron';
 
 @Component({
   selector: 'app-uploader',
@@ -13,6 +14,20 @@ export class UploaderComponent {
   }
 
   showDialog() {
+    remote.dialog.showOpenDialog(
+      {
+        title: 'Select a folder',
+        properties: ['openDirectory']
+      },
+      (folderPath) => {
+        if (folderPath === undefined) {
+          console.log("You didn't select a folder");
+          return;
+        }
+        console.log(folderPath);
+      }
+    );
+
     this.displayDialog = true;
   }
 }
