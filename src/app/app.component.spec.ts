@@ -1,8 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
+import { ToastModule } from 'primeng/toast';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { AppComponent } from './app.component';
@@ -14,7 +16,8 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, PrettySizePipe, DirTreeComponent, ViewComponent, UploaderComponent],
-      imports: [FormsModule, DropdownModule, MenubarModule],
+      providers: [MessageService],
+      imports: [FormsModule, DropdownModule, MenubarModule, ToastModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
