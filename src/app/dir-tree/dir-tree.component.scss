@@ -1,5 +1,12 @@
 :host ::ng-deep .ui-tree {
   width: 100%;
-  border-top-left-radius: 0;
+  border: none;
+}
+
+.tree-wrap {
+  border-left: 1px solid #c8c8c8;
+  border-right: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
   border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }

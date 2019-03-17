@@ -5,6 +5,10 @@
 @import url('../node_modules/primeflex/primeflex.css');
 @import url('../node_modules/primeng/resources/themes/nova-light/theme.css');
 
+body {
+  overflow: hidden;
+}
+
 .placeholder {
   padding: 60px;
   text-align: center;

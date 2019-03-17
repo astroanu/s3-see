@@ -23,19 +23,16 @@ export class AppComponent {
 
   menuItems = [
     {
-      label: this.config.appName,
-      icon: 'pi pi-fw pi-eye',
+      label: 'File',
       items: [
         {
           label: 'Upload',
-          icon: 'pi pi-fw pi-cloud-upload',
           command: () => {
             this.uploader.showDialog();
           }
         },
         {
           label: 'Buckets',
-          icon: 'pi pi-fw pi-folder',
           command: () => {
             this.bucketManager.showDialog();
           }

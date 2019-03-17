@@ -2,6 +2,19 @@
   margin-top: 15px;
 }
 
-.bucket-box p-footer .ui-button {
-  margin-right: 10px;
+.buckets-list {
+  h4 {
+    margin: 0;
+  }
+
+  .actions {
+    float: right;
+
+    .ui-button {
+      margin-right: 10px;
+    }
+  }
+}
+:host ::ng-deep .ui-card-body {
+  margin-bottom: 5px;
 }

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 import { DirectoryInterface } from '../../models/directory/directory.interface';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { TreeService } from '../../services/tree/tree.service';
-import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-dir-tree',
@@ -37,25 +37,24 @@ export class DirTreeComponent {
     this.folderStructor = {};
     this.loading = true;
 
-    this.getDirStructure()
-      .then(
-        () => {
-          this.loading = false;
-          console.info('Dir listing complete');
-        },
-        (e) => {
-          this.messageService.add({
-            key: 'tc',
-            severity: 'warn',
-            summary: 'Could not load directory structure',
-            detail: e.toString()
-          });
-          console.log(e.toString());
-        }
-      )
-      .catch((e) => {
-        console.log(e.toString());
-      });
+    this.getDirStructure().then(
+      () => {
+        this.loading = false;
+        console.info('Dir listing complete');
+      },
+      (e) => {
+        this.messageService.add({
+          sticky: true,
+          life: 10000,
+          key: 'tc',
+          severity: 'error',
+          summary: 'Could not load directory structure',
+          detail: e.toString()
+        });
+
+        this.loading = false;
+      }
+    );
   }
 
   selectNode(event) {
@@ -65,6 +64,12 @@ export class DirTreeComponent {
       console.info('subdirectories loaded');
       this.selected.emit(node);
     });
+  }
+
+  get panelHeight() {
+    const dataViewEl = this.el.nativeElement.querySelector('.tree-wrap');
+
+    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 10;
   }
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {
@@ -85,5 +90,5 @@ export class DirTreeComponent {
     });
   }
 
-  constructor(private treeService: TreeService, private messageService: MessageService) {}
+  constructor(private treeService: TreeService, private messageService: MessageService, private el: ElementRef) {}
 }

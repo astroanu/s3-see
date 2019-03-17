@@ -1,19 +1,20 @@
 <p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
-  <div *ngIf="!buckets.length" class="placeholder">
+  <div *ngIf="!buckets.length" class="placeholder ui-corner-all">
     No buckets configured
   </div>
 
-  <div class="p-grid p-align-stretch vertical-container">
-    <div class="p-col-4" *ngFor="let bucket of buckets; let i = index">
-      <p-card class="box box-stretched bucket-box">
+  <div class="buckets-list">
+    <div *ngFor="let bucket of buckets; let i = index">
+      <p-card class="box box-stretched">
+        <span class="actions">
+          <button pButton type="button" class="ui-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
+          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="ui-button-secondary"></button>
+        </span>
+
         <h4>{{ bucket.label }}</h4>
         <p>
           {{ bucket.bucketName }}<br /><I> ({{ bucket.region }})</I>
         </p>
-        <p-footer>
-          <button pButton type="button" class="ui-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
-          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="ui-button-secondary"></button>
-        </p-footer>
       </p-card>
     </div>
   </div>

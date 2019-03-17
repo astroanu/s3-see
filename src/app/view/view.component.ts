@@ -61,6 +61,12 @@ export class ViewComponent {
     this.selectedFile = file;
   }
 
+  get panelHeight() {
+    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+
+    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 60;
+  }
+
   setThumbSize() {
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 
