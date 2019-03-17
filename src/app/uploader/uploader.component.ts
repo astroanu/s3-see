@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { remote } from 'electron';
+import { readdir } from 'fs';
 
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
-  styleUrls: ['./uploader.component.css']
+  styleUrls: ['./uploader.component.scss']
 })
 export class UploaderComponent {
   displayDialog: boolean = false;
@@ -12,11 +13,29 @@ export class UploaderComponent {
   uploadDirectory: string;
   overwriteExisting: boolean = false;
 
-  onDirectorySelect(event) {
-    if (event.target.files) {
-      this.selectedFiles = event.target.files;
-      this.adjustWindowPlacement();
-    }
+  selectDirectory() {
+    remote.dialog.showOpenDialog(
+      {
+        title: 'Select a folder',
+        properties: ['openDirectory']
+      },
+      (paths) => {
+        if (paths) {
+          this.uploadDirectory = paths[0];
+          window.dispatchEvent(new Event('resize'));
+
+          this.readFilesInDirectory();
+        }
+      }
+    );
+  }
+
+  private readFilesInDirectory() {
+    readdir(this.uploadDirectory, (err, files) => {
+      files.forEach((file) => {
+        console.log(file);
+      });
+    });
   }
 
   private adjustWindowPlacement() {
@@ -27,20 +46,6 @@ export class UploaderComponent {
   }
 
   showDialog() {
-    remote.dialog.showOpenDialog(
-      {
-        title: 'Select a folder',
-        properties: ['openDirectory']
-      },
-      (folderPath) => {
-        if (folderPath === undefined) {
-          console.log("You didn't select a folder");
-          return;
-        }
-        console.log(folderPath);
-      }
-    );
-
     this.displayDialog = true;
   }
 }

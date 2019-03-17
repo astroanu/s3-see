@@ -22,6 +22,7 @@ import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
 import { FileService } from '../services/file/file.service';
 import { TreeService } from '../services/tree/tree.service';
+import { UploaderService } from '../services/uploader/uploader.service';
 import { AppComponent } from './app.component';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
@@ -59,7 +60,7 @@ import { ViewComponent } from './view/view.component';
     MomentModule,
     MenubarModule
   ],
-  providers: [MessageService, ConfigService, FileService, TreeService],
+  providers: [MessageService, ConfigService, FileService, TreeService, UploaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

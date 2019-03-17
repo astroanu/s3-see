@@ -9,25 +9,17 @@
   [style]="{ minWidth: '80%' }"
 >
   <div class="options-panel p-grid">
-    <div class="p-col-2">
-      <div class="box">
-        <button pButton label="Select folder" icon="pi pi-folder-open" class="upload-button ui-button-secondary">
-          <input type="file" (change)="onDirectorySelect($event)" type="file" webkitdirectory mozdirectory />
-        </button>
-      </div>
-    </div>
-    <div class="p-col-6">
-      <div class="box">
-        <input type="text" class="upload-directory" pInputText [disabled]="true" [(ngModel)]="uploadDirectory" />
-      </div>
-    </div>
-    <div class="p-col-4 submit-column">
-      <div class="box">
-        <p-button label="Upload" iconPos="left" icon="pi pi-cloud-upload"></p-button>
-      </div>
-      <div class="box checkbox-cell">
-        <p-checkbox label="Overwrite existing files" [(ngModel)]="overwriteExisting"></p-checkbox>
-      </div>
+    <div class="p-col-12">
+      <button
+        (click)="selectDirectory()"
+        pButton
+        title="Select folder"
+        icon="pi pi-folder-open"
+        class="ui-button-secondary select-folder"
+      ></button>
+      <input type="text" class="upload-directory" pInputText [disabled]="true" [(ngModel)]="uploadDirectory" />
+      <p-checkbox label="Overwrite existing files" [(ngModel)]="overwriteExisting"></p-checkbox>
+      <p-button label="Upload" iconPos="left" icon="pi pi-cloud-upload"></p-button>
     </div>
   </div>
 
