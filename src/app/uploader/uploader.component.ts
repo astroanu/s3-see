@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-uploader',
@@ -12,9 +13,7 @@ export class UploaderComponent {
   overwriteExisting: boolean = false;
 
   selectDirectory() {
-    const electron = require('electron');
-
-    electron.remote.dialog.showOpenDialog(
+    this.electronService.remote.dialog.showOpenDialog(
       {
         title: 'Select a folder',
         properties: ['openDirectory']
@@ -42,4 +41,6 @@ export class UploaderComponent {
   showDialog() {
     this.displayDialog = true;
   }
+
+  constructor(private electronService: ElectronService) {}
 }

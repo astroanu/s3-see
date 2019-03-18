@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxElectronModule } from 'ngx-electron';
 import { MomentModule } from 'ngx-moment';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -41,6 +42,7 @@ import { ViewComponent } from './view/view.component';
     BucketManageComponent
   ],
   imports: [
+    NgxElectronModule,
     BrowserModule,
     DialogModule,
     BrowserAnimationsModule,

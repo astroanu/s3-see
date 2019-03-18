@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { ElectronService } from 'ngx-electron';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -20,6 +21,7 @@ describe('UploaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PrettySizePipe, UploaderComponent, ViewComponent, SlideShowComponent],
+      providers: [ElectronService],
       imports: [
         FormsModule,
         ButtonModule,

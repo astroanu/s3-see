@@ -80,6 +80,7 @@
     "electron": "^4.0.8",
     "electron-reload": "^1.4.0",
     "moment": "^2.24.0",
+    "ngx-electron": "^2.1.1",
     "ngx-indexed-db": "^2.0.5",
     "ngx-moment": "^3.4.0",
     "primeflex": "^1.0.0-rc.1",
