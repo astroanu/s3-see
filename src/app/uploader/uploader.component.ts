@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { remote } from 'electron';
-import { readdir } from 'fs';
 
 @Component({
   selector: 'app-uploader',
@@ -30,13 +29,7 @@ export class UploaderComponent {
     );
   }
 
-  private readFilesInDirectory() {
-    readdir(this.uploadDirectory, (err, files) => {
-      files.forEach((file) => {
-        console.log(file);
-      });
-    });
-  }
+  private readFilesInDirectory() {}
 
   private adjustWindowPlacement() {
     this.displayDialog = false;
