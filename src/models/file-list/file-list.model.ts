@@ -6,7 +6,7 @@ import { DirectoryInterface } from '../directory/directory.interface';
 import { Directory } from '../directory/directory.model';
 import { FileListInterface } from '../file-list/file-list.interface';
 import { FileInterface } from '../file/file.interface';
-import { File } from '../file/file.model';
+import { S3File } from '../file/s3-file.model';
 
 export class FileList implements FileListInterface {
   get nextContinuationToken(): string {
@@ -40,7 +40,7 @@ export class FileList implements FileListInterface {
 
       return ext !== fileName;
     }).map((file) => {
-      return new File(this.fileService, file);
+      return new S3File(this.fileService, file);
     });
   }
 

@@ -1,6 +1,6 @@
 import { Config as AWSConfig, S3 } from 'aws-sdk';
 import { DateFormatPipe } from 'ngx-moment';
-import * as path from 'path';
+import { basename } from 'path';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { ConfigService } from '../../services/config/config.service';
@@ -9,7 +9,7 @@ import { FileInterface } from './file.interface';
 
 const config = new ConfigService();
 
-export class File implements FileInterface {
+export class S3File implements FileInterface {
   private thumbUrl: string = null;
   private fullUrl: string = null;
 
@@ -31,7 +31,7 @@ export class File implements FileInterface {
   }
 
   get fileName(): string {
-    return path.basename(this.key);
+    return basename(this.key);
   }
 
   private getSignedUrl(key: string) {
