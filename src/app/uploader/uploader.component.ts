@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { readdir } from 'file-system';
 import { ElectronService } from 'ngx-electron';
 
 @Component({
@@ -29,7 +30,13 @@ export class UploaderComponent {
     );
   }
 
-  private readFilesInDirectory() {}
+  private readFilesInDirectory() {
+    readdir(this.uploadDirectory, (err, files) => {
+      files.forEach((file) => {
+        console.log(file);
+      });
+    });
+  }
 
   private adjustWindowPlacement() {
     this.displayDialog = false;

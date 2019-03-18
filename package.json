@@ -79,6 +79,7 @@
     "aws-sdk": "^2.418.0",
     "electron": "^4.0.8",
     "electron-reload": "^1.4.0",
+    "file-system": "^2.2.2",
     "moment": "^2.24.0",
     "ngx-electron": "^2.1.1",
     "ngx-indexed-db": "^2.0.5",
@@ -89,5 +90,8 @@
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
+  },
+  "browser": {
+    "fs": false
   }
 }
