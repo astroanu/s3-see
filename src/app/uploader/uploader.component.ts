@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { remote } from 'electron';
 
 @Component({
   selector: 'app-uploader',
@@ -13,7 +12,9 @@ export class UploaderComponent {
   overwriteExisting: boolean = false;
 
   selectDirectory() {
-    remote.dialog.showOpenDialog(
+    const electron = require('electron');
+
+    electron.remote.dialog.showOpenDialog(
       {
         title: 'Select a folder',
         properties: ['openDirectory']
