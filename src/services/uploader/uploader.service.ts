@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { lstatSync, readdirSync } from 'file-system';
-import { join } from 'path';
+import { recurseSync } from 'file-system';
 
 import { LocalFile } from '../../models/file/local-file.model';
 
@@ -9,34 +8,31 @@ import { LocalFile } from '../../models/file/local-file.model';
 })
 export class UploaderService {
   private files = [];
+  private options: UploadOptions = {
+    prefix: null,
+    suffix: null,
+    flattern: false,
+    overwrite: true,
+    toLowerCase: true,
+    noSpaces: true
+  };
 
-  createFileTree() {
-    return this.processDirectory(this.uploadDirectory);
+  setUploadOptions(options: UploadOptions) {
+    this.options = options;
   }
 
-  private processDirectory(directory: string) {
+  createFileTree() {
+    this.files = [];
     return new Promise((resolve, reject) => {
-      const items = readdirSync(directory);
-
-      items
-        .filter((item) => {
-          return lstatSync(join(directory, item)).isFile();
-        })
-        .forEach((item) => {
-          this.files.push(new LocalFile(this.uploadDirectory, item));
-        });
+      recurseSync(this.uploadDirectory, (filepath, relative, filename) => {
+        if (filename) {
+          const file = new LocalFile(relative, filepath);
+          file.setUploadOptions(this.options);
+          this.files.push(file);
+        }
+      });
 
       resolve(this.files);
-
-      return Promise.all(
-        items
-          .filter((item) => {
-            return lstatSync(join(directory, item)).isDirectory();
-          })
-          .map((item) => {
-            return this.processDirectory(join(directory, item));
-          })
-      );
     });
   }
 
@@ -44,3 +40,12 @@ export class UploaderService {
     this.createFileTree();
   }
 }
+
+export type UploadOptions = {
+  prefix: string | null;
+  suffix: string | null;
+  flattern: boolean;
+  overwrite: boolean;
+  toLowerCase: boolean;
+  noSpaces: boolean;
+};

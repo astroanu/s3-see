@@ -26,13 +26,21 @@ export class ViewComponent {
   ];
 
   thumbH: number = 200;
+
   thumbW: number = 25;
+
   thumbMultiplier: number = 7;
+
   filesShown: Array<FileInterface> = [];
+
   listView: boolean = false;
+
   loading: boolean = false;
+
   selectedFile: FileInterface = null;
+
   filesShownTotalSize = 0;
+
   currentDirectory: DirectoryInterface;
 
   @Input() set currentNode(node: DirectoryInterface) {

@@ -41,7 +41,7 @@
   *ngIf="displayForm && itemForm"
 >
   <div class="form">
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="itemForm">
       <div class="p-grid">
         <label class="p-col-3">Label</label>
         <input class="p-col-6" type="text" required pInputText formControlName="label" />
