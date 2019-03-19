@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
 
@@ -10,6 +10,8 @@ import { UploaderService } from '../../services/uploader/uploader.service';
   styleUrls: ['./uploader.component.scss']
 })
 export class UploaderComponent {
+  @Output() uploadQueued = new EventEmitter<any>();
+
   displayDialog: boolean = false;
 
   displayOptions: boolean = false;
@@ -82,7 +84,10 @@ export class UploaderComponent {
     this.filesSelectedTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
   }
 
-  queueUpload() {}
+  queueUpload() {
+    this.uploadQueued.emit(this.uploaderService);
+    this.hideDialog();
+  }
 
   showOptions() {
     this.displayOptions = true;
@@ -116,6 +121,10 @@ export class UploaderComponent {
     this.clearVars();
 
     this.displayDialog = true;
+  }
+
+  hideDialog() {
+    this.displayDialog = false;
   }
 
   clearVars() {

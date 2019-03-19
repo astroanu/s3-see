@@ -41,6 +41,10 @@ export class AppComponent {
     }
   ];
 
+  uploadQueued(queue: any) {
+    console.log(queue);
+  }
+
   refreshTree() {
     this.view.resetFilesShown();
     this.dirTree.initializeDirPane();
