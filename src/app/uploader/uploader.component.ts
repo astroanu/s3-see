@@ -113,12 +113,16 @@ export class UploaderComponent {
   }
 
   showDialog() {
+    this.clearVars();
+
+    this.displayDialog = true;
+  }
+
+  clearVars() {
     this.selectedFiles = null;
     this.selectedFile = null;
     this.files = null;
     this.uploadDirectory = null;
-
-    this.displayDialog = true;
   }
 
   constructor(private electronService: ElectronService) {}
