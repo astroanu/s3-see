@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ConfigService } from '../services/config/config.service';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { QueueComponent } from './queue/queue.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
 
@@ -16,6 +17,7 @@ export class AppComponent {
   @ViewChild(ViewComponent) view: ViewComponent;
   @ViewChild(UploaderComponent) uploader: UploaderComponent;
   @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
+  @ViewChild(QueueComponent) queueComponent: QueueComponent;
 
   currentNode: DocumentEvent;
   currentBucket;
@@ -41,8 +43,8 @@ export class AppComponent {
     }
   ];
 
-  uploadQueued(queue: any) {
-    console.log(queue);
+  uploadQueued(job: any) {
+    this.queueComponent.addJob(job);
   }
 
   refreshTree() {

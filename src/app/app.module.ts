@@ -12,7 +12,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -27,6 +29,7 @@ import { UploaderService } from '../services/uploader/uploader.service';
 import { AppComponent } from './app.component';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { QueueComponent } from './queue/queue.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
@@ -39,7 +42,8 @@ import { ViewComponent } from './view/view.component';
     SlideShowComponent,
     PrettySizePipe,
     UploaderComponent,
-    BucketManageComponent
+    BucketManageComponent,
+    QueueComponent
   ],
   imports: [
     NgxElectronModule,
@@ -49,6 +53,7 @@ import { ViewComponent } from './view/view.component';
     ToolbarModule,
     SliderModule,
     CheckboxModule,
+    SidebarModule,
     CardModule,
     InputTextModule,
     ReactiveFormsModule,
@@ -57,6 +62,7 @@ import { ViewComponent } from './view/view.component';
     FormsModule,
     DropdownModule,
     ProgressSpinnerModule,
+    ProgressBarModule,
     TreeModule,
     TableModule,
     MomentModule,

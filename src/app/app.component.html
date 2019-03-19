@@ -14,5 +14,6 @@
     <app-view [currentNode]="currentNode"></app-view>
   </div>
 </div>
+<app-queue></app-queue>
 <app-uploader (uploadQueued)="uploadQueued($event)"></app-uploader>
 <app-bucket-manage (bucketsUpdated)="initializeBucktesList()"></app-bucket-manage>
