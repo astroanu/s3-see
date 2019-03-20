@@ -8,11 +8,11 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
-  - npm install -g electron electron-builder wait-on typescript
+  - npm install -g electron electron-builder wait-on typescript nyc coveralls
   - npm install typescript@3.1.6 -g --save-exact
   - npm set progress=false
   - npm install
 script:
   - ng lint
-  - npm run test
+  - nyc npm test && nyc report --reporter=text-lcov | coveralls
   - npm run build

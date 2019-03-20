@@ -39,6 +39,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.9.5",
     "codelyzer": "~4.5.0",
+    "coveralls": "^3.0.3",
     "electron": "^4.0.8",
     "electron-reload": "^1.4.0",
     "intl": "^1.2.5",
