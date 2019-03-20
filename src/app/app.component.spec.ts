@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { DropdownModule } from 'primeng/dropdown';
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, PrettySizePipe, DirTreeComponent, ViewComponent, UploaderComponent],
       providers: [MessageService, ElectronService],
-      imports: [FormsModule, DropdownModule, MenubarModule, ToastModule],
+      imports: [FormsModule, ReactiveFormsModule, DropdownModule, MenubarModule, ToastModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));

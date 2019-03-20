@@ -3,7 +3,9 @@ import { recurseSync } from 'file-system';
 
 import { LocalFile } from '../../models/file/local-file.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UploaderService {
   private files = [];
   private options: UploadOptions = {
