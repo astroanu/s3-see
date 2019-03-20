@@ -37,24 +37,26 @@ export class DirTreeComponent {
     this.folderStructor = {};
     this.loading = true;
 
-    this.getDirStructure().then(
-      () => {
-        this.loading = false;
-        console.info('Dir listing complete');
-      },
-      (e) => {
-        this.messageService.add({
-          sticky: true,
-          life: 10000,
-          key: 'tc',
-          severity: 'error',
-          summary: 'Could not load directory structure',
-          detail: e.toString()
-        });
+    this.getDirStructure()
+      .then(
+        () => {
+          this.loading = false;
+          console.info('Dir listing complete');
+        },
+        (e) => {
+          this.messageService.add({
+            sticky: true,
+            life: 10000,
+            key: 'tc',
+            severity: 'error',
+            summary: 'Could not load directory structure',
+            detail: e.toString()
+          });
 
-        this.loading = false;
-      }
-    );
+          this.loading = false;
+        }
+      )
+      .catch((e) => console.log(e));
   }
 
   selectNode(event) {
@@ -74,19 +76,25 @@ export class DirTreeComponent {
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {
     return new Promise((resolve, reject) => {
-      return this.treeService.listDirectories(prefix, NextContinuationToken).then((list: FileListInterface) => {
-        if (list.hasDirectories) {
-          list.directories.forEach((directory: DirectoryInterface) => {
-            this.fileTree.push(directory);
-          });
-        }
+      return this.treeService
+        .listDirectories(prefix, NextContinuationToken)
+        .then(
+          (list: FileListInterface) => {
+            if (list.hasDirectories) {
+              list.directories.forEach((directory: DirectoryInterface) => {
+                this.fileTree.push(directory);
+              });
+            }
 
-        if (list.hasMore) {
-          return this.getDirStructure(prefix, list.nextContinuationToken);
-        } else {
-          resolve();
-        }
-      }, reject);
+            if (list.hasMore) {
+              return this.getDirStructure(prefix, list.nextContinuationToken);
+            } else {
+              resolve();
+            }
+          },
+          () => reject()
+        )
+        .catch(() => reject());
     });
   }
 

@@ -13,11 +13,16 @@ export class DbService {
 
   get(id: string) {
     return new Promise((resolve, reject) => {
-      return this.getDb().then((db: any) => {
-        return db.getByKey(this.storeName, id).then((result) => {
-          resolve(result ? result : null);
-        });
-      });
+      return this.getDb()
+        .then((db: any) => {
+          return db
+            .getByKey(this.storeName, id)
+            .then((result) => {
+              resolve(result ? result : null);
+            })
+            .catch(() => reject());
+        })
+        .catch(() => reject());
     });
   }
 
@@ -28,9 +33,15 @@ export class DbService {
           value[this.primaryKey] = id;
 
           if (result) {
-            return db.update(this.storeName, value).then(() => resolve());
+            return db
+              .update(this.storeName, value)
+              .then(() => resolve())
+              .catch(() => reject());
           } else {
-            return db.add(this.storeName, value).then(() => resolve());
+            return db
+              .add(this.storeName, value)
+              .then(() => resolve())
+              .catch(() => reject());
           }
         });
       });

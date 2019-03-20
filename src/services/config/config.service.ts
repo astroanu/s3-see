@@ -16,43 +16,50 @@ export class ConfigService implements ConfigServiceInterface {
 
   public getBucketCredentials(bucketName: string): Promise<object> {
     return new Promise((resolve, reject) => {
-      return this.getBucket(bucketName).then((bucket) => {
-        if (bucket) {
-          resolve(bucket.getCredentials());
-        } else {
-          reject();
-        }
-      });
+      return this.getBucket(bucketName)
+        .then((bucket) => {
+          if (bucket) {
+            resolve(bucket.getCredentials());
+          } else {
+            reject();
+          }
+        })
+        .catch(() => reject());
     });
   }
 
   public getBucket(bucketName: string): Promise<Bucket> {
     return new Promise((resolve, reject) => {
-      return this.getBuckets().then((buckets: Array<Bucket>) => {
-        const currentBucket = buckets.filter((bucket: Bucket) => {
-          return bucket.bucketName === bucketName;
-        });
+      return this.getBuckets()
+        .then((buckets: Array<Bucket>) => {
+          const currentBucket = buckets.filter((bucket: Bucket) => {
+            return bucket.bucketName === bucketName;
+          });
 
-        if (currentBucket.length) {
-          resolve(currentBucket[0]);
-        } else {
-          resolve();
-        }
-      });
+          if (currentBucket.length) {
+            resolve(currentBucket[0]);
+          } else {
+            resolve();
+          }
+        })
+        .catch(() => reject());
     });
   }
 
   public getBuckets(): Promise<Array<Bucket>> {
     return new Promise((resolve, reject) => {
-      return this.db.get('buckets').then((buckets: Array<object>) => {
-        return resolve(
-          buckets
-            ? buckets.map((config: BucketConfig) => {
-                return new Bucket(config);
-              })
-            : []
-        );
-      });
+      return this.db
+        .get('buckets')
+        .then((buckets: Array<object>) => {
+          return resolve(
+            buckets
+              ? buckets.map((config: BucketConfig) => {
+                  return new Bucket(config);
+                })
+              : []
+          );
+        })
+        .catch(() => reject());
     });
   }
 
