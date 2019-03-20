@@ -70,6 +70,7 @@
     "@angular/platform-browser-dynamic": "^7.2.9",
     "@angular/router": "^7.2.9",
     "@types/filesystem": "0.0.29",
+    "aws-sdk": "^2.424.0",
     "file-system": "^2.2.2",
     "moment": "^2.24.0",
     "ngx-electron": "^2.1.1",
