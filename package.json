@@ -39,11 +39,6 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.9.5",
     "codelyzer": "~4.5.0",
-    "dotenv": "^6.2.0",
-    "gulp": "^4.0.0",
-    "gulp-msg": "0.0.4",
-    "gulp-rename": "^1.4.0",
-    "gulpclass": "^0.2.0",
     "intl": "^1.2.5",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -52,18 +47,16 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "progress": "^2.0.3",
-    "promise.bar": "^0.1.5",
     "protractor": "~5.4.0",
     "recursive-readdir": "^2.2.2",
-    "sharp": "^0.21.3",
-    "through2": "^3.0.0",
     "ts-loader": "^5.3.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typemoq": "^2.1.0",
     "typescript": "^3.2.4",
-    "yargs": "^13.2.1"
+    "sharp": "^0.21.3",
+    "electron": "^4.0.8",
+    "electron-reload": "^1.4.0"
   },
   "dependencies": {
     "@angular/animations": "^7.2.8",
@@ -75,10 +68,7 @@
     "@angular/platform-browser": "^7.2.9",
     "@angular/platform-browser-dynamic": "^7.2.9",
     "@angular/router": "^7.2.9",
-    "aws-lambda": "^0.1.2",
-    "aws-sdk": "^2.418.0",
-    "electron": "^4.0.8",
-    "electron-reload": "^1.4.0",
+    "@types/filesystem": "0.0.29",
     "file-system": "^2.2.2",
     "moment": "^2.24.0",
     "ngx-electron": "^2.1.1",
@@ -93,5 +83,24 @@
   },
   "browser": {
     "fs": false
+  },
+  "build": {
+    "appId": "com.collejo.s3see",
+    "productName": "S3 See",
+    "win": {
+      "icon": "s3see.ico",
+      "target": {
+        "target": "nsis"
+      }
+    },
+    "nsis": {
+      "installerIcon": "s3see.ico",
+      "deleteAppDataOnUninstall": true
+    },
+    "files": [
+      "*.js",
+      "dist",
+      "node_modules"
+    ]
   }
 }
