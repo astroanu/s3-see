@@ -5,6 +5,7 @@ import { ElectronService } from 'ngx-electron';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
@@ -18,7 +19,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, PrettySizePipe, DirTreeComponent, ViewComponent, UploaderComponent],
       providers: [MessageService, ElectronService],
-      imports: [FormsModule, ReactiveFormsModule, DropdownModule, MenubarModule, ToastModule],
+      imports: [FormsModule, ReactiveFormsModule, SidebarModule, DropdownModule, MenubarModule, ToastModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
