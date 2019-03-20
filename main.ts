@@ -2,7 +2,8 @@ import { app, BrowserWindow, screen as electronScreen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
+let win: BrowserWindow | null;
+let serve: boolean;
 const args = process.argv.slice(1);
 serve = args.some((val) => val === '--serve');
 

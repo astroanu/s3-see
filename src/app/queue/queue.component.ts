@@ -13,6 +13,4 @@ export class QueueComponent {
   addJob(job: UploaderService) {
     this.jobs.push(job);
   }
-
-  constructor() {}
 }

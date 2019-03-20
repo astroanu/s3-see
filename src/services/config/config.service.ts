@@ -11,7 +11,7 @@ export class ConfigService implements ConfigServiceInterface {
   private db: DbService;
 
   public updateBucketConfig(buckets: Array<object>) {
-    return this.db.update('buckets', buckets).then(() => {});
+    return this.db.update('buckets', buckets).then();
   }
 
   public getBucketCredentials(bucketName: string): Promise<object> {
