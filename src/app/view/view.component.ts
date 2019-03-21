@@ -7,7 +7,7 @@ import { FileService } from '../../services/file/file.service';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  styleUrls: ['./view.component.scss']
 })
 export class ViewComponent {
   columns: Array<object> = [
@@ -26,13 +26,21 @@ export class ViewComponent {
   ];
 
   thumbH: number = 200;
+
   thumbW: number = 25;
+
   thumbMultiplier: number = 7;
+
   filesShown: Array<FileInterface> = [];
+
   listView: boolean = false;
+
   loading: boolean = false;
+
   selectedFile: FileInterface = null;
+
   filesShownTotalSize = 0;
+
   currentDirectory: DirectoryInterface;
 
   @Input() set currentNode(node: DirectoryInterface) {
@@ -53,12 +61,27 @@ export class ViewComponent {
     }
   }
 
+  @Input() set files(files: any) {
+    if (files) {
+      this.resetFilesShown();
+      this.setThumbSize();
+
+      this.filesShown = files;
+    }
+  }
+
   onZoomChange() {
     this.setThumbSize();
   }
 
   setSelectedFile(file) {
     this.selectedFile = file;
+  }
+
+  get panelHeight() {
+    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+
+    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 60;
   }
 
   setThumbSize() {

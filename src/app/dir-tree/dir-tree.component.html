@@ -1,7 +1,11 @@
-<p-tree
-  class="dir-tree"
-  [value]="fileTree"
-  selectionMode="single"
-  (onNodeSelect)="selectNode($event)"
-  [loading]="loading"
-></p-tree>
+<div class="tree-wrap ui-corner-all" [style.height.px]="panelHeight">
+  <p-tree
+    class="dir-tree"
+    [value]="fileTree"
+    selectionMode="single"
+    (onNodeSelect)="selectNode($event)"
+    [loading]="loading"
+  ></p-tree>
+</div>
+
+<p-toast [style]="{ marginTop: '80px' }" position="bottom-right" key="tc"></p-toast>

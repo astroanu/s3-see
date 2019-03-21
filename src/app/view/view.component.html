@@ -1,21 +1,22 @@
 <div class="ui-dataview ui-widget ui-dataview-grid" (window:resize)="setThumbSize()">
-  <p-toolbar>
+  <p-toolbar class="toolbar">
     <div class="ui-toolbar-group-left">
       <span class="control-block" *ngIf="currentDirectory">
         <h4>{{ currentDirectory.label }}</h4>
       </span>
       <span class="control-block">
-        {{ filesShown.length }} Files (<i>{{ filesShownTotalSize | prettySize }}</i
+        {{ filesShown.length }} Items (<i>{{ filesShownTotalSize | prettySize }}</i
         >)
       </span>
     </div>
 
-    <div class="ui-toolbar-group-right">
+    <div class="toolbar ui-toolbar-group-right">
       <span class="control-block">
         <i class="pi pi-plus-circle"></i>
         <span class="zoom-controller">
           <p-slider
-            (onChange)="onZoomChange($event)"
+            title="Thumbnail size"
+            (onChange)="onZoomChange()"
             [(ngModel)]="thumbMultiplier"
             [step]="1"
             [min]="4"
@@ -24,21 +25,22 @@
         </span>
         <i class="pi pi-minus-circle"></i>
       </span>
-      <p-button icon="pi pi-bars" (onClick)="viewList()" *ngIf="!listView"></p-button>
-      <p-button icon="pi pi-th-large" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
+      <p-button icon="pi pi-bars" title="List View" (onClick)="viewList()" *ngIf="!listView"></p-button>
+      <p-button icon="pi pi-th-large" title="Thumbnail View" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
     </div>
   </p-toolbar>
 
-  <div *ngIf="loading" class="loading-bar ui-dataview-content ui-widget-content">
+  <div *ngIf="loading" class="loading-bar content-area ui-dataview-content ui-widget-content">
     <p-progressSpinner></p-progressSpinner>
   </div>
 
-  <div *ngIf="!filesShown.length && !loading" class="placeholder">
-    No files to show
+  <div *ngIf="!filesShown.length && !loading" class="placeholder ui-corner-all">
+    No items to show
   </div>
 
   <div *ngIf="listView && filesShown.length">
     <p-table
+      class="content-table"
       [resizableColumns]="true"
       dataKey="key"
       selectionMode="single"
@@ -65,7 +67,11 @@
     </p-table>
   </div>
 
-  <div *ngIf="!listView && filesShown.length" class="ui-dataview-content ui-widget-content">
+  <div
+    *ngIf="!listView && filesShown.length"
+    [style.height.px]="panelHeight"
+    class="content-area ui-dataview-content ui-widget-content ui-corner-all"
+  >
     <div class="ui-md-12">
       <div
         *ngFor="let file of filesShown"

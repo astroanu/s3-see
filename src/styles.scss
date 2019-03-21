@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+//primeng
+@import url('../node_modules/primeng/resources/primeng.css');
+@import url('../node_modules/primeicons/primeicons.css');
+@import url('../node_modules/primeflex/primeflex.css');
+@import url('../node_modules/primeng/resources/themes/nova-light/theme.css');
+
+body {
+  overflow: hidden;
+}
+
+*,
+*::after,
+*::before {
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
+}
+
+.placeholder {
+  padding: 60px;
+  text-align: center;
+  border: thin solid #c8c8c8;
+  background-image: linear-gradient(
+    45deg,
+    #f0f0f0 25%,
+    #ffffff 25%,
+    #ffffff 50%,
+    #f0f0f0 50%,
+    #f0f0f0 75%,
+    #ffffff 75%,
+    #ffffff 100%
+  );
+  background-size: 22.63px 22.63px;
+}
+
+.form {
+  margin: 10px;
+
+  label,
+  input {
+    margin-bottom: 15px;
+  }
+
+  .form-control-feedback {
+    font-size: 10px;
+    color: #8d3d3d;
+    padding: 9px 0 0 30px;
+  }
+}

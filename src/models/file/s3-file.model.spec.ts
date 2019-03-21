@@ -1,11 +1,11 @@
+import { TestBed } from '@angular/core/testing';
 import { S3 } from 'aws-sdk';
 import { DateFormatPipe } from 'ngx-moment';
-import { TestBed } from '@angular/core/testing';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { FileService } from '../../services/file/file.service';
-import { File } from './file.model';
 import { FileInterface } from './file.interface';
+import { S3File } from './s3-file.model';
 
 describe('File', () => {
   let s3Object: S3.Types.Object;
@@ -25,7 +25,7 @@ describe('File', () => {
       LastModified: date
     };
 
-    file = new File(service, s3Object);
+    file = new S3File(service, s3Object);
   });
 
   it('should create an instance', () => {

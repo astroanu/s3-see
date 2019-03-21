@@ -1,13 +1,13 @@
 import { Bucket } from './config.service';
 
 export interface ConfigServiceInterface {
-  defaultBucket: string;
-
   getBucketCredentials(bucketName: string): object;
 
-  getBucket(bucketName: string): Bucket;
+  getBucket(bucketName: string): Promise<Bucket>;
 
-  buckets: Array<Bucket>;
+  getBuckets(): Promise<Array<Bucket>>;
 
   appName: string;
+
+  defaultBucket: string;
 }

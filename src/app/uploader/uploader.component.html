@@ -1,15 +1,122 @@
-<p-dialog header="Upload images" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
-  <input (change)="onDirectorySelect($event)" type="file" webkitdirectory mozdirectory />
+<p-dialog
+  [maximizable]="true"
+  header="Upload files"
+  [blockScroll]="true"
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [closable]="true"
+  [responsive]="true"
+  (onHide)="clearVars()"
+  [style]="{ minWidth: '60%' }"
+>
+  <div class="options-panel p-grid">
+    <div class="p-col-12">
+      <div class="ui-inputgroup">
+        <button
+          (click)="selectDirectory()"
+          pButton
+          title="Select folder"
+          icon="pi pi-folder-open"
+          class="ui-button-secondary"
+        ></button>
+        <input class="upload-directory" type="text" pInputText [disabled]="true" [(ngModel)]="uploadDirectory" />
+        <button pButton (click)="queueUpload()" label="Upload" iconPos="left" icon="pi pi-cloud-upload"></button>
+        <button
+          pButton
+          (click)="showOptions()"
+          title="Options"
+          class="ui-button-secondary"
+          iconPos="left"
+          icon="pi pi-cog"
+        ></button>
+      </div>
+      {{ selectedFiles ? selectedFiles.length : 0 }} files ({{ filesSelectedTotalSize | prettySize }})
+    </div>
+  </div>
+
+  <p-table
+    *ngIf="files"
+    class="content-table"
+    [resizableColumns]="true"
+    dataKey="key"
+    selectionMode="single"
+    [value]="files"
+    [columns]="columns"
+    autoLayout="true"
+    selectionMode="multiple"
+    [(selection)]="selectedFiles"
+    (onRowSelect)="updateFileSize()"
+    (onHeaderCheckboxToggle)="updateFileSize()"
+    (onRowUnselect)="updateFileSize()"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3em">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th style="width:4em"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        </td>
+        <td *ngFor="let col of columns" class="ui-resizable-column">
+          {{ rowData[col.field] }}
+        </td>
+        <td>
+          <button pButton title="Preview" icon="pi pi-search" (click)="previewFile(rowData)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <app-slide-show [(file)]="selectedFile"></app-slide-show>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="displayOptions"
+  [style]="{ width: '500px' }"
+  [modal]="true"
+  header="Upload options"
+  [closable]="true"
+  [responsive]="true"
+>
+  <div class="form">
+    <form [formGroup]="optionsForm">
+      <div class="p-grid">
+        <label class="p-col-3">Prefix</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="prefix" />
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Suffix</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="suffix" />
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Overwrite</label>
+        <p-checkbox class="p-col-6" binary="true" formControlName="overwrite"></p-checkbox>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Flattern</label>
+        <p-checkbox class="p-col-6" binary="true" formControlName="flattern"></p-checkbox>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">ToLowerCase</label>
+        <p-checkbox class="p-col-6" binary="true" formControlName="toLowerCase"></p-checkbox>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Remove Spaces</label>
+        <p-checkbox class="p-col-6" binary="true" formControlName="noSpaces"></p-checkbox>
+      </div>
+    </form>
+  </div>
 
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="display = false" label="Yes"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-close"
-      (click)="display = false"
-      label="No"
-      class="ui-button-secondary"
-    ></button>
+    <button type="button" pButton icon="pi pi-check" (click)="applyOptions()" label="Apply"></button>
   </p-footer>
 </p-dialog>

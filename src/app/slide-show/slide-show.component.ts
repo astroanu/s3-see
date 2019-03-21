@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-slide-show',
   templateUrl: './slide-show.component.html',
-  styleUrls: ['./slide-show.component.css']
+  styleUrls: ['./slide-show.component.scss']
 })
-export class SlideShowComponent implements OnInit {
-  private currentFile;
+export class SlideShowComponent {
+  currentFile;
   isLoading: boolean = false;
 
   @Input() set file(file: any) {
@@ -16,8 +16,4 @@ export class SlideShowComponent implements OnInit {
   hideOverlay() {
     this.currentFile = null;
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

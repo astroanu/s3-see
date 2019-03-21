@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { IMock, Mock } from 'typemoq';
 
+import { Bucket, BucketConfig, ConfigService } from '../config/config.service';
+import { ConfigServiceInterface } from '../config/config.service.interface';
 import { FileService } from './file.service';
 import { FileServiceInterface } from './file.service.interface';
-import { ConfigService, Bucket, BucketConfig } from '../config/config.service';
-import { ConfigServiceInterface } from '../config/config.service.interface';
 
 describe('FileService', () => {
   let service: FileServiceInterface;
@@ -28,9 +28,17 @@ describe('FileService', () => {
 
     const bucket = new Bucket(testBucketConfig);
 
-    moqConfigService.setup((m) => m.buckets).returns(() => [bucket]);
+    moqConfigService
+      .setup((m) => m.getBuckets())
+      .returns(() => {
+        return Promise.resolve([bucket]);
+      });
 
-    moqConfigService.setup((m) => m.getBucketCredentials('test')).returns(() => bucket.getCredentials());
+    moqConfigService
+      .setup((m) => m.getBucketCredentials('test'))
+      .returns(() => {
+        return Promise.resolve(bucket.getCredentials());
+      });
 
     TestBed.overrideProvider(ConfigService, { useValue: moqConfigService.object });
 
