@@ -8,6 +8,7 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
+  - git clone git://source.winehq.org/git/wine.git && cd wine && sudo apt-get update && sudo apt-get install build-essential && ./configure && ./make && make install
   - npm install -g electron electron-builder wait-on typescript nyc codecov
   - npm install typescript@3.1.6 -g --save-exact
   - npm set progress=false
