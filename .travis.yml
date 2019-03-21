@@ -10,7 +10,7 @@ addons:
   chrome: stable
 before_script:
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi'
 install:
   - npm install -g electron electron-builder wait-on typescript nyc codecov
   - npm install typescript@3.1.6 -g --save-exact
@@ -21,4 +21,6 @@ script:
   - ng test --watch=false --code-coverage
   - codecov
   - npm run build
-  - electron-builder build --linux
+  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then electron-builder build --linux ; fi'
+  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then electron-builder build --windows ; fi'
+  - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then electron-builder build --mac ; fi'
