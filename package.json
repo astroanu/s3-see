@@ -94,7 +94,10 @@
       "icon": "s3see.ico",
       "target": {
         "target": "nsis"
-      }
+      },
+      "publish": [
+        "github"
+      ]
     },
     "nsis": {
       "installerIcon": "s3see.ico",
