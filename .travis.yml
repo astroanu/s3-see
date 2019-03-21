@@ -16,5 +16,5 @@ script:
   - ng lint
   - ng test --watch=false --code-coverage
   - codecov
-  - ng build
+  - npm run build
   - electron-builder build --windows
