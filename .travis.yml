@@ -21,7 +21,7 @@ script:
   - ng lint
   - ng test --watch=false --code-coverage
   - codecov
-  - npm run build
-  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then electron-builder build --linux ; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then electron-builder build --windows ; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then electron-builder build --mac ; fi'
+  - npm run build:prod
+  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux ; fi'
+  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm run electron:windows ; fi'
+  - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac ; fi'

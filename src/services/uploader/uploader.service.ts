@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { recurseSync } from 'file-system';
+import * as fs from 'fs';
 
 import { LocalFile } from '../../models/file/local-file.model';
 
@@ -21,24 +21,27 @@ export class UploaderService {
     this.options = options;
   }
 
-  createFileTree() {
-    this.files = [];
-    return new Promise((resolve, reject) => {
-      recurseSync(this.uploadDirectory, (filepath, relative, filename) => {
-        if (filename) {
-          const file = new LocalFile(relative, filepath);
-          file.setUploadOptions(this.options);
-          this.files.push(file);
-        }
-      });
+  walk(dir: string) {
+    let results = [];
+    fs.readdirSync(dir).forEach((file) => {
+      file = dir + '/' + file;
+      const stat = fs.statSync(file);
+      if (stat && stat.isDirectory()) {
+        results = results.concat(this.walk(file));
+      } else {
+        results.push(new LocalFile(file.replace(`${this.uploadDirectory}/`, ''), file));
+      }
+    });
+    return results;
+  }
 
-      resolve(this.files);
+  createFileTree() {
+    return new Promise((resolve, reject) => {
+      resolve(this.walk(this.uploadDirectory));
     });
   }
 
-  constructor(private uploadDirectory: string) {
-    this.createFileTree();
-  }
+  constructor(private uploadDirectory: string) {}
 }
 
 export type UploadOptions = {

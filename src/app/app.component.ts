@@ -56,7 +56,7 @@ export class AppComponent {
     this.currentNode = event;
   }
 
-  private initializeBucktesList() {
+  initializeBucktesList() {
     return this.config
       .getBuckets()
       .then(

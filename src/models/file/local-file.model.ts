@@ -1,10 +1,10 @@
-import { readFileSync, statSync } from 'file-system';
+import * as fs from 'fs';
 import { DateFormatPipe } from 'ngx-moment';
 import { basename } from 'path';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
-import { UploadOptions } from '../../services/uploader/uploader.service';
 import { FileInterface } from './file.interface';
+import { UploadOptions } from '../../services/uploader/uploader.service';
 
 export class LocalFile implements FileInterface {
   private stat = null;
@@ -30,7 +30,7 @@ export class LocalFile implements FileInterface {
       }
 
       if (this.uploadOptions.noSpaces) {
-        destKey = destKey.replace(' ', '');
+        destKey = destKey.replace(' ', '_');
       }
 
       if (this.uploadOptions.toLowerCase) {
@@ -41,7 +41,7 @@ export class LocalFile implements FileInterface {
   }
 
   get thumbUrl(): string {
-    return 'data:image/jpeg;base64,' + readFileSync(this.filePath, 'base64');
+    return 'data:image/jpeg;base64,' + fs.readFileSync(this.filePath, 'base64');
   }
 
   get fullUrl(): string {
@@ -72,6 +72,6 @@ export class LocalFile implements FileInterface {
   }
 
   constructor(private relativePath: string, private filePath: string) {
-    this.stat = statSync(this.filePath);
+    this.stat = fs.statSync(this.filePath.replace('/', '\\'));
   }
 }
