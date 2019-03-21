@@ -1,7 +1,7 @@
 {
   "name": "s3see",
   "description": "AWS S3 media viewer",
-  "version": "2.0.0",
+  "version": "v2.0.1",
   "author": {
     "name": "Anuradha Jayathilaka",
     "email": "anuradha@codebreez.com",
