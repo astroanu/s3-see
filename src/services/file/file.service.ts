@@ -13,20 +13,22 @@ export class FileService implements FileServiceInterface {
   private bucketName = this.config.defaultBucket;
   private s3: AWS.S3;
 
-  constructor(private config: ConfigService) {
-    this.initializeS3Object();
-  }
+  constructor(private config: ConfigService) {}
 
   initializeS3Object(): Promise<void> {
     return new Promise((resolve, reject) => {
-      return this.config
-        .getBucketCredentials(this.bucketName)
+      const credentials = this.config.getBucketCredentials(this.bucketName);
+
+      if (!credentials) {
+        reject();
+      }
+      return credentials
         .then(
-          (credentials) => {
-            this.s3 = new AWS.S3(new AWS.Config(credentials));
+          (creds) => {
+            this.s3 = new AWS.S3(new AWS.Config(creds));
             resolve();
           },
-          (e) => console.log(e)
+          () => console.log('initializeS3Object failed')
         )
         .catch(() => reject());
     });

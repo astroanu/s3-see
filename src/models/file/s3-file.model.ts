@@ -49,22 +49,28 @@ export class S3File implements FileInterface {
   }
 
   private createSignedUrls() {
-    config.getBucketCredentials(this.fileService.getBucketName()).then((credentials) => {
-      this.s3 = new S3(new AWSConfig(credentials));
+    config
+      .getBucketCredentials(this.fileService.getBucketName())
+      .then((credentials) => {
+        this.s3 = new S3(new AWSConfig(credentials));
 
-      if (!this.key.includes('_thumbs')) {
-        const ext = this.fileName.split('.').pop();
-        const thumbKey = this.key.replace(this.fileName, `_thumbs/${this.fileName.toLowerCase().replace(ext, 'jpg')}`);
+        if (!this.key.includes('_thumbs')) {
+          const ext = this.fileName.split('.').pop();
+          const thumbKey = this.key.replace(
+            this.fileName,
+            `_thumbs/${this.fileName.toLowerCase().replace(ext, 'jpg')}`
+          );
 
-        this.getSignedUrl(this.key).then((url: string) => {
-          this.fullUrl = url;
-        });
+          this.getSignedUrl(this.key).then((url: string) => {
+            this.fullUrl = url;
+          });
 
-        this.getSignedUrl(thumbKey).then((url: string) => {
-          this.thumbUrl = url;
-        });
-      }
-    });
+          this.getSignedUrl(thumbKey).then((url: string) => {
+            this.thumbUrl = url;
+          });
+        }
+      })
+      .catch(() => console.log('createSignedUrls failed'));
   }
 
   get key(): string {

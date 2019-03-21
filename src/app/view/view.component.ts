@@ -50,14 +50,17 @@ export class ViewComponent {
 
       this.currentDirectory = node;
 
-      this.currentDirectory.loadFiles().then(() => {
-        this.filesShown = this.currentDirectory.files;
-        const fileSizes = this.filesShown.map((file) => {
-          return file.size;
-        });
+      this.currentDirectory
+        .loadFiles()
+        .then(() => {
+          this.filesShown = this.currentDirectory.files;
+          const fileSizes = this.filesShown.map((file) => {
+            return file.size;
+          });
 
-        this.filesShownTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
-      });
+          this.filesShownTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
+        })
+        .catch(() => console.log(' @Input() set currentNode failed'));
     }
   }
 

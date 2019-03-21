@@ -59,25 +59,22 @@ export class AppComponent {
   initializeBucktesList() {
     return this.config
       .getBuckets()
-      .then(
-        (buckets) => {
-          if (!buckets.length) {
-            this.bucketManager.showDialog();
-            return;
-          }
+      .then((buckets) => {
+        if (!buckets.length) {
+          this.bucketManager.showDialog();
+          return;
+        }
 
-          this.buckets = buckets.map((bucket) => {
-            return {
-              label: bucket.label,
-              value: bucket.bucketName
-            };
-          });
+        this.buckets = buckets.map((bucket) => {
+          return {
+            label: bucket.label,
+            value: bucket.bucketName
+          };
+        });
 
-          this.setDefaultBucket();
-        },
-        (e) => console.log(e)
-      )
-      .catch((e) => console.log(e));
+        this.setDefaultBucket();
+      })
+      .catch((e) => console.log('initializeBucktesList failed'));
   }
 
   private setDefaultBucket() {

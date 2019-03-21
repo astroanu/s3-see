@@ -21,11 +21,14 @@ export class Directory implements DirectoryInterface {
       if (this.files.length) {
         resolve();
       } else {
-        return this.fileService.listObjects(this.prefix).then((list: FileListInterface) => {
-          this.files = list.files;
+        return this.fileService
+          .listObjects(this.prefix)
+          .then((list: FileListInterface) => {
+            this.files = list.files;
 
-          resolve();
-        });
+            resolve();
+          })
+          .catch(() => console.log('loadFiles failed'));
       }
     });
   }
@@ -35,13 +38,16 @@ export class Directory implements DirectoryInterface {
       if (this.children.length) {
         resolve();
       } else {
-        return this.fileService.listDirectories(this.prefix).then((list: FileListInterface) => {
-          this.children = list.directories;
+        return this.fileService
+          .listDirectories(this.prefix)
+          .then((list: FileListInterface) => {
+            this.children = list.directories;
 
-          this.expanded = this.children.length > 0;
+            this.expanded = this.children.length > 0;
 
-          resolve();
-        });
+            resolve();
+          })
+          .catch(() => console.log('loadSubdirectories failed'));
       }
     });
   }

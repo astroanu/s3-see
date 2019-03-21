@@ -63,7 +63,8 @@ export class DbService {
         })
         .then(() => {
           resolve(this.db);
-        });
+        })
+        .catch(() => console.log('getDb failed'));
     });
   }
 

@@ -28,9 +28,11 @@ export class BucketManageComponent {
   private editIndex = null;
 
   showDialog() {
-    this.loadBuckets().then(() => {
-      this.displayDialog = true;
-    });
+    this.loadBuckets()
+      .then(() => {
+        this.displayDialog = true;
+      })
+      .catch(() => console.log('showDialog failed'));
   }
 
   hideDialog() {
@@ -73,22 +75,28 @@ export class BucketManageComponent {
   }
 
   saveBuckets() {
-    this.config.updateBucketConfig(this.buckets).then(() => {
-      this.bucketsUpdated.emit();
-    });
+    this.config
+      .updateBucketConfig(this.buckets)
+      .then(() => {
+        this.bucketsUpdated.emit();
+      })
+      .catch(() => console.log('saveBuckets failed'));
 
     this.hideDialog();
   }
 
   loadBuckets() {
-    return this.config.getBuckets().then((buckets) => {
-      this.buckets = buckets.map((bucket) => {
-        return Object.assign(bucket.getCredentials(), {
-          bucketName: bucket.bucketName,
-          label: bucket.label
+    return this.config
+      .getBuckets()
+      .then((buckets) => {
+        this.buckets = buckets.map((bucket) => {
+          return Object.assign(bucket.getCredentials(), {
+            bucketName: bucket.bucketName,
+            label: bucket.label
+          });
         });
-      });
-    });
+      })
+      .catch(() => console.log('loadBuckets failed'));
   }
 
   get label() {

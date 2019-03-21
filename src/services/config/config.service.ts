@@ -11,7 +11,10 @@ export class ConfigService implements ConfigServiceInterface {
   private db: DbService;
 
   public updateBucketConfig(buckets: Array<object>) {
-    return this.db.update('buckets', buckets).then();
+    return this.db
+      .update('buckets', buckets)
+      .then()
+      .catch(() => console.log('updateBucketConfig failed'));
   }
 
   public getBucketCredentials(bucketName: string): Promise<object> {
@@ -24,7 +27,7 @@ export class ConfigService implements ConfigServiceInterface {
             reject();
           }
         })
-        .catch(() => reject());
+        .catch(() => console.log('getBucketCredentials failed'));
     });
   }
 
@@ -70,11 +73,13 @@ export class ConfigService implements ConfigServiceInterface {
   constructor() {
     this.db = new DbService('config', 'key');
 
-    this.getBuckets().then((buckets) => {
-      if (buckets.length) {
-        this.defaultBucket = buckets[0].bucketName;
-      }
-    });
+    this.getBuckets()
+      .then((buckets) => {
+        if (buckets.length) {
+          this.defaultBucket = buckets[0].bucketName;
+        }
+      })
+      .catch(() => console.log('getBuckets failed'));
   }
 }
 

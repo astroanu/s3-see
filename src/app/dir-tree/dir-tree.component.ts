@@ -15,9 +15,12 @@ export class DirTreeComponent {
 
   @Input() set bucket(bucketName: any) {
     if (bucketName) {
-      this.treeService.fileService.setBucket(bucketName).then(() => {
-        this.initializeDirPane();
-      });
+      this.treeService.fileService
+        .setBucket(bucketName)
+        .then(() => {
+          this.initializeDirPane();
+        })
+        .catch(() => console.log('@Input() set bucket failed'));
     }
   }
 
@@ -56,16 +59,19 @@ export class DirTreeComponent {
           this.loading = false;
         }
       )
-      .catch((e) => console.log(e));
+      .catch(() => console.log('initializeDirPane failed'));
   }
 
   selectNode(event) {
     const node: DirectoryInterface = event.node;
 
-    node.loadSubdirectories().then(() => {
-      console.info('subdirectories loaded');
-      this.selected.emit(node);
-    });
+    node
+      .loadSubdirectories()
+      .then(() => {
+        console.info('subdirectories loaded');
+        this.selected.emit(node);
+      })
+      .catch(() => console.log('selectNode failed'));
   }
 
   get panelHeight() {

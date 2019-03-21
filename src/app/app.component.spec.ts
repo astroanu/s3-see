@@ -10,14 +10,24 @@ import { ToastModule } from 'primeng/toast';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { AppComponent } from './app.component';
+import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { QueueComponent } from './queue/queue.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, PrettySizePipe, DirTreeComponent, ViewComponent, UploaderComponent],
+      declarations: [
+        AppComponent,
+        PrettySizePipe,
+        DirTreeComponent,
+        BucketManageComponent,
+        QueueComponent,
+        ViewComponent,
+        UploaderComponent
+      ],
       providers: [MessageService, ElectronService],
       imports: [FormsModule, ReactiveFormsModule, SidebarModule, DropdownModule, MenubarModule, ToastModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

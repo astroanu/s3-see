@@ -110,11 +110,14 @@ export class UploaderComponent {
   }
 
   private createFileTree() {
-    this.uploaderService.createFileTree().then((files: any) => {
-      this.files = files;
+    this.uploaderService
+      .createFileTree()
+      .then((files: any) => {
+        this.files = files;
 
-      window.dispatchEvent(new Event('resize'));
-    });
+        window.dispatchEvent(new Event('resize'));
+      })
+      .catch(() => console.log('createFileTree failed'));
   }
 
   showDialog() {
