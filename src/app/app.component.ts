@@ -25,10 +25,21 @@ export class AppComponent {
 
   menuItems = [
     {
-      label: 'Buckets',
-      command: () => {
-        this.bucketManager.showDialog();
-      }
+      label: 'File',
+      items: [
+        {
+          label: 'Upload',
+          command: () => {
+            this.uploader.showDialog();
+          }
+        },
+        {
+          label: 'Buckets',
+          command: () => {
+            this.bucketManager.showDialog();
+          }
+        }
+      ]
     }
   ];
 
