@@ -1,12 +1,26 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'karma-jasmine';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ElectronService } from 'ngx-electron';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { DropdownModule } from 'primeng/dropdown';
+import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
 
+import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { AppComponent } from './app.component';
+import { DirTreeComponent } from './dir-tree/dir-tree.component';
+import { UploaderComponent } from './uploader/uploader.component';
+import { ViewComponent } from './view/view.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent]
+      declarations: [AppComponent, PrettySizePipe, DirTreeComponent, ViewComponent, UploaderComponent],
+      providers: [MessageService, ElectronService],
+      imports: [FormsModule, ReactiveFormsModule, SidebarModule, DropdownModule, MenubarModule, ToastModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -14,18 +28,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 's3-image-man'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('s3-image-man');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to s3-image-man!');
   });
 });

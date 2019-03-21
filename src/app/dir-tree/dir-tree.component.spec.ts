@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'karma-jasmine';
+import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ToastModule } from 'primeng/toast';
+import { TreeModule } from 'primeng/tree';
 
 import { DirTreeComponent } from './dir-tree.component';
 
@@ -9,7 +12,9 @@ describe('DirTreeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DirTreeComponent]
+      declarations: [DirTreeComponent],
+      imports: [FormsModule, TreeModule, ToastModule],
+      providers: [MessageService]
     }).compileComponents();
   }));
 

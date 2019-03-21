@@ -1,0 +1,21 @@
+.pi-eye {
+  font-size: 2em;
+  margin-right: 0 !important;
+}
+
+.menubar {
+  margin-bottom: 15px;
+  display: block;
+}
+
+:host ::ng-deep .ui-dropdown {
+  width: 100% !important;
+  border-color: #c8c8c8;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ui-menubar-custom {
+  margin-top: 4px;
+  margin-right: 4px;
+}

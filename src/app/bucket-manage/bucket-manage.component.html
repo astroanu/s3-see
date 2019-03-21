@@ -1,0 +1,102 @@
+<p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
+  <div *ngIf="!buckets.length" class="placeholder ui-corner-all">
+    No buckets configured
+  </div>
+
+  <div class="buckets-list">
+    <div *ngFor="let bucket of buckets; let i = index">
+      <p-card class="box box-stretched">
+        <span class="actions">
+          <button pButton type="button" class="ui-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
+          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="ui-button-secondary"></button>
+        </span>
+
+        <h4>{{ bucket.label }}</h4>
+        <p>
+          {{ bucket.bucketName }}<br /><I> ({{ bucket.region }})</I>
+        </p>
+      </p-card>
+    </div>
+  </div>
+  <button
+    class="add-button"
+    pButton
+    type="button"
+    (click)="showAddBucketDialog()"
+    icon="pi pi-plus"
+    label="Add"
+  ></button>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-save" (click)="saveBuckets()" label="Save"></button>
+    <button type="button" pButton (click)="hideDialog()" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header="Title"
+  [style]="{ width: '800px' }"
+  [(visible)]="displayForm"
+  [modal]="true"
+  *ngIf="displayForm && itemForm"
+>
+  <div class="form">
+    <form [formGroup]="itemForm">
+      <div class="p-grid">
+        <label class="p-col-3">Label</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="label" />
+        <div class="p-col-3 form-control-feedback" *ngIf="label.invalid && (label.dirty || label.touched)">
+          <p>This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">BucketName</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="bucketName" />
+
+        <div
+          class="p-col-3 form-control-feedback"
+          *ngIf="bucketName.invalid && (bucketName.dirty || bucketName.touched)"
+        >
+          <p>This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Access Key ID</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="accessKeyId" />
+
+        <div
+          class="p-col-3 form-control-feedback"
+          *ngIf="accessKeyId.invalid && (accessKeyId.dirty || accessKeyId.touched)"
+        >
+          <p>This field is required</p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Secret Access Key</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="secretAccessKey" />
+
+        <div
+          class="p-col-3 form-control-feedback"
+          *ngIf="secretAccessKey.invalid && (secretAccessKey.dirty || secretAccessKey.touched)"
+        >
+          <p>
+            This field is required
+          </p>
+        </div>
+      </div>
+      <div class="p-grid">
+        <label class="p-col-3">Region</label>
+        <input class="p-col-6" type="text" required pInputText formControlName="region" />
+
+        <div class="p-col-3 form-control-feedback" *ngIf="region.invalid && (region.dirty || region.touched)">
+          <p>This field is required</p>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <p-footer>
+    <button type="button" pButton [disabled]="itemForm.invalid" (click)="addBucket()" label="Add"></button>
+    <button type="button" pButton (click)="hideForm()" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
