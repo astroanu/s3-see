@@ -11,7 +11,7 @@ addons:
 before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
-  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi'
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
 install:
   - npm install -g electron electron-builder wait-on typescript nyc codecov
   - npm install typescript@3.1.6 -g --save-exact
@@ -22,6 +22,9 @@ script:
   - ng test --watch=false --code-coverage
   - codecov
   - npm run build:prod
-  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux ; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm run electron:windows ; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac ; fi'
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm run electron:windows ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac ; fi
+notifications:
+  slack:
+    secure: R2nXewGcyHPkLPI/XwT0YcUWEcsQoOzpVZ8sMYSZ89SFLpjy8Bsisic6lgqVRjbxcfF/A5Obw7lLFHz5TKwRS/NWeKUoM9kg6X7pbzTZyNfKhh026RZewVtuzaU679I5ffJa6C+Tqg2gw9lVtT0pRMYoXBih75cjQhHwh4pfPshbfnL2RimwIXCwHWMN9Sfh2r1Y0eEhntTe5OkQVnLO3yCbIpnWVHp48YQnnnAlSA8Rj9m72E4ZBgCmj9z+SQW6DZJVPyJlz3rbCI4lteUk9PoIhfNWy9NQhPBVHLHnxsAALgeyNfc+YBl2x8DXPp7dkq8gkHKI97S07RYxlbfJ03XHwHDUNAzPlrtYmWXojnXl5HBDCyAiVQtw0O6L3EcA2nXghqYi2Fqtp7dEUzaE+JlINnpXYTr7f7E2gLVCU1AMMxnQdQ4zt9XWJOWC9ejPoGo06wrFiaEHu9naDsL2n/PyaopImP4bhxG5w8dHXC7Fe/ppndLcQ2tQoWLcS4XJShb+yaaGfHua/xqtG0FZ44jng9yja/pMLNmLpeL23/nblNmRLOjPPlVzrJo057CUG7J4EkTzRA89IHLrepo+R8p/p1RWksZTBF9rnBVj6XYhCcwsMjfUtTcAv2yQ9nVvYjBp+WJ1nUZEs7qbEnfMLwmEdN0irMetkaBN3hVTHE4=
