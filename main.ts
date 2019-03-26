@@ -7,7 +7,7 @@ let serve: boolean;
 const args = process.argv.slice(1);
 serve = args.some((val) => val === '--serve');
 
-function createWindow() {
+const createWindow = () => {
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
@@ -16,9 +16,9 @@ function createWindow() {
     y: 0,
     minHeight: 600,
     minWidth: 800,
-    height: 60, // size.height,
-    width: 800, // size.width,
-    icon: __dirname + `src/favicon.ico`
+    height: 60,
+    width: 800,
+    icon: __dirname + `s3see.png`
   });
 
   win.setMenu(null);
@@ -49,7 +49,7 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
-}
+};
 
 try {
   // This method will be called when Electron has finished
