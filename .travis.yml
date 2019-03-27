@@ -1,30 +1,26 @@
 language: node_js
 os:
   - linux
-  - osx
-  - windows
 node_js:
   - 8
-sudo: required
 addons:
   chrome: stable
+sudo: required
 before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
 install:
-  - npm install -g electron electron-builder wait-on typescript nyc codecov
+  - npm install -g electron electron-builder wait-on typescript nyc codecov tslint
   - npm install typescript@3.1.6 -g --save-exact
   - npm set progress=false
   - npm install
 script:
   - ng lint
-  - ng test --watch=false --code-coverage
+  - ng test --code-coverage
   - codecov
   - npm run build:prod
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm run electron:windows ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac ; fi
 notifications:
   slack:
-    secure: R2nXewGcyHPkLPI/XwT0YcUWEcsQoOzpVZ8sMYSZ89SFLpjy8Bsisic6lgqVRjbxcfF/A5Obw7lLFHz5TKwRS/NWeKUoM9kg6X7pbzTZyNfKhh026RZewVtuzaU679I5ffJa6C+Tqg2gw9lVtT0pRMYoXBih75cjQhHwh4pfPshbfnL2RimwIXCwHWMN9Sfh2r1Y0eEhntTe5OkQVnLO3yCbIpnWVHp48YQnnnAlSA8Rj9m72E4ZBgCmj9z+SQW6DZJVPyJlz3rbCI4lteUk9PoIhfNWy9NQhPBVHLHnxsAALgeyNfc+YBl2x8DXPp7dkq8gkHKI97S07RYxlbfJ03XHwHDUNAzPlrtYmWXojnXl5HBDCyAiVQtw0O6L3EcA2nXghqYi2Fqtp7dEUzaE+JlINnpXYTr7f7E2gLVCU1AMMxnQdQ4zt9XWJOWC9ejPoGo06wrFiaEHu9naDsL2n/PyaopImP4bhxG5w8dHXC7Fe/ppndLcQ2tQoWLcS4XJShb+yaaGfHua/xqtG0FZ44jng9yja/pMLNmLpeL23/nblNmRLOjPPlVzrJo057CUG7J4EkTzRA89IHLrepo+R8p/p1RWksZTBF9rnBVj6XYhCcwsMjfUtTcAv2yQ9nVvYjBp+WJ1nUZEs7qbEnfMLwmEdN0irMetkaBN3hVTHE4=
+    secure: nwTZl+YkUp07ZCBaQNF0ierhCdRsmJmV4rcqpHhAzf+wbTxZbkT5NFp3vmgQiF9Lgvt7j+s07079Dmzjrd8UePs6UEYJSTC7yRjkdNDzD5+vLLf3sryX5L8ppK3KyDtMEYRqRkvIehRGK0kZ2fZmy1YGodB+n0BCVhp+FwIkIeXqUw9i1JxDBILqnUrakE4flK+rwDQBe3Aij78nF8nYsOrXAN2fXshtmJhgXX0WKYn84X/NzZMtW3MolhyxF0FpmZmaao2R3C1UsIIN5ACjWtfz5TT+Sx0wIL63U1o52fJT/sJM9re01wVtMuqooQiK0bhPwaC6myovi/Q2XyWPCyOghvo2MVjaWf+NNoW4jgJCOIFs6rzrCZSkg7WQaysYFmtWqKXuOIkXMNGdKlEy+n4FKiY6ZKV2688SZejIz/KI16dYZwvkiMPK+heO0FtRoakpYEZ7uvSee2g3V40V3uedTHnQAkVQKC01b795mUcwbi5rF93HFyU76fhM69nT7V/266kFGGHgIvQot9YihEytnlDIpJMpgpznSCk8vqDCUXdvhs5gfzhStFt0LcSIZAGx2yPUNlvUdoiyR4rbMSl5A8vc8pndv+RgvrpIFoZPjiEVx7jzn2x5xg6SX6OWev2S9tRoAOg8zAW40WyOgEMAozvOFDiw4tvg6CWoWrQ=

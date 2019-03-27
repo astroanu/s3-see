@@ -14,13 +14,11 @@ describe('QueueComponent', () => {
       declarations: [QueueComponent],
       imports: [SidebarModule, ProgressBarModule, BrowserAnimationsModule]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(QueueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

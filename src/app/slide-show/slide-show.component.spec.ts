@@ -10,13 +10,11 @@ describe('SlideShowComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SlideShowComponent]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(SlideShowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

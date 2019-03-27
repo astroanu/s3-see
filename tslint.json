@@ -31,6 +31,8 @@
     "no-unused-expression": true,
     "no-use-before-declare": false,
     "object-literal-sort-keys": false,
+    "directive-selector": [true, "attribute", "app", "camelCase"],
+    "component-selector": [true, "element", "app", "kebab-case"],
     "one-line": { "options": ["check-catch", "check-else", "check-finally", "check-open-brace", "check-whitespace"] },
     "one-variable-per-declaration": { "options": ["ignore-for-loop"] },
     "quotemark": { "options": ["single", "avoid-escape"] },

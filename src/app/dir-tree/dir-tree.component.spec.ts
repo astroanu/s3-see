@@ -16,15 +16,13 @@ describe('DirTreeComponent', () => {
       imports: [FormsModule, TreeModule, ToastModule],
       providers: [MessageService]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(DirTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
-  it('should create', () => {
+  it('should create instance', () => {
     expect(component).toBeTruthy();
   });
 });

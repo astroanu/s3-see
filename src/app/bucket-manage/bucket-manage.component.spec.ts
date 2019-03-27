@@ -14,15 +14,13 @@ describe('BucketManageComponent', () => {
       declarations: [BucketManageComponent],
       imports: [FormsModule, ReactiveFormsModule, DialogModule, CardModule]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(BucketManageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
-  it('should create', () => {
+  it('should create instance', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -19,13 +19,11 @@ describe('ViewComponent', () => {
       declarations: [PrettySizePipe, ViewComponent, SlideShowComponent],
       imports: [FormsModule, SliderModule, ProgressSpinnerModule, ToolbarModule, TableModule, ButtonModule]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

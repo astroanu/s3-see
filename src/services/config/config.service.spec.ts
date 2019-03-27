@@ -10,7 +10,7 @@ describe('ConfigService', () => {
     service = TestBed.get(ConfigService);
   });
 
-  it('should be created', () => {
+  it('should create instance', () => {
     expect(service).toBeTruthy();
   });
 });
