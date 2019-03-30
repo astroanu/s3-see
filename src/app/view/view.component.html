@@ -1,7 +1,7 @@
 <div class="ui-dataview ui-widget ui-dataview-grid" (window:resize)="setThumbSize()">
   <p-toolbar class="toolbar">
-    <div class="ui-toolbar-group-left">
-      <span class="control-block" *ngIf="currentDirectory">
+    <div class="ui-toolbar-group-left" *ngIf="currentDirectory">
+      <span class="control-block">
         <h4>{{ currentDirectory.label }}</h4>
       </span>
       <span class="control-block">
@@ -35,7 +35,7 @@
   </div>
 
   <div *ngIf="!filesShown.length && !loading" class="placeholder ui-corner-all">
-    No items to show
+    Select a diretory to view it's contents.
   </div>
 
   <div class="table-wrap" [style.height.px]="panelHeight" *ngIf="listView && filesShown.length">

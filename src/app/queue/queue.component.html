@@ -1,3 +1,5 @@
-<p-sidebar position="bottom" [modal]="false" [dismissible]="false" [showCloseIcon]="false" [(visible)]="jobs.length">
+<p-sidebar position="bottom" [modal]="false" [dismissible]="false" [showCloseIcon]="false" [(visible)]="panelVisible">
   <p-progressBar [style]="{ height: '12px' }" mode="indeterminate" [value]="50"></p-progressBar>
+
+  <button (click)="collapsePanel()" pButton class="ui-button-secondary collapse-button" icon="pi pi-check"></button>
 </p-sidebar>

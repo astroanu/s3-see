@@ -56,6 +56,10 @@ export class AppComponent {
     this.queueComponent.addJob(job);
   }
 
+  public showQueue(value: boolean) {
+    this.queueComponent.panelVisible = value;
+  }
+
   public refreshTree() {
     this.view.resetFilesShown();
     this.dirTree.initializeDirPane();

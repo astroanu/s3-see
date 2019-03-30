@@ -10,6 +10,12 @@ import { UploaderService } from '../../services/uploader/uploader.service';
 export class QueueComponent {
   public jobs: Array<UploaderService> = [];
 
+  public panelVisible: boolean = false;
+
+  public collapsePanel() {
+    this.panelVisible = false;
+  }
+
   public addJob(job: UploaderService) {
     this.jobs.push(job);
   }
