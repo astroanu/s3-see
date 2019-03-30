@@ -1,0 +1,15 @@
+.status-bar {
+  padding: 3px 10px;
+  background-color: #eee;
+  border-top: thin solid #ccc;
+  margin-top: 1px;
+  font-size: 12px;
+
+  .message-column {
+    padding: 0 !important;
+  }
+}
+
+:host ::ng-deep .ui-progressbar {
+  background-color: #fff;
+}

@@ -13,6 +13,8 @@ import { TreeService } from '../../services/tree/tree.service';
 export class DirTreeComponent {
   @Output() selected = new EventEmitter<any>();
 
+  @Output() status = new EventEmitter<any>();
+
   @Input() set bucket(bucketName: any) {
     if (bucketName) {
       this.treeService.fileService
@@ -30,16 +32,31 @@ export class DirTreeComponent {
 
   public loading: boolean = true;
 
+  private emitLoadingEvent() {
+    this.status.emit('Loading directories...');
+  }
+
+  private emitLoadedEvent() {
+    console.info('Dir listing complete');
+    this.status.emit('Directory listing complete.');
+  }
+
+  private emitLoadErrorEvent() {
+    this.status.emit('Failed to load directories...');
+  }
+
   public initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
     this.loading = true;
 
+    this.emitLoadingEvent();
+
     this.getDirStructure()
       .then(
         () => {
           this.loading = false;
-          console.info('Dir listing complete');
+          this.emitLoadedEvent();
         },
         (e) => {
           this.messageService.add({
@@ -52,6 +69,7 @@ export class DirTreeComponent {
           });
 
           this.loading = false;
+          this.emitLoadErrorEvent();
         }
       )
       .catch(() => console.log('initializeDirPane failed'));
@@ -60,10 +78,12 @@ export class DirTreeComponent {
   public selectNode(event) {
     const node: DirectoryInterface = event.node;
 
+    this.emitLoadingEvent();
+
     node
       .loadSubdirectories()
       .then(() => {
-        console.info('subdirectories loaded');
+        this.emitLoadedEvent();
         this.selected.emit(node);
       })
       .catch(() => console.log('selectNode failed'));
@@ -72,7 +92,7 @@ export class DirTreeComponent {
   public get panelHeight() {
     const dataViewEl = this.el.nativeElement.querySelector('.tree-wrap');
 
-    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 10;
+    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 35;
   }
 
   private getDirStructure(prefix = null, NextContinuationToken = null) {

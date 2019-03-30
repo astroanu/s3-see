@@ -4,6 +4,7 @@ import { ConfigService } from '../services/config/config.service';
 import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
 import { DirTreeComponent } from './dir-tree/dir-tree.component';
 import { QueueComponent } from './queue/queue.component';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
 
@@ -14,13 +15,21 @@ import { ViewComponent } from './view/view.component';
 })
 export class AppComponent {
   @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
+
   @ViewChild(ViewComponent) view: ViewComponent;
+
   @ViewChild(UploaderComponent) uploader: UploaderComponent;
+
   @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
+
   @ViewChild(QueueComponent) queueComponent: QueueComponent;
 
+  @ViewChild(StatusBarComponent) statusBarComponent: StatusBarComponent;
+
   public currentNode: DocumentEvent;
+
   public currentBucket: string;
+
   public buckets: Array<object>;
 
   public menuItems: Array<object> = [
@@ -75,6 +84,10 @@ export class AppComponent {
         this.setDefaultBucket();
       })
       .catch((e) => console.log('initializeBucktesList failed'));
+  }
+
+  public updateStatusBar(message) {
+    this.statusBarComponent.statusMessage = message;
   }
 
   private setDefaultBucket() {

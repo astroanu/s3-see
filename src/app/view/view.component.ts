@@ -88,7 +88,7 @@ export class ViewComponent {
   public get panelHeight() {
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 
-    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 60;
+    return window.innerHeight - dataViewEl.getBoundingClientRect().top - 85;
   }
 
   public setThumbSize() {

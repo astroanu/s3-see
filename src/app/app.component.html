@@ -8,12 +8,17 @@
   <div class="p-col-3 box box-stretched">
     <p-dropdown class="bucket-dropdown" [options]="buckets" [(ngModel)]="currentBucket"></p-dropdown>
 
-    <app-dir-tree [bucket]="currentBucket" (selected)="onSelected($event)"></app-dir-tree>
+    <app-dir-tree
+      [bucket]="currentBucket"
+      (selected)="onSelected($event)"
+      (status)="updateStatusBar($event)"
+    ></app-dir-tree>
   </div>
   <div class="p-col-9 box box-stretched">
     <app-view [currentNode]="currentNode"></app-view>
   </div>
 </div>
+<app-status-bar></app-status-bar>
 <app-queue></app-queue>
 <app-uploader (uploadQueued)="uploadQueued($event)"></app-uploader>
 <app-bucket-manage (bucketsUpdated)="initializeBucktesList()"></app-bucket-manage>

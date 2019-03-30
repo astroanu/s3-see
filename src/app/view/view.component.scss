@@ -16,7 +16,8 @@
   z-index: 0;
 }
 
-:host ::ng-deep .content-area {
+:host ::ng-deep .content-area,
+.table-wrap {
   padding: 0 !important;
   border-top: none !important;
   overflow-y: scroll;

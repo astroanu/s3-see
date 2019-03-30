@@ -33,6 +33,7 @@ import { QueueComponent } from './queue/queue.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ViewComponent } from './view/view.component';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ViewComponent } from './view/view.component';
     PrettySizePipe,
     UploaderComponent,
     BucketManageComponent,
-    QueueComponent
+    QueueComponent,
+    StatusBarComponent
   ],
   imports: [
     NgxElectronModule,

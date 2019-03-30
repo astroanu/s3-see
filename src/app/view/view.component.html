@@ -38,7 +38,7 @@
     No items to show
   </div>
 
-  <div *ngIf="listView && filesShown.length">
+  <div class="table-wrap" [style.height.px]="panelHeight" *ngIf="listView && filesShown.length">
     <p-table
       class="content-table"
       [resizableColumns]="true"
