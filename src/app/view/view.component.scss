@@ -16,6 +16,7 @@
 :host ::ng-deep .content-area {
   padding: 0 !important;
   border-top: none !important;
+  overflow-y: scroll;
 
   &.loading-bar {
     text-align: center;
