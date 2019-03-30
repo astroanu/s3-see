@@ -88,4 +88,4 @@
     </div>
   </div>
 </div>
-<app-slide-show [(file)]="selectedFile"></app-slide-show>
+<app-slide-show (closed)="clearSelectedFile()" [(file)]="selectedFile"></app-slide-show>

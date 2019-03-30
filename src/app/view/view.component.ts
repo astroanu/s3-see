@@ -81,6 +81,10 @@ export class ViewComponent {
     this.selectedFile = file;
   }
 
+  public clearSelectedFile() {
+    this.selectedFile = null;
+  }
+
   public get panelHeight() {
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 

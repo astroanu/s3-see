@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-slide-show',
@@ -13,7 +13,10 @@ export class SlideShowComponent {
     this.currentFile = file;
   }
 
+  @Output() closed = new EventEmitter<any>();
+
   public hideOverlay() {
     this.currentFile = null;
+    this.closed.emit();
   }
 }

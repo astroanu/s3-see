@@ -12,6 +12,9 @@
 .thumbnail img:hover {
   border: thick solid #eaeaea;
 }
+:host ::ng-deep .ui-slider .ui-slider-handle {
+  z-index: 0;
+}
 
 :host ::ng-deep .content-area {
   padding: 0 !important;
