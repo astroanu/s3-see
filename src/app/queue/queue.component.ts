@@ -8,9 +8,9 @@ import { UploaderService } from '../../services/uploader/uploader.service';
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent {
-  jobs: Array<UploaderService> = [];
+  public jobs: Array<UploaderService> = [];
 
-  addJob(job: UploaderService) {
+  public addJob(job: UploaderService) {
     this.jobs.push(job);
   }
 }

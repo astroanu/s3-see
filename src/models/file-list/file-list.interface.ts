@@ -1,5 +1,6 @@
 import { DirectoryInterface } from '../directory/directory.interface';
-import { FileInterface } from '../file/file.interface';
+import { LocalFileInterface } from '../file/local-file.interface';
+import { S3FileInterface } from '../file/s3-file.interface';
 
 export interface FileListInterface {
   nextContinuationToken: string;
@@ -12,5 +13,5 @@ export interface FileListInterface {
 
   directories: Array<DirectoryInterface>;
 
-  files: Array<FileInterface>;
+  files: Array<S3FileInterface | LocalFileInterface>;
 }

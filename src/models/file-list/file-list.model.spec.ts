@@ -1,9 +1,9 @@
-import { S3 } from 'aws-sdk';
 import { TestBed } from '@angular/core/testing';
+import { S3 } from 'aws-sdk';
 
 import { FileService } from '../../services/file/file.service';
-import { FileList } from './file-list.model';
 import { FileListInterface } from './file-list.interface';
+import { FileList } from './file-list.model';
 
 describe('FileList', () => {
   let sOutput: S3.ListObjectsV2Output;
@@ -57,6 +57,10 @@ describe('FileList', () => {
 
   it('should return directories', () => {
     expect(fileList.directories.length).toEqual(sOutput.CommonPrefixes.length);
+  });
+
+  it('should return hasMore', () => {
+    expect(fileList.directories.length).toBeTruthy(sOutput.IsTruncated);
   });
 
   it('should return files', () => {

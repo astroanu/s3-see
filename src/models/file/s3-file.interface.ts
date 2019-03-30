@@ -1,4 +1,4 @@
-export interface FileInterface {
+export interface S3FileInterface {
   sizePretty: string;
 
   size: number;

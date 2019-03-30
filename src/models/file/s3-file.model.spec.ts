@@ -4,13 +4,13 @@ import { DateFormatPipe } from 'ngx-moment';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { FileService } from '../../services/file/file.service';
-import { FileInterface } from './file.interface';
+import { S3FileInterface } from './s3-file.interface';
 import { S3File } from './s3-file.model';
 
 describe('File', () => {
   let s3Object: S3.Types.Object;
 
-  let file: FileInterface;
+  let file: S3FileInterface;
 
   let date: Date;
 

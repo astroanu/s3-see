@@ -24,20 +24,15 @@ export class DirTreeComponent {
     }
   }
 
-  selectedFiles: Array<any> = [];
+  public selectedFiles: Array<any> = [];
 
-  fileCache: Array<object> = [];
+  public fileTree: Array<object> = [];
 
-  fileTree: Array<object> = [];
+  public loading: boolean = true;
 
-  folderStructor: Object = {};
-
-  loading: boolean = true;
-
-  initializeDirPane() {
+  public initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
-    this.folderStructor = {};
     this.loading = true;
 
     this.getDirStructure()
@@ -62,7 +57,7 @@ export class DirTreeComponent {
       .catch(() => console.log('initializeDirPane failed'));
   }
 
-  selectNode(event) {
+  public selectNode(event) {
     const node: DirectoryInterface = event.node;
 
     node
@@ -74,7 +69,7 @@ export class DirTreeComponent {
       .catch(() => console.log('selectNode failed'));
   }
 
-  get panelHeight() {
+  public get panelHeight() {
     const dataViewEl = this.el.nativeElement.querySelector('.tree-wrap');
 
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 10;

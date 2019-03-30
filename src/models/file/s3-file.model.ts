@@ -5,11 +5,11 @@ import { basename } from 'path';
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { ConfigService } from '../../services/config/config.service';
 import { FileService } from '../../services/file/file.service';
-import { FileInterface } from './file.interface';
+import { S3FileInterface } from './s3-file.interface';
 
 const config = new ConfigService();
 
-export class S3File implements FileInterface {
+export class S3File implements S3FileInterface {
   private thumbUrl: string = null;
   private fullUrl: string = null;
 

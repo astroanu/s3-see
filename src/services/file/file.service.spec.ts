@@ -40,7 +40,9 @@ describe('FileService', () => {
         return Promise.resolve(bucket.getCredentials());
       });
 
-    TestBed.overrideProvider(ConfigService, { useValue: moqConfigService.object });
+    TestBed.overrideProvider(ConfigService, {
+      useValue: moqConfigService.object
+    });
 
     service = TestBed.get(FileService);
   });

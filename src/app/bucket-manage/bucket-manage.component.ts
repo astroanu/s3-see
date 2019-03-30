@@ -27,7 +27,7 @@ export class BucketManageComponent {
 
   private editIndex = null;
 
-  showDialog() {
+  public showDialog() {
     this.loadBuckets()
       .then(() => {
         this.displayDialog = true;
@@ -35,36 +35,36 @@ export class BucketManageComponent {
       .catch(() => console.log('showDialog failed'));
   }
 
-  hideDialog() {
+  public hideDialog() {
     this.displayDialog = false;
   }
 
-  showForm() {
+  public showForm() {
     this.displayForm = true;
   }
 
-  hideForm() {
+  public hideForm() {
     this.displayForm = false;
   }
 
-  showAddBucketDialog() {
+  public showAddBucketDialog() {
     this.editIndex = null;
     this.itemForm.reset();
     this.showForm();
   }
 
-  editBucket(index) {
+  public editBucket(index) {
     this.editIndex = index;
     this.itemForm.reset(this.buckets[this.editIndex]);
 
     this.showForm();
   }
 
-  deleteBucket(index) {
+  public deleteBucket(index) {
     this.buckets.splice(index, 1);
   }
 
-  addBucket() {
+  public addBucket() {
     if (this.editIndex) {
       this.buckets[this.editIndex] = this.itemForm.value;
     } else {
@@ -74,7 +74,7 @@ export class BucketManageComponent {
     this.hideForm();
   }
 
-  saveBuckets() {
+  public saveBuckets() {
     this.config
       .updateBucketConfig(this.buckets)
       .then(() => {
@@ -85,7 +85,7 @@ export class BucketManageComponent {
     this.hideDialog();
   }
 
-  loadBuckets() {
+  public loadBuckets() {
     return this.config
       .getBuckets()
       .then((buckets) => {
@@ -99,23 +99,23 @@ export class BucketManageComponent {
       .catch(() => console.log('loadBuckets failed'));
   }
 
-  get label() {
+  public get label() {
     return this.itemForm.get('label');
   }
 
-  get bucketName() {
+  public get bucketName() {
     return this.itemForm.get('bucketName');
   }
 
-  get accessKeyId() {
+  public get accessKeyId() {
     return this.itemForm.get('accessKeyId');
   }
 
-  get secretAccessKey() {
+  public get secretAccessKey() {
     return this.itemForm.get('secretAccessKey');
   }
 
-  get region() {
+  public get region() {
     return this.itemForm.get('region');
   }
 

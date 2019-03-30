@@ -3,10 +3,10 @@ import { DateFormatPipe } from 'ngx-moment';
 import { basename } from 'path';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
-import { FileInterface } from './file.interface';
 import { UploadOptions } from '../../services/uploader/uploader.service';
+import { LocalFileInterface } from './local-file.interface';
 
-export class LocalFile implements FileInterface {
+export class LocalFile implements LocalFileInterface {
   private stat = null;
   private uploadOptions: UploadOptions = null;
 
@@ -72,6 +72,9 @@ export class LocalFile implements FileInterface {
   }
 
   constructor(private relativePath: string, private filePath: string) {
-    this.stat = fs.statSync(this.filePath.replace('/', '\\'));
+    console.log(fs);
+    if (this.filePath) {
+      this.stat = fs.statSync(this.filePath.replace('/', '\\'));
+    }
   }
 }

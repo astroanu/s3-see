@@ -19,11 +19,11 @@ export class AppComponent {
   @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
   @ViewChild(QueueComponent) queueComponent: QueueComponent;
 
-  currentNode: DocumentEvent;
-  currentBucket;
-  buckets: Array<object>;
+  public currentNode: DocumentEvent;
+  public currentBucket: string;
+  public buckets: Array<object>;
 
-  menuItems = [
+  public menuItems: Array<object> = [
     {
       label: 'File',
       items: [
@@ -43,20 +43,20 @@ export class AppComponent {
     }
   ];
 
-  uploadQueued(job: any) {
+  public uploadQueued(job: any) {
     this.queueComponent.addJob(job);
   }
 
-  refreshTree() {
+  public refreshTree() {
     this.view.resetFilesShown();
     this.dirTree.initializeDirPane();
   }
 
-  onSelected(event: DocumentEvent) {
+  public onSelected(event: DocumentEvent) {
     this.currentNode = event;
   }
 
-  initializeBucktesList() {
+  public initializeBucktesList() {
     return this.config
       .getBuckets()
       .then((buckets) => {

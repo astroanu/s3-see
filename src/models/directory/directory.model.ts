@@ -4,7 +4,7 @@ import * as path from 'path';
 import { FileService } from '../../services/file/file.service';
 import { DirectoryInterface } from '../directory/directory.interface';
 import { FileListInterface } from '../file-list/file-list.interface';
-import { FileInterface } from '../file/file.interface';
+import { S3FileInterface } from '../file/s3-file.interface';
 
 export const FOLDER_ICON_NORMAL = 'pi pi-folder';
 export const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
@@ -12,7 +12,7 @@ export const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
 
 export class Directory implements DirectoryInterface {
   public children: Array<DirectoryInterface> = [];
-  public files: Array<FileInterface> = [];
+  public files: Array<S3FileInterface> = [];
   public expanded: boolean = false;
   public selectable: boolean = true;
 

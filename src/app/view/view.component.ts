@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input } from '@angular/core';
 
 import { DirectoryInterface } from '../../models/directory/directory.interface';
-import { FileInterface } from '../../models/file/file.interface';
+import { S3FileInterface } from '../../models/file/s3-file.interface';
 import { FileService } from '../../services/file/file.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { FileService } from '../../services/file/file.service';
   styleUrls: ['./view.component.scss']
 })
 export class ViewComponent {
-  columns: Array<object> = [
+  public columns: Array<object> = [
     {
       field: 'fileName',
       header: 'File'
@@ -25,23 +25,23 @@ export class ViewComponent {
     }
   ];
 
-  thumbH: number = 200;
+  public thumbH: number = 200;
 
-  thumbW: number = 25;
+  public thumbW: number = 25;
 
-  thumbMultiplier: number = 7;
+  public thumbMultiplier: number = 7;
 
-  filesShown: Array<FileInterface> = [];
+  public filesShown: Array<S3FileInterface> = [];
 
-  listView: boolean = false;
+  public listView: boolean = false;
 
-  loading: boolean = false;
+  public loading: boolean = false;
 
-  selectedFile: FileInterface = null;
+  public selectedFile: S3FileInterface = null;
 
-  filesShownTotalSize = 0;
+  public filesShownTotalSize = 0;
 
-  currentDirectory: DirectoryInterface;
+  public currentDirectory: DirectoryInterface;
 
   @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
@@ -73,21 +73,21 @@ export class ViewComponent {
     }
   }
 
-  onZoomChange() {
+  public onZoomChange() {
     this.setThumbSize();
   }
 
-  setSelectedFile(file) {
+  public setSelectedFile(file) {
     this.selectedFile = file;
   }
 
-  get panelHeight() {
+  public get panelHeight() {
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 60;
   }
 
-  setThumbSize() {
+  public setThumbSize() {
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 
     const containerWidth = dataViewEl.offsetWidth - 14;

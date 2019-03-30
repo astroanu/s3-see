@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { NgxIndexedDB } from 'ngx-indexed-db';
 
+import { DbServiceInterface } from './db.service.interface';
+
 const DBName = 's3see';
 const DBVersion = 1;
 
 @Injectable({
   providedIn: 'root'
 })
-export class DbService {
+export class DbService implements DbServiceInterface {
   private db = new NgxIndexedDB(DBName, DBVersion);
   private store;
 

@@ -1,10 +1,9 @@
-import { FileInterface } from '../file/file.interface';
-import { DirectoryInterface } from '../directory/directory.interface';
+import { S3FileInterface } from '../file/s3-file.interface';
 
 export interface DirectoryInterface {
   children: Array<DirectoryInterface>;
 
-  files: Array<FileInterface>;
+  files: Array<S3FileInterface>;
 
   expanded: boolean;
 

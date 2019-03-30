@@ -12,11 +12,11 @@ import { UploaderService } from '../../services/uploader/uploader.service';
 export class UploaderComponent {
   @Output() uploadQueued = new EventEmitter<any>();
 
-  displayDialog: boolean = false;
+  public displayDialog: boolean = false;
 
-  displayOptions: boolean = false;
+  public displayOptions: boolean = false;
 
-  optionsForm: FormGroup = new FormGroup({
+  public optionsForm: FormGroup = new FormGroup({
     prefix: new FormControl(),
     suffix: new FormControl(),
     flattern: new FormControl(false),
@@ -25,19 +25,19 @@ export class UploaderComponent {
     noSpaces: new FormControl(true)
   });
 
-  selectedFiles: Array<object> = null;
+  public selectedFiles: Array<object> = null;
 
-  selectedFile = null;
+  public selectedFile = null;
 
-  files: Array<object> = null;
+  public files: Array<object> = null;
 
-  uploadDirectory: string;
+  public uploadDirectory: string;
 
-  filesSelectedTotalSize = 0;
+  public filesSelectedTotalSize: number = 0;
 
-  uploaderService: UploaderService;
+  public uploaderService: UploaderService;
 
-  columns: Array<object> = [
+  public columns: Array<object> = [
     {
       field: 'fileName',
       header: 'File'
@@ -56,7 +56,7 @@ export class UploaderComponent {
     }
   ];
 
-  selectDirectory() {
+  public selectDirectory() {
     this.electronService.remote.dialog.showOpenDialog(
       {
         title: 'Select a folder',
@@ -72,11 +72,11 @@ export class UploaderComponent {
     );
   }
 
-  previewFile(file) {
+  public previewFile(file) {
     this.selectedFile = file;
   }
 
-  updateFileSize() {
+  public updateFileSize() {
     const fileSizes = this.selectedFiles.map((file: any) => {
       return file.size;
     });
@@ -84,20 +84,20 @@ export class UploaderComponent {
     this.filesSelectedTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
   }
 
-  queueUpload() {
+  public queueUpload() {
     this.uploadQueued.emit(this.uploaderService);
     this.hideDialog();
   }
 
-  showOptions() {
+  public showOptions() {
     this.displayOptions = true;
   }
 
-  hideOptions() {
+  public hideOptions() {
     this.displayOptions = false;
   }
 
-  applyOptions() {
+  public applyOptions() {
     this.uploaderService.setUploadOptions(this.optionsForm.value);
     this.createFileTree();
     this.hideOptions();
@@ -120,17 +120,17 @@ export class UploaderComponent {
       .catch(() => console.log('createFileTree failed'));
   }
 
-  showDialog() {
+  public showDialog() {
     this.clearVars();
 
     this.displayDialog = true;
   }
 
-  hideDialog() {
+  public hideDialog() {
     this.displayDialog = false;
   }
 
-  clearVars() {
+  private clearVars() {
     this.selectedFiles = null;
     this.selectedFile = null;
     this.files = null;

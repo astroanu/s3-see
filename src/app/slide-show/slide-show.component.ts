@@ -6,14 +6,14 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./slide-show.component.scss']
 })
 export class SlideShowComponent {
-  currentFile;
-  isLoading: boolean = false;
+  public currentFile: object;
+  public isLoading: boolean = false;
 
   @Input() set file(file: any) {
     this.currentFile = file;
   }
 
-  hideOverlay() {
+  public hideOverlay() {
     this.currentFile = null;
   }
 }

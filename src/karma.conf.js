@@ -39,16 +39,17 @@ module.exports = function(config) {
         ]
       }
     },
-    browserDisconnectTimeout: 10000,
-    browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 60000,
     singleRun: false
   };
 
-  process.env.NO_PROXY = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
-  process.env.no_proxy = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
-
   if (process.env.TRAVIS) {
+    process.env.NO_PROXY = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
+    process.env.no_proxy = 'localhost, 0.0.0.0/4201, 0.0.0.0/9876';
+
+    configuration.browserDisconnectTimeout = 10000;
+    configuration.browserDisconnectTolerance = 3;
+    configuration.browserNoActivityTimeout = 60000;
+
     configuration.browsers = ['Chrome_travis_ci'];
     configuration.singleRun = true;
     configuration.autoWatch = true;
