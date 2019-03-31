@@ -13,8 +13,6 @@ export class FileService implements FileServiceInterface {
   private bucketName = this.config.defaultBucket;
   private s3: AWS.S3;
 
-  constructor(private config: ConfigService) {}
-
   public upload(key: string, data: Blob, progressCallback): Promise<object> {
     return new Promise((resolve, reject) => {
       this.s3
@@ -125,4 +123,6 @@ export class FileService implements FileServiceInterface {
       });
     });
   }
+
+  constructor(private config: ConfigService) {}
 }

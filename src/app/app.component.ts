@@ -109,5 +109,9 @@ export class AppComponent {
 
   constructor(private config: ConfigService) {
     this.initializeBucktesList();
+
+    setInterval(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1000);
   }
 }

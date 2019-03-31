@@ -80,7 +80,15 @@
         [style.height.px]="thumbH"
         [style.width.%]="thumbW"
       >
-        <img *ngIf="file.thumbUrl" [style.width.%]="100" [style.height.%]="100" [src]="file.thumbUrl" />
+        <img
+          *ngIf="file.thumbUrl && !file.needsThumbnail"
+          [style.width.%]="100"
+          [style.height.%]="100"
+          [src]="file.thumbUrl"
+        />
+        <div *ngIf="file.needsThumbnail" class="img-placeholder-wrap" [style.width.%]="100" [style.height.%]="100">
+          <div class="img-placeholder"><i class="pi pi-ban" title="Thumbnail unavailable"></i></div>
+        </div>
         <i *ngIf="!file.thumbUrl" class="pi pi-spin pi-spinner"></i>
       </div>
 

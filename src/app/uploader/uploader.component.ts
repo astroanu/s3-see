@@ -122,7 +122,7 @@ export class UploaderComponent {
         this.selectedFiles = files;
         this.updateFileSize();
 
-        window.dispatchEvent(new Event('resize'));
+        //window.dispatchEvent(new Event('resize'));
       })
       .catch(() => console.log('createFileTree failed'));
   }

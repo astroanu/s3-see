@@ -11,7 +11,10 @@ const config = new ConfigService();
 
 export class S3File implements S3FileInterface {
   private thumbUrl: string = null;
-  private fullUrl: string = null;
+
+  public fullUrl: string = null;
+
+  public needsThumbnail: boolean = false;
 
   private s3: S3;
 
@@ -67,10 +70,21 @@ export class S3File implements S3FileInterface {
 
           this.getSignedUrl(thumbKey).then((url: string) => {
             this.thumbUrl = url;
+            this.checkThumbnail();
           });
         }
       })
       .catch(() => console.log('createSignedUrls failed'));
+  }
+
+  private checkThumbnail() {
+    const img = document.createElement('img');
+
+    img.onerror = () => {
+      this.needsThumbnail = true;
+    };
+
+    img.src = this.thumbUrl;
   }
 
   get key(): string {
