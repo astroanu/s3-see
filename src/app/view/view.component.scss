@@ -20,7 +20,7 @@
 .table-wrap {
   padding: 0 !important;
   border-top: none !important;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &.loading-bar {
     text-align: center;

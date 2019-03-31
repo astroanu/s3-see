@@ -4,9 +4,10 @@
   </div>
   <div class="p-col-3">
     <p-progressBar
-      title="Click to show details"
+      *ngIf="totalBytes"
+      title="Batch job in progress. Click to show details"
       (click)="showQueuePanel()"
-      mode="indeterminate"
+      [value]="progress"
       [style]="{ height: '6px' }"
     ></p-progressBar>
   </div>

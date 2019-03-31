@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
-import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { UploaderService } from '../../services/uploader/uploader.service';
@@ -25,7 +24,7 @@ export class UploaderComponent {
   public displayOptions: boolean = false;
 
   public optionsForm: FormGroup = new FormGroup({
-    prefix: new FormControl(),
+    prefix: new FormControl('uploaded', [Validators.required]),
     suffix: new FormControl(),
     flattern: new FormControl(false),
     overwrite: new FormControl(true),
@@ -112,7 +111,7 @@ export class UploaderComponent {
   private initializeUploaderService() {
     this.uploaderService.setUploadDirectory(this.uploadDirectory);
 
-    this.createFileTree();
+    this.applyOptions();
   }
 
   private createFileTree() {

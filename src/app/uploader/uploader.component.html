@@ -20,7 +20,14 @@
           class="ui-button-secondary"
         ></button>
         <input class="upload-directory" type="text" pInputText [disabled]="true" [(ngModel)]="uploadDirectory" />
-        <button pButton (click)="queueUpload()" label="Upload" iconPos="left" icon="pi pi-cloud-upload"></button>
+        <button
+          [disabled]="!selectedFiles || !selectedFiles.length"
+          pButton
+          (click)="queueUpload()"
+          label="Upload"
+          iconPos="left"
+          icon="pi pi-cloud-upload"
+        ></button>
         <button
           pButton
           (click)="showOptions()"
@@ -30,7 +37,10 @@
           icon="pi pi-cog"
         ></button>
       </div>
-      <p class="files-stat">
+      <p class="files-stat" *ngIf="!selectedFiles || !selectedFiles.length">
+        No files selected for uploading.
+      </p>
+      <p class="files-stat" *ngIf="selectedFiles && selectedFiles.length">
         Uploading {{ selectedFiles ? selectedFiles.length : 0 }} files ({{ filesSelectedTotalSize | prettySize }})
       </p>
     </div>

@@ -15,26 +15,28 @@ export class FileService implements FileServiceInterface {
 
   constructor(private config: ConfigService) {}
 
-  public upload(key: string, data: Blob): Promise<object> {
+  public upload(key: string, data: Blob, progressCallback): Promise<object> {
     return new Promise((resolve, reject) => {
-      this.s3.upload(
-        {
-          Body: data,
-          Bucket: this.bucketName,
-          Key: key
-        },
-        {
-          partSize: 10 * 1024 * 1024,
-          queueSize: 1
-        },
-        (err, data: S3.Types.PutObjectOutput) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(data);
+      this.s3
+        .upload(
+          {
+            Body: data,
+            Bucket: this.bucketName,
+            Key: key
+          },
+          {
+            partSize: 10 * 1024 * 1024,
+            queueSize: 1
+          },
+          (err, data: S3.Types.PutObjectOutput) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
           }
-        }
-      );
+        )
+        .on('httpUploadProgress', progressCallback);
     });
   }
 

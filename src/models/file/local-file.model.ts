@@ -27,11 +27,11 @@ export class LocalFile implements LocalFileInterface {
       }
 
       if (this.uploadOptions.prefix) {
-        destKey = this.uploadOptions.prefix + destKey;
+        destKey = this.addTrailingSlash(this.uploadOptions.prefix) + destKey;
       }
 
       if (this.uploadOptions.suffix) {
-        destKey = destKey.replace(this.fileName, this.uploadOptions.suffix) + this.fileName;
+        destKey = destKey.replace(this.fileName, this.addTrailingSlash(this.uploadOptions.suffix)) + this.fileName;
       }
 
       if (this.uploadOptions.noSpaces) {
@@ -43,6 +43,10 @@ export class LocalFile implements LocalFileInterface {
       }
     }
     return destKey;
+  }
+
+  private addTrailingSlash(value) {
+    return (value += value.endsWith('/') ? '' : '/');
   }
 
   public getBinaryData(): Promise<Blob> {
@@ -86,7 +90,7 @@ export class LocalFile implements LocalFileInterface {
   }
 
   public get key(): string {
-    return this.relativePath;
+    return this.destinationKey;
   }
 
   public get fullLocalPath(): string {

@@ -7,12 +7,12 @@
       class="ui-button-secondary collapse-button"
       icon="pi pi-angle-double-down"
     ></button>
-    <p>{{ jobs.length }} jobs on queue</p>
+    <p>{{ jobs.length }} job(s) on queue</p>
   </div>
 
   <div class="jobs-wrap">
     <div *ngFor="let job of jobs" class="job ui-widget ui-shadow">
-      <p class="job-status">{{ job.status }}</p>
+      <p class="job-status">{{ job.status }} ({{ job.xhrProgress }}%)</p>
       <p-progressBar [style]="{ height: '12px' }" [showValue]="false" [value]="job.progress"></p-progressBar>
     </div>
   </div>

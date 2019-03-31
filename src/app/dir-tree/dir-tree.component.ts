@@ -45,6 +45,17 @@ export class DirTreeComponent {
     this.status.emit('Failed to load directories...');
   }
 
+  private showErrorMessage(e = null) {
+    this.messageService.add({
+      sticky: true,
+      life: 10000,
+      key: 'tc',
+      severity: 'error',
+      summary: 'Could not load directory structure',
+      detail: e ? e.toString() : null
+    });
+  }
+
   public initializeDirPane() {
     this.selectedFiles = [];
     this.fileTree = [];
@@ -59,28 +70,13 @@ export class DirTreeComponent {
           this.emitLoadedEvent();
         },
         (e) => {
-          this.messageService.add({
-            sticky: true,
-            life: 10000,
-            key: 'tc',
-            severity: 'error',
-            summary: 'Could not load directory structure',
-            detail: e.toString()
-          });
-
+          this.showErrorMessage(e);
           this.loading = false;
           this.emitLoadErrorEvent();
         }
       )
       .catch(() => {
-        this.messageService.add({
-          sticky: true,
-          life: 10000,
-          key: 'tc',
-          severity: 'error',
-          summary: 'Could not load directory structure'
-        });
-
+        this.showErrorMessage();
         this.loading = false;
         this.emitLoadErrorEvent();
 
