@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
 import { FileList } from '../../models/file-list/file-list.model';
+import { LocalFile } from '../../models/file/local-file.model';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { ConfigService } from '../config/config.service';
 import { FileServiceInterface } from './file.service.interface';
@@ -15,7 +16,32 @@ export class FileService implements FileServiceInterface {
 
   constructor(private config: ConfigService) {}
 
-  initializeS3Object(): Promise<void> {
+  public upload(file: LocalFile): Promise<object> {
+    return file.getBinaryData().then((data: Buffer) => {
+      return new Promise((resolve, reject) => {
+        this.s3.upload(
+          {
+            Body: data,
+            Bucket: this.bucketName,
+            Key: file.key
+          },
+          {
+            partSize: 10 * 1024 * 1024,
+            queueSize: 1
+          },
+          (err, data: S3.Types.PutObjectOutput) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+          }
+        );
+      });
+    });
+  }
+
+  public initializeS3Object(): Promise<void> {
     return new Promise((resolve, reject) => {
       const credentials = this.config.getBucketCredentials(this.bucketName);
 
@@ -34,11 +60,11 @@ export class FileService implements FileServiceInterface {
     });
   }
 
-  getBucketName(): string {
+  public getBucketName(): string {
     return this.bucketName;
   }
 
-  setBucket(bucketName: string): Promise<void> {
+  public setBucket(bucketName: string): Promise<void> {
     if (bucketName) {
       this.bucketName = bucketName;
 
@@ -47,7 +73,7 @@ export class FileService implements FileServiceInterface {
     return Promise.reject();
   }
 
-  listDirectories(prefix: string, continuationToken: null | string = null): Promise<FileListInterface> {
+  public listDirectories(prefix: string, continuationToken: null | string = null): Promise<FileListInterface> {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 
@@ -77,7 +103,7 @@ export class FileService implements FileServiceInterface {
     });
   }
 
-  listObjects(prefix: any, continuationToken = null): Promise<FileListInterface> {
+  public listObjects(prefix: any, continuationToken = null): Promise<FileListInterface> {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.bucketName };
 

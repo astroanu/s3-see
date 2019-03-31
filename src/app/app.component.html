@@ -20,5 +20,5 @@
 </div>
 <app-status-bar (showQueue)="showQueue($event)"></app-status-bar>
 <app-queue></app-queue>
-<app-uploader (uploadQueued)="uploadQueued($event)"></app-uploader>
+<app-uploader (uploadQueued)="uploadQueued($event)" [bucket]="currentBucket"></app-uploader>
 <app-bucket-manage (bucketsUpdated)="initializeBucktesList()"></app-bucket-manage>

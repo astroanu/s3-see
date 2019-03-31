@@ -10,11 +10,11 @@ export class LocalFile implements LocalFileInterface {
   private stat = null;
   private uploadOptions: UploadOptions = null;
 
-  setUploadOptions(uploadOptions: UploadOptions) {
+  public setUploadOptions(uploadOptions: UploadOptions): void {
     this.uploadOptions = uploadOptions;
   }
 
-  get destinationKey() {
+  public get destinationKey(): string {
     let destKey = this.relativePath;
     if (this.uploadOptions) {
       if (this.uploadOptions.flattern) {
@@ -40,41 +40,55 @@ export class LocalFile implements LocalFileInterface {
     return destKey;
   }
 
-  get thumbUrl(): string {
-    return 'data:image/jpeg;base64,' + fs.readFileSync(this.filePath, 'base64');
+  public getBinaryData(): Promise<Buffer> {
+    const chunks = [];
+
+    return new Promise((resolve, reject) => {
+      const stream = fs.createReadStream(this.fullLocalPath);
+      stream.on('data', (chunk) => chunks.push(chunk));
+      stream.on('error', reject);
+      stream.on('end', () => resolve(Buffer.concat(chunks)));
+    });
   }
 
-  get fullUrl(): string {
+  public get thumbUrl(): string {
+    return 'data:image/jpeg;base64,' + fs.readFileSync(this.fullLocalPath, 'base64');
+  }
+
+  public get fullUrl(): string {
     return this.thumbUrl;
   }
 
-  get sizePretty(): string {
+  public get sizePretty(): string {
     const pipe = new PrettySizePipe();
 
     return pipe.transform(this.size);
   }
 
-  get size(): number {
+  public get size(): number {
     return this.stat.size;
   }
 
-  get lastModified() {
+  public get lastModified(): string {
     const pipe = new DateFormatPipe();
     return pipe.transform(this.stat.mtime, 'Do MMM YYYY, h:mm a');
   }
 
-  get fileName(): string {
+  public get fileName(): string {
     return basename(this.key);
   }
 
-  get key(): string {
+  public get key(): string {
     return this.relativePath;
   }
 
+  public get fullLocalPath(): string {
+    return this.filePath.replace('/', '\\');
+  }
+
   constructor(private relativePath: string, private filePath: string) {
-    console.log(fs);
     if (this.filePath) {
-      this.stat = fs.statSync(this.filePath.replace('/', '\\'));
+      this.stat = fs.statSync(this.fullLocalPath);
     }
   }
 }

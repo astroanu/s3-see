@@ -3,6 +3,11 @@
     {{ statusMessage }}
   </div>
   <div class="p-col-3">
-    <p-progressBar (click)="showQueuePanel()" mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+    <p-progressBar
+      title="Click to show details"
+      (click)="showQueuePanel()"
+      mode="indeterminate"
+      [style]="{ height: '6px' }"
+    ></p-progressBar>
   </div>
 </div>

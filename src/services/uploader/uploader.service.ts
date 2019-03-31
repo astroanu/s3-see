@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import * as fs from 'fs';
 
 import { LocalFile } from '../../models/file/local-file.model';
+import { Job } from '../../models/job/job';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploaderService {
-  private files = [];
   private options: UploadOptions = {
     prefix: null,
     suffix: null,
@@ -17,11 +17,11 @@ export class UploaderService {
     noSpaces: true
   };
 
-  setUploadOptions(options: UploadOptions) {
+  public setUploadOptions(options: UploadOptions) {
     this.options = options;
   }
 
-  walk(dir: string) {
+  private walk(dir: string) {
     let results = [];
     fs.readdirSync(dir).forEach((file) => {
       file = dir + '/' + file;
@@ -29,16 +29,22 @@ export class UploaderService {
       if (stat && stat.isDirectory()) {
         results = results.concat(this.walk(file));
       } else {
-        results.push(new LocalFile(file.replace(`${this.uploadDirectory}/`, ''), file));
+        const localFile = new LocalFile(file.replace(`${this.uploadDirectory}/`, ''), file);
+        localFile.setUploadOptions(this.options);
+        results.push(localFile);
       }
     });
     return results;
   }
 
-  createFileTree() {
+  public createFileTree() {
     return new Promise((resolve, reject) => {
       resolve(this.walk(this.uploadDirectory));
     });
+  }
+
+  public getJob(files: Array<LocalFile>, bucketName: string) {
+    return new Job(files, this.options, bucketName);
   }
 
   constructor(private uploadDirectory: string) {}

@@ -1,5 +1,19 @@
 <p-sidebar position="bottom" [modal]="false" [dismissible]="false" [showCloseIcon]="false" [(visible)]="panelVisible">
-  <p-progressBar [style]="{ height: '12px' }" mode="indeterminate" [value]="50"></p-progressBar>
+  <div class="tools">
+    <button
+      title="Hide this panel"
+      (click)="collapsePanel()"
+      pButton
+      class="ui-button-secondary collapse-button"
+      icon="pi pi-angle-double-down"
+    ></button>
+    <p>{{ jobs.length }} jobs on queue</p>
+  </div>
 
-  <button (click)="collapsePanel()" pButton class="ui-button-secondary collapse-button" icon="pi pi-check"></button>
+  <div class="jobs-wrap">
+    <div *ngFor="let job of jobs" class="job ui-widget ui-shadow">
+      <p class="job-status">{{ job.status }}</p>
+      <p-progressBar [style]="{ height: '12px' }" [showValue]="false" [value]="job.progress"></p-progressBar>
+    </div>
+  </div>
 </p-sidebar>

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
 
+import { LocalFile } from '../../models/file/local-file.model';
 import { UploaderService } from '../../services/uploader/uploader.service';
 
 @Component({
@@ -11,6 +12,12 @@ import { UploaderService } from '../../services/uploader/uploader.service';
 })
 export class UploaderComponent {
   @Output() uploadQueued = new EventEmitter<any>();
+
+  @Input() set bucket(bucketName: any) {
+    this.bucketName = bucketName;
+  }
+
+  private bucketName: string;
 
   public displayDialog: boolean = false;
 
@@ -25,7 +32,7 @@ export class UploaderComponent {
     noSpaces: new FormControl(true)
   });
 
-  public selectedFiles: Array<object> = null;
+  public selectedFiles: Array<LocalFile> = null;
 
   public selectedFile = null;
 
@@ -85,7 +92,7 @@ export class UploaderComponent {
   }
 
   public queueUpload() {
-    this.uploadQueued.emit(this.uploaderService);
+    this.uploadQueued.emit(this.uploaderService.getJob(this.selectedFiles, this.bucketName));
     this.hideDialog();
   }
 
@@ -114,6 +121,8 @@ export class UploaderComponent {
       .createFileTree()
       .then((files: any) => {
         this.files = files;
+        this.selectedFiles = files;
+        this.updateFileSize();
 
         window.dispatchEvent(new Event('resize'));
       })
