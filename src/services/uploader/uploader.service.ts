@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as fs from 'fs';
-import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
-import { Job } from '../../models/job/job';
+import { JobFactory } from '../../services/uploader/job.factory.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,12 @@ export class UploaderService {
     toLowerCase: true,
     noSpaces: true
   };
+
+  private uploadDirectory: string;
+
+  public setUploadDirectory(directorypath: string) {
+    this.uploadDirectory = directorypath;
+  }
 
   public setUploadOptions(options: UploadOptions) {
     this.options = options;
@@ -45,10 +50,10 @@ export class UploaderService {
   }
 
   public getJob(files: Array<LocalFile>, bucketName: string) {
-    return new Job(files, this.options, bucketName, this.picaService);
+    return this.jobFactory.make(files, this.options, bucketName);
   }
 
-  constructor(private uploadDirectory: string, private picaService: NgxPicaService) {}
+  constructor(private jobFactory: JobFactory) {}
 }
 
 export type UploadOptions = {

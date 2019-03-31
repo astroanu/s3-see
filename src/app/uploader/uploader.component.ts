@@ -43,8 +43,6 @@ export class UploaderComponent {
 
   public filesSelectedTotalSize: number = 0;
 
-  public uploaderService: UploaderService;
-
   public columns: Array<object> = [
     {
       field: 'fileName',
@@ -112,7 +110,7 @@ export class UploaderComponent {
   }
 
   private initializeUploaderService() {
-    this.uploaderService = new UploaderService(this.uploadDirectory, this.picaService);
+    this.uploaderService.setUploadDirectory(this.uploadDirectory);
 
     this.createFileTree();
   }
@@ -147,5 +145,5 @@ export class UploaderComponent {
     this.uploadDirectory = null;
   }
 
-  constructor(private electronService: ElectronService, private picaService: NgxPicaService) {}
+  constructor(private electronService: ElectronService, private uploaderService: UploaderService) {}
 }

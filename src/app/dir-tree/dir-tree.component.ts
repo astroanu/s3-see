@@ -72,7 +72,20 @@ export class DirTreeComponent {
           this.emitLoadErrorEvent();
         }
       )
-      .catch(() => console.log('initializeDirPane failed'));
+      .catch(() => {
+        this.messageService.add({
+          sticky: true,
+          life: 10000,
+          key: 'tc',
+          severity: 'error',
+          summary: 'Could not load directory structure'
+        });
+
+        this.loading = false;
+        this.emitLoadErrorEvent();
+
+        console.log('initializeDirPane failed');
+      });
   }
 
   public selectNode(event) {
@@ -113,9 +126,9 @@ export class DirTreeComponent {
               resolve();
             }
           },
-          () => reject()
+          (e) => reject(e)
         )
-        .catch(() => reject());
+        .catch((e) => reject(e));
     });
   }
 

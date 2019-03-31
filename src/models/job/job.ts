@@ -1,11 +1,10 @@
 import PromiseQueue from 'easy-promise-queue';
 
 import { LocalFile } from '../../models/file/local-file.model';
-import { ConfigService } from '../../services/config/config.service';
 import { FileService } from '../../services/file/file.service';
 import { UploadOptions } from '../../services/uploader/uploader.service';
 import { NgxPicaService } from 'ngx-pica';
-const pica = require('pica')();
+
 export const JOB_QUEUED = 'queued';
 export const JOB_STARTED = 'started';
 export const JOB_COMPLETE = 'complete';
@@ -17,15 +16,17 @@ export class Job {
 
   public status: string = 'Queued...';
 
-  private queue: PromiseQueue;
+  public promiseQueue: PromiseQueue;
 
-  private fileService: FileService;
+  public fileService: FileService;
+
+  public picaService: NgxPicaService;
 
   public start() {
     this.state = JOB_STARTED;
 
     this.files.forEach((file: LocalFile) => {
-      this.queue.add(() => {
+      this.promiseQueue.add(() => {
         return this.fileService
           .setBucket(this.bucketName)
           .then(() => {
@@ -67,11 +68,9 @@ export class Job {
 
   private blobToFile(theBlob: Blob, fileName: string): File {
     var b: any = theBlob;
-    //A Blob() is almost a File() - it's just missing the two properties below which we will add
     b.lastModifiedDate = new Date();
     b.name = fileName;
 
-    //Cast to a File() type
     return <File>theBlob;
   }
 
@@ -106,16 +105,5 @@ export class Job {
       .reduce((a, b) => a + b);
   }
 
-  constructor(
-    private files: Array<LocalFile>,
-    private options: UploadOptions,
-    private bucketName: string,
-    private picaService: NgxPicaService
-  ) {
-    this.queue = new PromiseQueue({
-      concurrency: 1
-    });
-
-    this.fileService = new FileService(new ConfigService());
-  }
+  constructor(private files: Array<LocalFile>, private options: UploadOptions, private bucketName: string) {}
 }

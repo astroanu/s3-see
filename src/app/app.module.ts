@@ -25,6 +25,7 @@ import { NgxPicaModule } from 'ngx-pica';
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
 import { FileService } from '../services/file/file.service';
+import { JobFactory } from '../services/uploader/job.factory.service';
 import { TreeService } from '../services/tree/tree.service';
 import { UploaderService } from '../services/uploader/uploader.service';
 import { AppComponent } from './app.component';
@@ -72,7 +73,7 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
     MomentModule,
     MenubarModule
   ],
-  providers: [MessageService, ConfigService, FileService, TreeService, UploaderService],
+  providers: [MessageService, ConfigService, FileService, TreeService, UploaderService, JobFactory],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
