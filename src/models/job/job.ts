@@ -9,12 +9,14 @@ export const JOB_QUEUED = 'queued';
 export const JOB_STARTED = 'started';
 export const JOB_COMPLETE = 'complete';
 
+export const THUMB_SIZE = 200;
+
 export class Job {
   public bytesTransfered: number = 0;
 
   public state: string = JOB_QUEUED;
 
-  public status: string = 'Queued...';
+  public status: string = 'Waiting...';
 
   public promiseQueue: PromiseQueue;
 
@@ -22,56 +24,69 @@ export class Job {
 
   public picaService: NgxPicaService;
 
-  public start() {
-    this.state = JOB_STARTED;
+  public itemStatusMap = {};
 
-    this.files.forEach((file: LocalFile) => {
-      this.promiseQueue.add(() => {
-        return this.fileService
-          .setBucket(this.bucketName)
-          .then(() => {
-            this.status = `Uploading file  ${file.key}`;
+  public start() {
+    return new Promise((resolve, reject) => {
+      this.state = JOB_STARTED;
+
+      this.files.forEach((file: LocalFile, itemId: number) => {
+        this.itemStatusMap[itemId] = 'queued';
+
+        this.promiseQueue.add(() => {
+          this.itemStatusMap[itemId] = 'started';
+
+          return this.fileService.setBucket(this.bucketName).then(() => {
+            this.status = `Uploading: ${file.key}`;
 
             return this.uploadFile(file).then(() => {
-              this.status = `Generating thumbnail  ${file.key}`;
+              this.status = `Generating thumbnail: ${file.key}`;
 
               return this.resize(file).then((thumbnail: Blob) => {
-                return this.uploadThumbnail(file.thumbnailKey, thumbnail);
+                return this.uploadThumbnail(file.thumbnailKey, thumbnail).then(() => {
+                  this.itemStatusMap[itemId] = 'complete';
+                });
               });
             });
-          })
-          .catch((e) => console.log(e));
+          });
+        });
       });
+
+      const timer = setInterval(() => {
+        if (
+          Object.values(this.itemStatusMap).filter((value) => {
+            return value === 'complete';
+          }).length === Object.values(this.itemStatusMap).length
+        ) {
+          clearTimeout(timer);
+          resolve();
+        }
+      }, 5000);
     });
   }
 
   private resize(file: LocalFile) {
-    var offScreenCanvas = document.createElement('canvas');
-    offScreenCanvas.width = 200;
-    offScreenCanvas.height = 200;
+    const offScreenCanvas = document.createElement('canvas');
+    offScreenCanvas.width = THUMB_SIZE;
+    offScreenCanvas.height = THUMB_SIZE;
 
     return new Promise((resolve, reject) => {
-      console.log('canv', offScreenCanvas);
-
       return file.getBinaryData().then((blob: Blob) => {
-        console.log('blob', blob);
-        const f = this.blobToFile(blob, file.fileName);
-        console.log('f', f);
-        return this.picaService.resizeImage(f, 100, 100).subscribe((result) => {
-          console.log(result);
-
-          resolve(result);
-        });
+        return this.picaService
+          .resizeImage(this.blobToFile(blob, file.fileName), THUMB_SIZE, THUMB_SIZE)
+          .subscribe((result) => {
+            resolve(result);
+          });
       });
     });
   }
 
-  private blobToFile(theBlob: Blob, fileName: string): File {
-    var b: any = theBlob;
-    b.lastModifiedDate = new Date();
-    b.name = fileName;
+  private blobToFile(blob: Blob, fileName: string): File {
+    const file: any = blob;
+    file.lastModifiedDate = new Date();
+    file.name = fileName;
 
-    return <File>theBlob;
+    return <File>blob;
   }
 
   private uploadThumbnail(key: string, data: Blob) {
@@ -90,14 +105,14 @@ export class Job {
   }
 
   public get progress() {
-    return (100 / this.totalBytes) * this.bytesTransfered;
+    return (100 / this.bytesInQueue) * this.bytesTransfered;
   }
 
   private recordBytes(bytes: number) {
     this.bytesTransfered += bytes;
   }
 
-  private get totalBytes() {
+  public get bytesInQueue() {
     return this.files
       .map((file: LocalFile) => {
         return file.size;

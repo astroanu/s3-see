@@ -94,6 +94,15 @@ export class AppComponent {
     this.statusBarComponent.statusMessage = message;
   }
 
+  public updateTotalBytes(value) {
+    this.statusBarComponent.totalBytes = value;
+  }
+
+  public updateTransferedBytes(value) {
+    console.log(value);
+    this.statusBarComponent.transferedBytes = value;
+  }
+
   private setDefaultBucket() {
     const firstBucket: any = this.buckets[0];
     this.currentBucket = firstBucket.value;
