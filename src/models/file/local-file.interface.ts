@@ -6,7 +6,7 @@ export interface LocalFileInterface extends S3FileInterface {
 
   destinationKey: string;
 
-  getBinaryData(): Promise<Buffer>;
+  getBinaryData(): Promise<Blob>;
 
   thumbUrl: string;
 

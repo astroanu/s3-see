@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen as electronScreen } from 'electron';
+import { app, BrowserWindow, ipcMain, screen as electronScreen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 

@@ -20,6 +20,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
+import { NgxPicaModule } from 'ngx-pica';
 
 import { PrettySizePipe } from '../pipes/pretty-size.pipe';
 import { ConfigService } from '../services/config/config.service';
@@ -49,6 +50,7 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
   ],
   imports: [
     NgxElectronModule,
+    NgxPicaModule,
     BrowserModule,
     DialogModule,
     BrowserAnimationsModule,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as fs from 'fs';
+import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { Job } from '../../models/job/job';
@@ -44,10 +45,10 @@ export class UploaderService {
   }
 
   public getJob(files: Array<LocalFile>, bucketName: string) {
-    return new Job(files, this.options, bucketName);
+    return new Job(files, this.options, bucketName, this.picaService);
   }
 
-  constructor(private uploadDirectory: string) {}
+  constructor(private uploadDirectory: string, private picaService: NgxPicaService) {}
 }
 
 export type UploadOptions = {

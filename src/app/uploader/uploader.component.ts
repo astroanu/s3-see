@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
+import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { UploaderService } from '../../services/uploader/uploader.service';
@@ -111,7 +112,7 @@ export class UploaderComponent {
   }
 
   private initializeUploaderService() {
-    this.uploaderService = new UploaderService(this.uploadDirectory);
+    this.uploaderService = new UploaderService(this.uploadDirectory, this.picaService);
 
     this.createFileTree();
   }
@@ -146,5 +147,5 @@ export class UploaderComponent {
     this.uploadDirectory = null;
   }
 
-  constructor(private electronService: ElectronService) {}
+  constructor(private electronService: ElectronService, private picaService: NgxPicaService) {}
 }

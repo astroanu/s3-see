@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { DateFormatPipe } from 'ngx-moment';
 import { basename } from 'path';
+var toBlob = require('stream-to-blob');
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { UploadOptions } from '../../services/uploader/uploader.service';
@@ -12,6 +13,10 @@ export class LocalFile implements LocalFileInterface {
 
   public setUploadOptions(uploadOptions: UploadOptions): void {
     this.uploadOptions = uploadOptions;
+  }
+
+  public get thumbnailKey(): string {
+    return this.destinationKey.replace(this.fileName, '_thumbs/') + this.fileName;
   }
 
   public get destinationKey(): string {
@@ -40,14 +45,16 @@ export class LocalFile implements LocalFileInterface {
     return destKey;
   }
 
-  public getBinaryData(): Promise<Buffer> {
-    const chunks = [];
-
+  public getBinaryData(): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const stream = fs.createReadStream(this.fullLocalPath);
-      stream.on('data', (chunk) => chunks.push(chunk));
-      stream.on('error', reject);
-      stream.on('end', () => resolve(Buffer.concat(chunks)));
+      toBlob(stream, (err, blob) => {
+        if (err) {
+          reject();
+        } else {
+          resolve(blob);
+        }
+      });
     });
   }
 

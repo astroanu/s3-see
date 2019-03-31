@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk';
 import { S3 } from 'aws-sdk';
 import { FileList } from '../../models/file-list/file-list.model';
-import { LocalFile } from '../../models/file/local-file.model';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { ConfigService } from '../config/config.service';
 import { FileServiceInterface } from './file.service.interface';
@@ -16,28 +15,26 @@ export class FileService implements FileServiceInterface {
 
   constructor(private config: ConfigService) {}
 
-  public upload(file: LocalFile): Promise<object> {
-    return file.getBinaryData().then((data: Buffer) => {
-      return new Promise((resolve, reject) => {
-        this.s3.upload(
-          {
-            Body: data,
-            Bucket: this.bucketName,
-            Key: file.key
-          },
-          {
-            partSize: 10 * 1024 * 1024,
-            queueSize: 1
-          },
-          (err, data: S3.Types.PutObjectOutput) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(data);
-            }
+  public upload(key: string, data: Blob): Promise<object> {
+    return new Promise((resolve, reject) => {
+      this.s3.upload(
+        {
+          Body: data,
+          Bucket: this.bucketName,
+          Key: key
+        },
+        {
+          partSize: 10 * 1024 * 1024,
+          queueSize: 1
+        },
+        (err, data: S3.Types.PutObjectOutput) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
           }
-        );
-      });
+        }
+      );
     });
   }
 
