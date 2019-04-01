@@ -1,9 +1,9 @@
 import PromiseQueue from 'easy-promise-queue';
+import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { FileService } from '../../services/file/file.service';
 import { UploadOptions } from '../../services/uploader/uploader.service';
-import { NgxPicaService } from 'ngx-pica';
 
 export const JOB_QUEUED = 'queued';
 export const JOB_STARTED = 'started';
@@ -93,7 +93,7 @@ export class Job {
     file.lastModifiedDate = new Date();
     file.name = fileName;
 
-    return <File>blob;
+    return <File> blob;
   }
 
   private uploadThumbnail(key: string, data: Blob) {

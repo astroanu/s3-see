@@ -27,10 +27,10 @@ export class FileService implements FileServiceInterface {
             queueSize: 1
           },
           (err, data: S3.Types.PutObjectOutput) => {
-            if (err) {
-              reject(err);
-            } else {
+            if (!err) {
               resolve(data);
+            } else {
+              reject(err);
             }
           }
         )
