@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UploaderService } from './uploader.service';
+import { JobFactoryService } from './job.factory.service';
 
 describe('UploaderService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
-
-  it('should be created', () => {
-    const service: UploaderService = new UploaderService('path');
-    expect(service).toBeTruthy();
-  });
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [JobFactoryService]
+    })
+  );
 });

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
+import { NgxPicaModule } from 'ngx-pica';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -24,6 +25,7 @@ describe('UploaderComponent', () => {
       providers: [ElectronService],
       imports: [
         FormsModule,
+        NgxPicaModule,
         ReactiveFormsModule,
         ButtonModule,
         DialogModule,

@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
+import { NgxPicaModule } from 'ngx-pica';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
@@ -29,7 +30,15 @@ describe('AppComponent', () => {
         UploaderComponent
       ],
       providers: [MessageService, ElectronService],
-      imports: [FormsModule, ReactiveFormsModule, SidebarModule, DropdownModule, MenubarModule, ToastModule],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        SidebarModule,
+        NgxPicaModule,
+        DropdownModule,
+        MenubarModule,
+        ToastModule
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));

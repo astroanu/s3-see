@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as fs from 'fs';
 
 import { LocalFile } from '../../models/file/local-file.model';
-import { JobFactory } from '../../services/uploader/job.factory.service';
+import { JobFactoryService } from '../../services/uploader/job.factory.service';
 
 @Injectable({
   providedIn: 'root'
@@ -50,10 +50,10 @@ export class UploaderService {
   }
 
   public getJob(files: Array<LocalFile>, bucketName: string) {
-    return this.jobFactory.make(files, this.options, bucketName);
+    return this.jobFactoryservice.make(files, this.options, bucketName);
   }
 
-  constructor(private jobFactory: JobFactory) {}
+  constructor(private jobFactoryservice: JobFactoryService) {}
 }
 
 export type UploadOptions = {

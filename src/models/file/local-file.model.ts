@@ -1,11 +1,12 @@
 import * as fs from 'fs';
 import { DateFormatPipe } from 'ngx-moment';
 import { basename } from 'path';
-var toBlob = require('stream-to-blob');
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { UploadOptions } from '../../services/uploader/uploader.service';
 import { LocalFileInterface } from './local-file.interface';
+
+var toBlob = require('stream-to-blob');
 
 export class LocalFile implements LocalFileInterface {
   private stat = null;
@@ -45,7 +46,7 @@ export class LocalFile implements LocalFileInterface {
     return destKey;
   }
 
-  private addTrailingSlash(value) {
+  private addTrailingSlash(value): string {
     return (value += value.endsWith('/') ? '' : '/');
   }
 
@@ -98,8 +99,6 @@ export class LocalFile implements LocalFileInterface {
   }
 
   constructor(private relativePath: string, private filePath: string) {
-    if (this.filePath) {
-      this.stat = fs.statSync(this.fullLocalPath);
-    }
+    this.stat = fs.statSync(this.fullLocalPath);
   }
 }

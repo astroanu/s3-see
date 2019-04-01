@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SidebarModule } from 'primeng/sidebar';
 
@@ -12,6 +13,7 @@ describe('QueueComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [QueueComponent],
+      providers: [MessageService],
       imports: [SidebarModule, ProgressBarModule, BrowserAnimationsModule]
     }).compileComponents();
 

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 import { StatusBarComponent } from './status-bar.component';
 
@@ -8,9 +9,9 @@ describe('StatusBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusBarComponent ]
-    })
-    .compileComponents();
+      declarations: [StatusBarComponent],
+      imports: [ProgressBarModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
