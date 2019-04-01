@@ -23,19 +23,7 @@
     "no-empty": true,
     "no-eval": true,
     "no-reference": true,
-    "no-shadowed-variable": [
-      true,
-      {
-        "class": true,
-        "enum": true,
-        "function": false,
-        "interface": false,
-        "namespace": true,
-        "typeAlias": false,
-        "typeParameter": false,
-        "underscore": false
-      }
-    ],
+    "no-shadowed-variable": false,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": false,
