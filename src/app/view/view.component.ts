@@ -31,6 +31,8 @@ export class ViewComponent {
 
   public thumbMultiplier: number = 7;
 
+  public newm: number = 7;
+
   public filesShown: Array<S3FileInterface> = [];
 
   public listView: boolean = false;
@@ -92,12 +94,22 @@ export class ViewComponent {
   }
 
   public setThumbSize() {
+    let multiplierCorrected;
+
+    if (this.thumbMultiplier === 7) {
+      multiplierCorrected = this.thumbMultiplier;
+    } else if (this.thumbMultiplier > 7) {
+      multiplierCorrected = 7 - this.thumbMultiplier + 7;
+    } else if (this.thumbMultiplier < 7) {
+      multiplierCorrected = 7 + 7 - this.thumbMultiplier;
+    }
+
     const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
 
     const containerWidth = dataViewEl.offsetWidth - 14;
 
-    this.thumbW = 100 / this.thumbMultiplier;
-    this.thumbH = containerWidth / this.thumbMultiplier;
+    this.thumbW = 100 / multiplierCorrected;
+    this.thumbH = containerWidth / multiplierCorrected;
   }
 
   public resetFilesShown() {

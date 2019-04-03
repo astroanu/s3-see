@@ -9,10 +9,9 @@
         >)
       </span>
     </div>
-
     <div class="toolbar ui-toolbar-group-right">
       <span class="control-block">
-        <i class="pi pi-plus-circle"></i>
+        <i class="pi pi-minus-circle"></i>
         <span class="zoom-controller">
           <p-slider
             title="Thumbnail size"
@@ -23,7 +22,7 @@
             [max]="10"
           ></p-slider>
         </span>
-        <i class="pi pi-minus-circle"></i>
+        <i class="pi pi-plus-circle"></i>
       </span>
       <p-button icon="pi pi-bars" title="List View" (onClick)="viewList()" *ngIf="!listView"></p-button>
       <p-button icon="pi pi-th-large" title="Thumbnail View" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
