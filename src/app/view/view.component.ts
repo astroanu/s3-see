@@ -1,4 +1,6 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ContextMenu } from 'primeng/contextmenu';
 
 import { DirectoryInterface } from '../../models/directory/directory.interface';
 import { S3FileInterface } from '../../models/file/s3-file.interface';
@@ -25,25 +27,54 @@ export class ViewComponent {
     }
   ];
 
+  public contextmenu = [
+    {
+      label: 'Copy key',
+      command: () => {
+        this.copyFileKey();
+      }
+    },
+    {
+      label: 'Create signed URL'
+    },
+    {
+      label: 'Download'
+    },
+    {
+      label: 'Regenerate thumbnail',
+      command: () => {
+        this.regenerateThumbnail();
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: 'Properties'
+    }
+  ];
+
   public thumbH: number = 200;
 
   public thumbW: number = 25;
 
   public thumbMultiplier: number = 7;
 
-  public newm: number = 7;
-
-  public filesShown: Array<S3FileInterface> = [];
+  public filesShown: Array<any> = [];
 
   public listView: boolean = false;
 
   public loading: boolean = false;
+
+  public fullScreenFile: S3FileInterface = null;
 
   public selectedFile: S3FileInterface = null;
 
   public filesShownTotalSize = 0;
 
   public currentDirectory: DirectoryInterface;
+
+  @ViewChild(ContextMenu) contextMenu: ContextMenu;
 
   @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
@@ -79,8 +110,22 @@ export class ViewComponent {
     this.setThumbSize();
   }
 
+  public showContectMenu(event, file) {
+    this.selectedFile = file;
+    this.contextMenu.position(event);
+    this.contextMenu.show();
+  }
+
+  private regenerateThumbnail() {
+    this.selectedFile.generateThumbnail();
+  }
+
   public setSelectedFile(file) {
     this.selectedFile = file;
+  }
+
+  public openSlideShow(file) {
+    this.fullScreenFile = file;
   }
 
   public clearSelectedFile() {
@@ -125,5 +170,26 @@ export class ViewComponent {
     this.listView = false;
   }
 
-  constructor(private fileService: FileService, private el: ElementRef) {}
+  private copyFileKey() {
+    this.copyToClipboard(this.selectedFile.key);
+
+    this.messageService.add({
+      life: 3000,
+      key: 'tc',
+      severity: 'success',
+      summary: 'Copied.',
+      detail: 'Object key has been copied to the clipboard.'
+    });
+  }
+
+  private copyToClipboard(text) {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', text);
+      e.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
+  }
+
+  constructor(private fileService: FileService, private messageService: MessageService, private el: ElementRef) {}
 }

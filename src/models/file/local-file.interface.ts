@@ -1,7 +1,7 @@
 import { UploadOptions } from '../../services/uploader/uploader.service';
-import { S3FileInterface } from './s3-file.interface';
+import { FileInterface } from './file.interface';
 
-export interface LocalFileInterface extends S3FileInterface {
+export interface LocalFileInterface extends FileInterface {
   setUploadOptions(uploadOptions: UploadOptions): void;
 
   destinationKey: string;

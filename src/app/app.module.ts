@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -61,6 +62,7 @@ import { ViewComponent } from './view/view.component';
     SidebarModule,
     CardModule,
     InputTextModule,
+    ContextMenuModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule,

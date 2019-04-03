@@ -74,8 +74,11 @@
     <div class="ui-md-12">
       <div
         *ngFor="let file of filesShown"
+        [class.selected]="selectedFile === file"
         class="ui-md-3 thumbnail"
         (click)="setSelectedFile(file)"
+        (dblclick)="openSlideShow(file)"
+        (contextmenu)="showContectMenu($event, file)"
         [style.height.px]="thumbH"
         [style.width.%]="thumbW"
       >
@@ -95,4 +98,5 @@
     </div>
   </div>
 </div>
-<app-slide-show (closed)="clearSelectedFile()" [(file)]="selectedFile"></app-slide-show>
+<app-slide-show (closed)="clearSelectedFile()" [(file)]="fullScreenFile"></app-slide-show>
+<p-contextMenu [model]="contextmenu"></p-contextMenu>

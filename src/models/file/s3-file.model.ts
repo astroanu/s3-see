@@ -77,6 +77,10 @@ export class S3File implements S3FileInterface {
       .catch(() => console.log('createSignedUrls failed'));
   }
 
+  public generateThumbnail() {
+    console.log('ss');
+  }
+
   private checkThumbnail() {
     const img = document.createElement('img');
 

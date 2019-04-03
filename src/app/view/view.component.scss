@@ -1,6 +1,6 @@
 .thumbnail {
   float: left;
-  padding: 0px;
+  padding: 0;
 
   .img-placeholder-wrap {
     padding: 5px;
@@ -14,10 +14,10 @@
     object-fit: cover;
     cursor: pointer;
     border: thick solid transparent;
+  }
 
-    &:hover {
-      border: thick solid #eaeaea;
-    }
+  &.selected img {
+    border: thick solid #507ee2;
   }
 }
 

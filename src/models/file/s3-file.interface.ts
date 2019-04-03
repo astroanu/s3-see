@@ -1,11 +1,5 @@
-export interface S3FileInterface {
-  sizePretty: string;
+import { FileInterface } from './file.interface';
 
-  size: number;
-
-  lastModified: string;
-
-  fileName: string;
-
-  key: string;
+export interface S3FileInterface extends FileInterface {
+  generateThumbnail(): void;
 }
