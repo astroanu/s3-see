@@ -97,7 +97,7 @@
     "appId": "com.collejo.s3see",
     "productName": "S3 See",
     "win": {
-      "icon": "s3see.ico",
+      "icon": "src/s3see.ico",
       "target": {
         "target": "nsis"
       },
@@ -106,7 +106,7 @@
       ]
     },
     "nsis": {
-      "installerIcon": "s3see.ico",
+      "installerIcon": "src/s3see.ico",
       "deleteAppDataOnUninstall": true
     },
     "files": [

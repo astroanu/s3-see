@@ -1,7 +1,12 @@
+import { UploadOptions } from './uploader.service';
+import { LocalFile } from '../../models/file/local-file.model';
+
 export interface UploaderServiceInterface {
-  get(id: string);
+  setUploadDirectory(directorypath: string): void;
 
-  update(id: string, value: object);
+  setUploadOptions(options: UploadOptions): void;
 
-  getDb();
+  createFileTree(): Promise<Array<LocalFile>>;
+
+  getJob(files: Array<LocalFile>, bucketName: string);
 }

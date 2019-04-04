@@ -3,7 +3,7 @@ import PromiseQueue from 'easy-promise-queue';
 import { NgxPicaService } from 'ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
-import { Job } from '../../models/job/job';
+import { UploadJob } from '../../models/job/upload-job';
 import { FileService } from '../../services/file/file.service';
 import { UploadOptions } from '../../services/uploader/uploader.service';
 
@@ -11,8 +11,8 @@ import { UploadOptions } from '../../services/uploader/uploader.service';
   providedIn: 'root'
 })
 export class JobFactoryService {
-  public make(files: Array<LocalFile>, options: UploadOptions, bucketName: string) {
-    const job = new Job(files, options, bucketName);
+  public make(files: Array<LocalFile>, options: UploadOptions, bucketName: string): UploadJob {
+    const job = new UploadJob(files, options, bucketName);
 
     job.promiseQueue = new PromiseQueue({
       concurrency: 1
