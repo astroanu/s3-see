@@ -13,5 +13,5 @@ export interface JobInterface {
 
   recordBytes(bytes: number): void;
 
-  start(): Promise<UploadJob>;
+  start(): Promise<any>;
 }

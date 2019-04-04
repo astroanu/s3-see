@@ -3,7 +3,7 @@ import { JobInterface } from './job.interface';
 import { Job, JOB_STARTED, JOB_COMPLETE, JOB_QUEUED, THUMB_SIZE } from './job';
 
 export class UploadJob extends Job implements JobInterface {
-  public start(): Promise<UploadJob> {
+  public start(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.state = JOB_STARTED;
 
