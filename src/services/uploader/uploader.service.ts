@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as fs from 'fs';
+import { Observable } from 'rxjs';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { JobFactoryService } from '../../services/uploader/job.factory.service';
@@ -44,9 +45,9 @@ export class UploaderService implements UploaderServiceInterface {
     return results;
   }
 
-  public createFileTree(): Promise<Array<LocalFile>> {
-    return new Promise((resolve, reject) => {
-      resolve(this.walk(this.uploadDirectory));
+  public createFileTree(): Observable<Array<LocalFile>> {
+    return new Observable((observer) => {
+      observer.next(this.walk(this.uploadDirectory));
     });
   }
 

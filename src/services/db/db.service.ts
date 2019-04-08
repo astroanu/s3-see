@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxIndexedDB } from 'ngx-indexed-db';
+import { Observable } from 'rxjs';
 
 import { DbServiceInterface } from './db.service.interface';
 
@@ -11,48 +12,42 @@ const DBVersion = 1;
 })
 export class DbService implements DbServiceInterface {
   private db = new NgxIndexedDB(DBName, DBVersion);
-  private store;
+  private store: any;
 
-  get(id: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      return this.getDb()
-        .then((db: any) => {
-          return db
-            .getByKey(this.storeName, id)
-            .then((result) => {
-              resolve(result ? result : null);
-            })
-            .catch(() => reject());
-        })
-        .catch(() => reject());
+  get(id: string): Observable<any> {
+    return new Observable((observer) => {
+      this.getDb().subscribe((db: any) => {
+        db.getByKey(this.storeName, id).then(
+          (result) => {
+            observer.next(result ? result : null);
+          },
+          (e) => {
+            observer.error(e);
+          }
+        );
+      });
     });
   }
 
-  update(id: string, value: object): Promise<void> {
-    return new Promise((resolve, reject) => {
-      return this.getDb().then((db: any) => {
-        return db.getByKey(this.storeName, id).then((result) => {
+  update(id: string, value: object): Observable<void> {
+    return new Observable((observer) => {
+      this.getDb().subscribe((db: any) => {
+        db.getByKey(this.storeName, id).subscribe((result) => {
           value[this.primaryKey] = id;
 
           if (result) {
-            return db
-              .update(this.storeName, value)
-              .then(() => resolve())
-              .catch(() => reject());
+            db.update(this.storeName, value).subscribe(() => observer.next(), (e) => observer.error());
           } else {
-            return db
-              .add(this.storeName, value)
-              .then(() => resolve())
-              .catch(() => reject());
+            db.add(this.storeName, value).subscribe(() => observer.next(), (e) => observer.error());
           }
         });
       });
     });
   }
 
-  getDb(): Promise<NgxIndexedDB> {
-    return new Promise((resolve, reject) => {
-      return this.db
+  getDb(): Observable<NgxIndexedDB> {
+    return new Observable((observer) => {
+      this.db
         .openDatabase(DBVersion, (evt) => {
           this.store = evt.currentTarget.result.createObjectStore(this.storeName, {
             keyPath: this.primaryKey,
@@ -63,9 +58,14 @@ export class DbService implements DbServiceInterface {
             unique: true
           });
         })
-        .then(() => {
-          resolve(this.db);
-        })
+        .then(
+          () => {
+            observer.next(this.db);
+          },
+          (e) => {
+            observer.error(e);
+          }
+        )
         .catch(() => console.log('getDb failed'));
     });
   }

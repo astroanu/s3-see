@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { ConfigService } from '../../services/config/config.service';
 
@@ -28,11 +29,9 @@ export class BucketManageComponent {
   private editIndex = null;
 
   public showDialog() {
-    this.loadBuckets()
-      .then(() => {
-        this.displayDialog = true;
-      })
-      .catch(() => console.log('showDialog failed'));
+    this.loadBuckets().subscribe(() => {
+      this.displayDialog = true;
+    });
   }
 
   public hideDialog() {
@@ -75,28 +74,25 @@ export class BucketManageComponent {
   }
 
   public saveBuckets() {
-    this.config
-      .updateBucketConfig(this.buckets)
-      .then(() => {
-        this.bucketsUpdated.emit();
-      })
-      .catch(() => console.log('saveBuckets failed'));
+    this.config.updateBucketConfig(this.buckets).subscribe(() => {
+      this.bucketsUpdated.emit();
+    });
 
     this.hideDialog();
   }
 
   public loadBuckets() {
-    return this.config
-      .getBuckets()
-      .then((buckets) => {
+    return new Observable((observer) => {
+      this.config.getBuckets().subscribe((buckets) => {
         this.buckets = buckets.map((bucket) => {
           return Object.assign(bucket.getCredentials(), {
             bucketName: bucket.bucketName,
             label: bucket.label
           });
         });
-      })
-      .catch(() => console.log('loadBuckets failed'));
+        observer.next();
+      });
+    });
   }
 
   public get label() {

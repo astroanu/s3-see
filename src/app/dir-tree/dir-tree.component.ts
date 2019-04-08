@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { DirectoryInterface } from '../../models/directory/directory.interface';
 import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { TreeService } from '../../services/tree/tree.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dir-tree',
@@ -17,12 +18,9 @@ export class DirTreeComponent {
 
   @Input() set bucket(bucketName: any) {
     if (bucketName) {
-      this.treeService.fileService
-        .setBucket(bucketName)
-        .then(() => {
-          this.initializeDirPane();
-        })
-        .catch(() => console.log('@Input() set bucket failed'));
+      this.treeService.fileService.setBucket(bucketName).subscribe(() => {
+        this.initializeDirPane();
+      });
     }
   }
 
@@ -63,25 +61,17 @@ export class DirTreeComponent {
 
     this.emitLoadingEvent();
 
-    this.getDirStructure()
-      .then(
-        () => {
-          this.loading = false;
-          this.emitLoadedEvent();
-        },
-        (e) => {
-          this.showErrorMessage(e);
-          this.loading = false;
-          this.emitLoadErrorEvent();
-        }
-      )
-      .catch(() => {
-        this.showErrorMessage();
+    this.getDirStructure().subscribe(
+      () => {
+        this.loading = false;
+        this.emitLoadedEvent();
+      },
+      (e) => {
+        this.showErrorMessage(e);
         this.loading = false;
         this.emitLoadErrorEvent();
-
-        console.log('initializeDirPane failed');
-      });
+      }
+    );
   }
 
   public selectNode(event) {
@@ -89,13 +79,10 @@ export class DirTreeComponent {
 
     this.emitLoadingEvent();
 
-    node
-      .loadSubdirectories()
-      .then(() => {
-        this.emitLoadedEvent();
-        this.selected.emit(node);
-      })
-      .catch(() => console.log('selectNode failed'));
+    node.loadSubdirectories().subscribe(() => {
+      this.emitLoadedEvent();
+      this.selected.emit(node);
+    });
   }
 
   public get panelHeight() {
@@ -104,27 +91,24 @@ export class DirTreeComponent {
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 35;
   }
 
-  private getDirStructure(prefix = null, NextContinuationToken = null) {
-    return new Promise((resolve, reject) => {
-      return this.treeService
-        .listDirectories(prefix, NextContinuationToken)
-        .then(
-          (list: FileListInterface) => {
-            if (list.hasDirectories) {
-              list.directories.forEach((directory: DirectoryInterface) => {
-                this.fileTree.push(directory);
-              });
-            }
+  private getDirStructure(prefix = null, NextContinuationToken = null): Observable<void> {
+    return new Observable((observer) => {
+      return this.treeService.listDirectories(prefix, NextContinuationToken).subscribe(
+        (list: FileListInterface) => {
+          if (list.hasDirectories) {
+            list.directories.forEach((directory: DirectoryInterface) => {
+              this.fileTree.push(directory);
+            });
+          }
 
-            if (list.hasMore) {
-              return this.getDirStructure(prefix, list.nextContinuationToken);
-            } else {
-              resolve();
-            }
-          },
-          (e) => reject(e)
-        )
-        .catch((e) => reject(e));
+          if (list.hasMore) {
+            return this.getDirStructure(prefix, list.nextContinuationToken);
+          } else {
+            observer.next();
+          }
+        },
+        (e) => observer.error(e)
+      );
     });
   }
 

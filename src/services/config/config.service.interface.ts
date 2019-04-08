@@ -1,13 +1,15 @@
+import { Observable } from 'rxjs';
+
 import { Bucket } from './config.service';
 
 export interface ConfigServiceInterface {
-  updateBucketConfig(buckets: Array<object>): Promise<void>;
+  updateBucketConfig(buckets: Array<object>): Observable<void>;
 
   getBucketCredentials(bucketName: string): object;
 
-  getBucket(bucketName: string): Promise<Bucket>;
+  getBucket(bucketName: string): Observable<Bucket>;
 
-  getBuckets(): Promise<Array<Bucket>>;
+  getBuckets(): Observable<Array<Bucket>>;
 
   appName: string;
 

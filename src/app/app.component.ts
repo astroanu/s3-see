@@ -70,24 +70,21 @@ export class AppComponent {
   }
 
   public initializeBucktesList() {
-    return this.config
-      .getBuckets()
-      .then((buckets) => {
-        if (!buckets.length) {
-          this.bucketManager.showDialog();
-          return;
-        }
+    return this.config.getBuckets().subscribe((buckets) => {
+      if (!buckets.length) {
+        this.bucketManager.showDialog();
+        return;
+      }
 
-        this.buckets = buckets.map((bucket) => {
-          return {
-            label: bucket.label,
-            value: bucket.bucketName
-          };
-        });
+      this.buckets = buckets.map((bucket) => {
+        return {
+          label: bucket.label,
+          value: bucket.bucketName
+        };
+      });
 
-        this.setDefaultBucket();
-      })
-      .catch((e) => console.log('initializeBucktesList failed'));
+      this.setDefaultBucket();
+    });
   }
 
   public updateStatusBar(message) {
@@ -109,9 +106,5 @@ export class AppComponent {
 
   constructor(private config: ConfigService) {
     this.initializeBucktesList();
-
-    /*setInterval(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 1000);*/
   }
 }

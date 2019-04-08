@@ -1,4 +1,5 @@
 import { S3FileInterface } from '../file/s3-file.interface';
+import { Observable } from 'rxjs';
 
 export interface DirectoryInterface {
   children: Array<DirectoryInterface>;
@@ -7,9 +8,9 @@ export interface DirectoryInterface {
 
   expanded: boolean;
 
-  loadFiles(): Promise<void>;
+  loadFiles(): Observable<void>;
 
-  loadSubdirectories(): Promise<void>;
+  loadSubdirectories(): Observable<void>;
 
   icon: string;
 

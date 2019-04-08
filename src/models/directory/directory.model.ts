@@ -5,6 +5,7 @@ import { FileService } from '../../services/file/file.service';
 import { DirectoryInterface } from '../directory/directory.interface';
 import { FileListInterface } from '../file-list/file-list.interface';
 import { S3FileInterface } from '../file/s3-file.interface';
+import { Observable } from 'rxjs';
 
 export const FOLDER_ICON_NORMAL = 'pi pi-folder';
 export const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
@@ -16,38 +17,32 @@ export class Directory implements DirectoryInterface {
   public expanded: boolean = false;
   public selectable: boolean = true;
 
-  public loadFiles(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  public loadFiles(): Observable<void> {
+    return new Observable((observer) => {
       if (this.files.length) {
-        resolve();
+        observer.next();
       } else {
-        return this.fileService
-          .listObjects(this.prefix)
-          .then((list: FileListInterface) => {
-            this.files = list.files;
+        this.fileService.listObjects(this.prefix).subscribe((list: FileListInterface) => {
+          this.files = list.files;
 
-            resolve();
-          })
-          .catch(() => console.log('loadFiles failed'));
+          observer.next();
+        });
       }
     });
   }
 
-  public loadSubdirectories(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  public loadSubdirectories(): Observable<void> {
+    return new Observable((observer) => {
       if (this.children.length) {
-        resolve();
+        observer.next();
       } else {
-        return this.fileService
-          .listDirectories(this.prefix)
-          .then((list: FileListInterface) => {
-            this.children = list.directories;
+        return this.fileService.listDirectories(this.prefix).subscribe((list: FileListInterface) => {
+          this.children = list.directories;
 
-            this.expanded = this.children.length > 0;
+          this.expanded = this.children.length > 0;
 
-            resolve();
-          })
-          .catch(() => console.log('loadSubdirectories failed'));
+          observer.next();
+        });
       }
     });
   }

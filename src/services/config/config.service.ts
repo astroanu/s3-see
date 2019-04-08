@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { DbService } from '../db/db.service';
 import { ConfigServiceInterface } from './config.service.interface';
@@ -10,59 +11,49 @@ export class ConfigService implements ConfigServiceInterface {
   public defaultBucket: string;
   private db: DbService;
 
-  public updateBucketConfig(buckets: Array<object>): Promise<void> {
-    return this.db
-      .update('buckets', buckets)
-      .then()
-      .catch(() => console.log('updateBucketConfig failed'));
+  public updateBucketConfig(buckets: Array<object>): Observable<void> {
+    return this.db.update('buckets', buckets);
   }
 
-  public getBucketCredentials(bucketName: string): Promise<object> {
-    return new Promise((resolve, reject) => {
-      return this.getBucket(bucketName)
-        .then((bucket) => {
-          if (bucket) {
-            resolve(bucket.getCredentials());
-          } else {
-            reject();
-          }
-        })
-        .catch(() => console.log('getBucketCredentials failed'));
+  public getBucketCredentials(bucketName: string): Observable<object> {
+    return new Observable((observer) => {
+      this.getBucket(bucketName).subscribe((bucket) => {
+        if (bucket) {
+          observer.next(bucket.getCredentials());
+        } else {
+          observer.error();
+        }
+      });
     });
   }
 
-  public getBucket(bucketName: string): Promise<Bucket> {
-    return new Promise((resolve, reject) => {
-      return this.getBuckets()
-        .then((buckets: Array<Bucket>) => {
-          const currentBucket = buckets.filter((bucket: Bucket) => {
-            return bucket.bucketName === bucketName;
-          });
+  public getBucket(bucketName: string): Observable<Bucket> {
+    return new Observable((observer) => {
+      this.getBuckets().subscribe((buckets: Array<Bucket>) => {
+        const currentBucket = buckets.filter((bucket: Bucket) => {
+          return bucket.bucketName === bucketName;
+        });
 
-          if (currentBucket.length) {
-            resolve(currentBucket[0]);
-          } else {
-            resolve();
-          }
-        })
-        .catch(() => reject());
+        if (currentBucket.length) {
+          observer.next(currentBucket[0]);
+        } else {
+          observer.error();
+        }
+      });
     });
   }
 
-  public getBuckets(): Promise<Array<Bucket>> {
-    return new Promise((resolve, reject) => {
-      return this.db
-        .get('buckets')
-        .then((buckets: Array<object>) => {
-          return resolve(
-            buckets
-              ? buckets.map((config: BucketConfig) => {
-                  return new Bucket(config);
-                })
-              : []
-          );
-        })
-        .catch(() => reject());
+  public getBuckets(): Observable<Array<Bucket>> {
+    return new Observable((observer) => {
+      this.db.get('buckets').subscribe((buckets: Array<object>) => {
+        observer.next(
+          buckets
+            ? buckets.map((config: BucketConfig) => {
+                return new Bucket(config);
+              })
+            : []
+        );
+      });
     });
   }
 
@@ -73,13 +64,11 @@ export class ConfigService implements ConfigServiceInterface {
   constructor() {
     this.db = new DbService('config', 'key');
 
-    this.getBuckets()
-      .then((buckets) => {
-        if (buckets.length) {
-          this.defaultBucket = buckets[0].bucketName;
-        }
-      })
-      .catch(() => console.log('getBuckets failed'));
+    this.getBuckets().subscribe((buckets) => {
+      if (buckets.length) {
+        this.defaultBucket = buckets[0].bucketName;
+      }
+    });
   }
 }
 

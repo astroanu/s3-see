@@ -6,6 +6,8 @@ import { FileListInterface } from '../../models/file-list/file-list.interface';
 import { ConfigService } from '../config/config.service';
 import { FileServiceInterface } from './file.service.interface';
 
+import { Observable, from } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +15,8 @@ export class FileService implements FileServiceInterface {
   private bucketName = this.config.defaultBucket;
   private s3: AWS.S3;
 
-  public upload(key: string, data: Blob, progressCallback: any): Promise<object> {
-    return new Promise((resolve, reject) => {
+  public upload(key: string, data: Blob, progressCallback: any): Observable<object> {
+    return new Observable((observer) => {
       this.s3
         .upload(
           {
@@ -28,9 +30,9 @@ export class FileService implements FileServiceInterface {
           },
           (err, data: S3.Types.PutObjectOutput) => {
             if (!err) {
-              resolve(data);
+              observer.next(data);
             } else {
-              reject(err);
+              observer.error(err);
             }
           }
         )
@@ -38,22 +40,20 @@ export class FileService implements FileServiceInterface {
     });
   }
 
-  public initializeS3Object(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  public initializeS3Object(): Observable<void> {
+    return new Observable((observer) => {
       const credentials = this.config.getBucketCredentials(this.bucketName);
 
       if (!credentials) {
-        reject();
+        observer.error();
       }
-      return credentials
-        .then(
-          (creds) => {
-            this.s3 = new AWS.S3(new AWS.Config(creds));
-            resolve();
-          },
-          () => console.log('initializeS3Object failed')
-        )
-        .catch(() => reject());
+      return credentials.subscribe(
+        (creds) => {
+          this.s3 = new AWS.S3(new AWS.Config(creds));
+          observer.next();
+        },
+        () => console.log('initializeS3Object failed')
+      );
     });
   }
 
@@ -61,17 +61,17 @@ export class FileService implements FileServiceInterface {
     return this.bucketName;
   }
 
-  public setBucket(bucketName: string): Promise<void> {
+  public setBucket(bucketName: string): Observable<void> {
     if (bucketName) {
       this.bucketName = bucketName;
 
       return this.initializeS3Object();
     }
-    return Promise.reject();
+    return from(null);
   }
 
-  public listDirectories(prefix: string, continuationToken: null | string = null): Promise<FileListInterface> {
-    return new Promise((resolve, reject) => {
+  public listDirectories(prefix: string, continuationToken: null | string = null): Observable<FileListInterface> {
+    return new Observable((observer) => {
       const params = { Bucket: this.bucketName };
 
       if (prefix) {
@@ -87,21 +87,21 @@ export class FileService implements FileServiceInterface {
       this.s3
         .listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
           if (err) {
-            reject(err);
+            observer.error(err);
           } else {
-            resolve(new FileList(this, data));
+            observer.next(new FileList(this, data));
           }
         })
         .on('complete', (response) => {
           if (response.error) {
-            reject(response.error);
+            observer.error(response.error);
           }
         });
     });
   }
 
-  public listObjects(prefix: any, continuationToken = null): Promise<FileListInterface> {
-    return new Promise((resolve, reject) => {
+  public listObjects(prefix: any, continuationToken = null): Observable<FileListInterface> {
+    return new Observable((observer) => {
       const params = { Bucket: this.bucketName };
 
       if (prefix) {
@@ -116,9 +116,9 @@ export class FileService implements FileServiceInterface {
 
       this.s3.listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
         if (err) {
-          reject(err);
+          observer.error(err);
         } else {
-          resolve(new FileList(this, data));
+          observer.next(new FileList(this, data));
         }
       });
     });

@@ -24,7 +24,7 @@ export class UploaderComponent {
   public displayOptions: boolean = false;
 
   public optionsForm: FormGroup = new FormGroup({
-    prefix: new FormControl('uploaded', [Validators.required]),
+    prefix: new FormControl(null, [Validators.required]),
     suffix: new FormControl(),
     flattern: new FormControl(false),
     overwrite: new FormControl(true),
@@ -115,16 +115,13 @@ export class UploaderComponent {
   }
 
   private createFileTree() {
-    this.uploaderService
-      .createFileTree()
-      .then((files: any) => {
-        this.files = files;
-        this.selectedFiles = files;
-        this.updateFileSize();
+    this.uploaderService.createFileTree().subscribe((files: any) => {
+      this.files = files;
+      this.selectedFiles = files;
+      this.updateFileSize();
 
-        //window.dispatchEvent(new Event('resize'));
-      })
-      .catch(() => console.log('createFileTree failed'));
+      window.dispatchEvent(new Event('resize'));
+    });
   }
 
   public showDialog() {

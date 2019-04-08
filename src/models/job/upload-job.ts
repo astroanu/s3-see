@@ -11,17 +11,20 @@ export class UploadJob extends Job implements JobInterface {
         this.itemStatusMap[itemId] = 'queued';
 
         this.promiseQueue.add(() => {
-          this.itemStatusMap[itemId] = 'started';
+          return new Promise((resolve, reject) => {
+            this.itemStatusMap[itemId] = 'started';
 
-          return this.fileService.setBucket(this.bucketName).then(() => {
-            this.status = `Uploading: ${file.key}`;
+            return this.fileService.setBucket(this.bucketName).subscribe(() => {
+              this.status = `Uploading: ${file.key}`;
 
-            return this.uploadFile(file).then(() => {
-              this.status = `Generating thumbnail: ${file.key}`;
+              return this.uploadFile(file).then(() => {
+                this.status = `Generating thumbnail: ${file.key}`;
 
-              return this.resize(file).then((thumbnail: Blob) => {
-                return this.uploadThumbnail(file.thumbnailKey, thumbnail).then(() => {
-                  this.itemStatusMap[itemId] = 'complete';
+                return this.resize(file).then((thumbnail: Blob) => {
+                  return this.uploadThumbnail(file.thumbnailKey, thumbnail).subscribe(() => {
+                    this.itemStatusMap[itemId] = 'complete';
+                    resolve();
+                  });
                 });
               });
             });
@@ -83,10 +86,9 @@ export class UploadJob extends Job implements JobInterface {
         .upload(file.key, data, (progress) => {
           this.xhrProgress = Math.round((100 / progress.total) * progress.loaded);
         })
-        .then(() => {
+        .subscribe(() => {
           this.recordBytes(file.size);
-        })
-        .catch((e) => console.log(e));
+        });
     });
   }
 }
