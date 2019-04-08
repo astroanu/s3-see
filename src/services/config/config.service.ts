@@ -10,7 +10,7 @@ export class ConfigService implements ConfigServiceInterface {
   public defaultBucket: string;
   private db: DbService;
 
-  public updateBucketConfig(buckets: Array<object>) {
+  public updateBucketConfig(buckets: Array<object>): Promise<void> {
     return this.db
       .update('buckets', buckets)
       .then()

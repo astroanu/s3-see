@@ -13,7 +13,7 @@ export class FileService implements FileServiceInterface {
   private bucketName = this.config.defaultBucket;
   private s3: AWS.S3;
 
-  public upload(key: string, data: Blob, progressCallback): Promise<object> {
+  public upload(key: string, data: Blob, progressCallback: any): Promise<object> {
     return new Promise((resolve, reject) => {
       this.s3
         .upload(

@@ -18,11 +18,11 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/s3see.png",
+              "src/s3see.ico",
+              "src/s3see.icns",
+              "src/s3see.256x256.png",
+              "src/s3see.512x512.png"
             ],
             "styles": ["src/styles.scss"],
             "scripts": []
@@ -95,11 +95,11 @@
             "styles": ["src/styles.scss"],
             "assets": [
               "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/s3see.ico",
+              "src/s3see.png",
+              "src/s3see.icns",
+              "src/s3see.256x256.png",
+              "src/s3see.512x512.png"
             ]
           }
         },

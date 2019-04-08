@@ -5,9 +5,9 @@ export interface FileServiceInterface {
 
   getBucketName(): string;
 
-  listDirectories(prefix: string, continuationToken: null | string): Promise<FileListInterface>;
+  listDirectories(prefix: string, continuationToken: string): Promise<FileListInterface>;
 
-  listObjects(prefix: string, continuationToken: null | string): Promise<FileListInterface>;
+  listObjects(prefix: string, continuationToken: string): Promise<FileListInterface>;
 
   setBucket(bucketname: string): void;
 }

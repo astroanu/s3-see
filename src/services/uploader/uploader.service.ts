@@ -3,11 +3,12 @@ import * as fs from 'fs';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { JobFactoryService } from '../../services/uploader/job.factory.service';
+import { UploaderServiceInterface } from './uploader.service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UploaderService {
+export class UploaderService implements UploaderServiceInterface {
   private options: UploadOptions = {
     prefix: null,
     suffix: null,
@@ -19,18 +20,18 @@ export class UploaderService {
 
   private uploadDirectory: string;
 
-  public setUploadDirectory(directorypath: string) {
+  public setUploadDirectory(directorypath: string): void {
     this.uploadDirectory = directorypath;
   }
 
-  public setUploadOptions(options: UploadOptions) {
+  public setUploadOptions(options: UploadOptions): void {
     this.options = options;
   }
 
-  private walk(dir: string) {
+  private walk(dir: string): Array<LocalFile> {
     let results = [];
     fs.readdirSync(dir).forEach((file) => {
-      file = dir + '/' + file;
+      file = `${dir}/${file}`;
       const stat = fs.statSync(file);
       if (stat && stat.isDirectory()) {
         results = results.concat(this.walk(file));
@@ -43,7 +44,7 @@ export class UploaderService {
     return results;
   }
 
-  public createFileTree() {
+  public createFileTree(): Promise<Array<LocalFile>> {
     return new Promise((resolve, reject) => {
       resolve(this.walk(this.uploadDirectory));
     });

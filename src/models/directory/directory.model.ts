@@ -12,7 +12,7 @@ export const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
 
 export class Directory implements DirectoryInterface {
   public children: Array<DirectoryInterface> = [];
-  public files: Array<S3FileInterface> = [];
+  public files: Array<any> = [];
   public expanded: boolean = false;
   public selectable: boolean = true;
 

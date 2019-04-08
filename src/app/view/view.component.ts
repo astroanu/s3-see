@@ -35,10 +35,16 @@ export class ViewComponent {
       }
     },
     {
-      label: 'Create signed URL'
-    },
-    {
-      label: 'Download'
+      label: 'Create signed URL',
+      command: () => {
+        this.copySignedUrl();
+      }
+    }
+    /*{
+      label: 'Download',
+      command: () => {
+        this.downloadFile();
+      }
     },
     {
       label: 'Regenerate thumbnail',
@@ -51,7 +57,7 @@ export class ViewComponent {
     },
     {
       label: 'Properties'
-    }
+    }*/
   ];
 
   public thumbH: number = 200;
@@ -139,7 +145,11 @@ export class ViewComponent {
   }
 
   public setThumbSize() {
-    let multiplierCorrected;
+    let multiplierCorrected: number;
+
+    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+
+    const containerWidth = dataViewEl.offsetWidth - 14;
 
     if (this.thumbMultiplier === 7) {
       multiplierCorrected = this.thumbMultiplier;
@@ -148,10 +158,6 @@ export class ViewComponent {
     } else if (this.thumbMultiplier < 7) {
       multiplierCorrected = 7 + 7 - this.thumbMultiplier;
     }
-
-    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
-
-    const containerWidth = dataViewEl.offsetWidth - 14;
 
     this.thumbW = 100 / multiplierCorrected;
     this.thumbH = containerWidth / multiplierCorrected;
@@ -168,6 +174,20 @@ export class ViewComponent {
 
   private viewThumbs() {
     this.listView = false;
+  }
+
+  private downloadFile() {}
+
+  private copySignedUrl() {
+    this.copyToClipboard(this.selectedFile.fullUrl);
+
+    this.messageService.add({
+      life: 3000,
+      key: 'tc',
+      severity: 'success',
+      summary: 'Copied.',
+      detail: 'A sgned URL has been copied to the clipboard.'
+    });
   }
 
   private copyFileKey() {

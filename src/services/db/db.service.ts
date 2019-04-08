@@ -13,7 +13,7 @@ export class DbService implements DbServiceInterface {
   private db = new NgxIndexedDB(DBName, DBVersion);
   private store;
 
-  get(id: string) {
+  get(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       return this.getDb()
         .then((db: any) => {
@@ -28,7 +28,7 @@ export class DbService implements DbServiceInterface {
     });
   }
 
-  update(id: string, value: object) {
+  update(id: string, value: object): Promise<void> {
     return new Promise((resolve, reject) => {
       return this.getDb().then((db: any) => {
         return db.getByKey(this.storeName, id).then((result) => {
@@ -50,7 +50,7 @@ export class DbService implements DbServiceInterface {
     });
   }
 
-  getDb() {
+  getDb(): Promise<NgxIndexedDB> {
     return new Promise((resolve, reject) => {
       return this.db
         .openDatabase(DBVersion, (evt) => {

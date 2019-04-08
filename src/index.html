@@ -11,13 +11,50 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
     <script>
       if (global === undefined) {
         var global = window;
       }
     </script>
+    <style>
+      .splash {
+        text-align: center;
+        height: 100vh;
+        padding: 20%;
+        color: #6f6f6f;
+        font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+        animation: fadein 2s;
+      }
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .splash h1 {
+        margin-top: 0;
+      }
+      .splash p {
+        margin-top: 5px;
+      }
+      .splash img {
+        width: 150px;
+      }
+    </style>
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <div class="splash">
+        <img src="../s3see.png" alt="" />
+        <h1>S3 See</h1>
+        <small>v2.0.1</small>
+        <p>Anuradha Jayathilaka</p>
+      </div>
+    </app-root>
   </body>
 </html>

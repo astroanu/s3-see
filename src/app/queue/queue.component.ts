@@ -1,7 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { Job, JOB_QUEUED } from '../../models/job/job';
+import { UploadJob } from '../../models/job/upload-job';
+import { JOB_QUEUED } from '../../models/job/job';
 
 @Component({
   selector: 'app-queue',
@@ -13,7 +14,7 @@ export class QueueComponent {
 
   @Output() totalBytesTransferedChanged = new EventEmitter<any>();
 
-  public jobs: Array<Job> = [];
+  public jobs: Array<UploadJob> = [];
 
   public panelVisible: boolean = false;
 
@@ -43,7 +44,7 @@ export class QueueComponent {
     }
   }
 
-  public addJob(job: Job) {
+  public addJob(job: UploadJob) {
     this.jobs.push(job);
     this.startNextJob();
     this.emitTotalBytesInQueue();
