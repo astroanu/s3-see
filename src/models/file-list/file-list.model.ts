@@ -5,7 +5,6 @@ import { FileService } from '../../services/file/file.service';
 import { DirectoryInterface } from '../directory/directory.interface';
 import { Directory } from '../directory/directory.model';
 import { FileListInterface } from '../file-list/file-list.interface';
-import { LocalFileInterface } from '../file/local-file.interface';
 import { S3FileInterface } from '../file/s3-file.interface';
 import { S3File } from '../file/s3-file.model';
 
@@ -34,7 +33,7 @@ export class FileList implements FileListInterface {
     });
   }
 
-  get files(): Array<LocalFileInterface | S3FileInterface> {
+  get files(): Array<S3FileInterface> {
     return this.list.Contents.filter((file) => {
       const fileName = path.basename(file.Key);
       const ext = fileName.split('.').pop();
