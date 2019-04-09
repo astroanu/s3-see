@@ -4,7 +4,6 @@ import * as path from 'path';
 import { FileService } from '../../services/file/file.service';
 import { DirectoryInterface } from '../directory/directory.interface';
 import { FileListInterface } from '../file-list/file-list.interface';
-import { S3FileInterface } from '../file/s3-file.interface';
 import { Observable } from 'rxjs';
 
 export const FOLDER_ICON_NORMAL = 'pi pi-folder';

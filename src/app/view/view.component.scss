@@ -16,8 +16,11 @@
     border: thick solid transparent;
   }
 
-  &.selected img {
-    border: thick solid #507ee2;
+  &.selected {
+    .img-placeholder-wrap,
+    img {
+      border: thick solid #507ee2;
+    }
   }
 }
 
