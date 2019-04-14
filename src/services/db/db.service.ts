@@ -32,13 +32,13 @@ export class DbService implements DbServiceInterface {
   update(id: string, value: object): Observable<void> {
     return new Observable((observer) => {
       this.getDb().subscribe((db: any) => {
-        db.getByKey(this.storeName, id).subscribe((result) => {
+        db.getByKey(this.storeName, id).then((result) => {
           value[this.primaryKey] = id;
 
           if (result) {
-            db.update(this.storeName, value).subscribe(() => observer.next(), (e) => observer.error());
+            db.update(this.storeName, value).then(() => observer.next(), (e) => observer.error());
           } else {
-            db.add(this.storeName, value).subscribe(() => observer.next(), (e) => observer.error());
+            db.add(this.storeName, value).then(() => observer.next(), (e) => observer.error());
           }
         });
       });
