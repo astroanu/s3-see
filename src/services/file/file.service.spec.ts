@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { IMock, Mock } from 'typemoq';
 
 import { Bucket, BucketConfig, ConfigService } from '../config/config.service';
@@ -31,13 +32,13 @@ describe('FileService', () => {
     moqConfigService
       .setup((m) => m.getBuckets())
       .returns(() => {
-        return Promise.resolve([bucket]);
+        return of([bucket]);
       });
 
     moqConfigService
       .setup((m) => m.getBucketCredentials('test'))
       .returns(() => {
-        return Promise.resolve(bucket.getCredentials());
+        return of(bucket.getCredentials());
       });
 
     TestBed.overrideProvider(ConfigService, {

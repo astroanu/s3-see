@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { IMock, Mock } from 'typemoq';
 
 import { Bucket, BucketConfig, ConfigService } from './config.service';
@@ -28,7 +29,7 @@ describe('ConfigService', () => {
     moqConfigService
       .setup((m) => m.getBuckets())
       .returns(() => {
-        return Promise.resolve([new Bucket(bucketConfig)]);
+        return of([new Bucket(bucketConfig)]);
       });
 
     moqConfigService.setup((m) => m.defaultBucket).returns(() => bucketConfig.bucketName);
@@ -36,7 +37,7 @@ describe('ConfigService', () => {
     moqConfigService
       .setup((m) => m.updateBucketConfig([bucketConfig]))
       .returns(() => {
-        return Promise.resolve();
+        return of();
       });
 
     service = TestBed.get(ConfigService);
@@ -64,13 +65,13 @@ describe('ConfigService', () => {
   });
 
   it('should get buckets', () => {
-    moqConfigService.object.getBuckets().then((buckets) => {
+    moqConfigService.object.getBuckets().subscribe((buckets) => {
       expect(buckets.length).toEqual(1);
     });
   });
 
   it('should update buckets', () => {
-    moqConfigService.object.updateBucketConfig([bucketConfig]).then(() => {
+    moqConfigService.object.updateBucketConfig([bucketConfig]).subscribe(() => {
       expect(true).toEqual(true);
     });
   });

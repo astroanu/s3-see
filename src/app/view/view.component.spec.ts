@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
@@ -17,7 +19,16 @@ describe('ViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PrettySizePipe, ViewComponent, SlideShowComponent],
-      imports: [FormsModule, SliderModule, ProgressSpinnerModule, ToolbarModule, TableModule, ButtonModule]
+      imports: [
+        FormsModule,
+        SliderModule,
+        ProgressSpinnerModule,
+        ContextMenuModule,
+        ToolbarModule,
+        TableModule,
+        ButtonModule
+      ],
+      providers: [MessageService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ViewComponent);

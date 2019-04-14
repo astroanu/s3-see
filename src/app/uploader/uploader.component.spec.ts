@@ -12,7 +12,6 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
 import { SlideShowComponent } from '../slide-show/slide-show.component';
-import { ViewComponent } from '../view/view.component';
 import { UploaderComponent } from './uploader.component';
 
 describe('UploaderComponent', () => {
@@ -21,7 +20,7 @@ describe('UploaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PrettySizePipe, UploaderComponent, ViewComponent, SlideShowComponent],
+      declarations: [PrettySizePipe, UploaderComponent, SlideShowComponent],
       providers: [ElectronService],
       imports: [
         FormsModule,
