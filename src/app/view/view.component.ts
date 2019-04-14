@@ -173,7 +173,9 @@ export class ViewComponent {
     this.listView = false;
   }
 
-  private downloadFile() {}
+  private downloadFile() {
+    console.log('todo');
+  }
 
   private copySignedUrl() {
     this.copyToClipboard(this.selectedFile.fullUrl);

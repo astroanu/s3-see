@@ -52,7 +52,7 @@
     "use-isnan": true,
     "variable-name": { "options": ["ban-keywords", "check-format", "allow-pascal-case"] },
     "whitespace": {
-      "options": ["check-branch", "check-decl", "check-operator", "check-separator", "check-type", "check-typecast"]
+      "options": ["check-branch", "check-decl", "check-operator", "check-separator"]
     }
   }
 }

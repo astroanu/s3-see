@@ -1,6 +1,6 @@
 import { LocalFile } from '../file/local-file.model';
+import { Job, JOB_STARTED, THUMB_SIZE } from './job';
 import { JobInterface } from './job.interface';
-import { Job, JOB_STARTED, JOB_COMPLETE, JOB_QUEUED, THUMB_SIZE } from './job';
 
 export class UploadJob extends Job implements JobInterface {
   public start(): Promise<any> {
