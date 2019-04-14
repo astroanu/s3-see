@@ -10,5 +10,5 @@ export interface FileServiceInterface {
 
   listObjects(prefix: string, continuationToken: string): Observable<FileListInterface>;
 
-  setBucket(bucketname: string): void;
+  setBucket(bucketname: string): any;
 }

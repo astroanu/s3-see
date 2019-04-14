@@ -61,7 +61,7 @@ export class FileService implements FileServiceInterface {
     return this.bucketName;
   }
 
-  public setBucket(bucketName: string): Observable<void> {
+  public setBucket(bucketName: string): Observable<any> {
     if (bucketName) {
       this.bucketName = bucketName;
 
