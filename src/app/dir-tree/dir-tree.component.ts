@@ -107,7 +107,7 @@ export class DirTreeComponent {
             observer.next();
           }
         },
-        (e) => observer.error(e)
+        (e) => observer.next(e)
       );
     });
   }

@@ -22,7 +22,7 @@ export class DbService implements DbServiceInterface {
             observer.next(result ? result : null);
           },
           (e) => {
-            observer.error(e);
+            observer.next(e);
           }
         );
       });
@@ -36,9 +36,9 @@ export class DbService implements DbServiceInterface {
           value[this.primaryKey] = id;
 
           if (result) {
-            db.update(this.storeName, value).then(() => observer.next(), (e) => observer.error());
+            db.update(this.storeName, value).then(() => observer.next(), (e) => observer.next());
           } else {
-            db.add(this.storeName, value).then(() => observer.next(), (e) => observer.error());
+            db.add(this.storeName, value).then(() => observer.next(), (e) => observer.next());
           }
         });
       });
@@ -63,7 +63,7 @@ export class DbService implements DbServiceInterface {
             observer.next(this.db);
           },
           (e) => {
-            observer.error(e);
+            observer.next(e);
           }
         )
         .catch(() => console.log('getDb failed'));

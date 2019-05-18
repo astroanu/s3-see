@@ -32,7 +32,7 @@ export class FileService implements FileServiceInterface {
             if (!err) {
               observer.next(data);
             } else {
-              observer.error(err);
+              observer.next(err);
             }
           }
         )
@@ -45,7 +45,7 @@ export class FileService implements FileServiceInterface {
       const credentials = this.config.getBucketCredentials(this.bucketName);
 
       if (!credentials) {
-        observer.error();
+        observer.next();
       }
       return credentials.subscribe(
         (creds) => {
@@ -87,14 +87,14 @@ export class FileService implements FileServiceInterface {
       this.s3
         .listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
           if (err) {
-            observer.error(err);
+            observer.next();
           } else {
             observer.next(new FileList(this, data));
           }
         })
         .on('complete', (response) => {
           if (response.error) {
-            observer.error(response.error);
+            observer.next();
           }
         });
     });
@@ -116,7 +116,7 @@ export class FileService implements FileServiceInterface {
 
       this.s3.listObjectsV2(params, (err, data: S3.Types.ListObjectsV2Output) => {
         if (err) {
-          observer.error(err);
+          observer.next();
         } else {
           observer.next(new FileList(this, data));
         }

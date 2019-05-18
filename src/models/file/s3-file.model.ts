@@ -40,11 +40,8 @@ export class S3File implements S3FileInterface {
   private getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
       const params = { Bucket: this.fileService.getBucketName(), Key: key };
-
       this.s3.getSignedUrl('getObject', params, (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
+        if (!err) {
           resolve(data);
         }
       });

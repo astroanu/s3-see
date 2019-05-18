@@ -21,7 +21,7 @@ export class ConfigService implements ConfigServiceInterface {
         if (bucket) {
           observer.next(bucket.getCredentials());
         } else {
-          observer.error();
+          observer.next();
         }
       });
     });
@@ -37,7 +37,7 @@ export class ConfigService implements ConfigServiceInterface {
         if (currentBucket.length) {
           observer.next(currentBucket[0]);
         } else {
-          observer.error();
+          observer.next();
         }
       });
     });
