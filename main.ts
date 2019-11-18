@@ -23,6 +23,7 @@ const createWindow = () => {
     minWidth: 800,
     height: 600,
     width: 800,
+    autoHideMenuBar: true,
     icon: __dirname + `s3see.png`,
     webPreferences: {
       nodeIntegration: true
