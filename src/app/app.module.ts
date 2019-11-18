@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
 import { MomentModule } from 'ngx-moment';
-import { NgxPicaModule } from 'ngx-pica';
+import { NgxPicaModule } from '@digitalascetic/ngx-pica';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';

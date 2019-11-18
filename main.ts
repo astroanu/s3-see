@@ -23,7 +23,10 @@ const createWindow = () => {
     minWidth: 800,
     height: 600,
     width: 800,
-    icon: __dirname + `s3see.png`
+    icon: __dirname + `s3see.png`,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   win.setMenu(null);

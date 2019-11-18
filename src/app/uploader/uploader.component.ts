@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ElectronService } from 'ngx-electron';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ElectronService } from "ngx-electron";
 
-import { LocalFile } from '../../models/file/local-file.model';
-import { UploaderService } from '../../services/uploader/uploader.service';
+import { LocalFile } from "../../models/file/local-file.model";
+import { UploaderService } from "../../services/uploader/uploader.service";
+import { BrowserWindow, OpenDialogOptions } from "electron";
 
 @Component({
-  selector: 'app-uploader',
-  templateUrl: './uploader.component.html',
-  styleUrls: ['./uploader.component.scss']
+  selector: "app-uploader",
+  templateUrl: "./uploader.component.html",
+  styleUrls: ["./uploader.component.scss"]
 })
 export class UploaderComponent {
   @Output() uploadQueued = new EventEmitter<any>();
@@ -44,37 +45,38 @@ export class UploaderComponent {
 
   public columns: Array<object> = [
     {
-      field: 'fileName',
-      header: 'File'
+      field: "fileName",
+      header: "File"
     },
     {
-      field: 'sizePretty',
-      header: 'Size'
+      field: "sizePretty",
+      header: "Size"
     },
     {
-      field: 'lastModified',
-      header: 'Last Modified'
+      field: "lastModified",
+      header: "Last Modified"
     },
     {
-      field: 'destinationKey',
-      header: 'Upload Destination'
+      field: "destinationKey",
+      header: "Upload Destination"
     }
   ];
 
   public selectDirectory() {
-    this.electronService.remote.dialog.showOpenDialog(
-      {
-        title: 'Select a folder',
-        properties: ['openDirectory']
-      },
-      (paths) => {
+    const options: OpenDialogOptions = {
+      title: "Select a folder",
+      properties: ["openDirectory"]
+    };
+
+    this.electronService.remote.dialog
+      .showOpenDialog(new BrowserWindow(), options)
+      .then(paths => {
         if (paths) {
           this.uploadDirectory = paths[0];
 
           this.initializeUploaderService();
         }
-      }
-    );
+      });
   }
 
   public previewFile(file) {
@@ -86,11 +88,15 @@ export class UploaderComponent {
       return file.size;
     });
 
-    this.filesSelectedTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
+    this.filesSelectedTotalSize = fileSizes.length
+      ? fileSizes.reduce((a, b) => a + b)
+      : 0;
   }
 
   public queueUpload() {
-    this.uploadQueued.emit(this.uploaderService.getJob(this.selectedFiles, this.bucketName));
+    this.uploadQueued.emit(
+      this.uploaderService.getJob(this.selectedFiles, this.bucketName)
+    );
     this.hideDialog();
   }
 
@@ -120,7 +126,7 @@ export class UploaderComponent {
       this.selectedFiles = files;
       this.updateFileSize();
 
-      window.dispatchEvent(new Event('resize'));
+      window.dispatchEvent(new Event("resize"));
     });
   }
 
@@ -141,5 +147,8 @@ export class UploaderComponent {
     this.uploadDirectory = null;
   }
 
-  constructor(private electronService: ElectronService, private uploaderService: UploaderService) {}
+  constructor(
+    private electronService: ElectronService,
+    private uploaderService: UploaderService
+  ) {}
 }

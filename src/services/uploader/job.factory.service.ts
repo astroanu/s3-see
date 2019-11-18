@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import PromiseQueue from 'easy-promise-queue';
-import { NgxPicaService } from 'ngx-pica';
+import { NgxPicaService } from '@digitalascetic/ngx-pica';
 
 import { LocalFile } from '../../models/file/local-file.model';
 import { UploadJob } from '../../models/job/upload-job';

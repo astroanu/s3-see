@@ -1,6 +1,6 @@
 import PromiseQueue from 'easy-promise-queue';
 import { FileService } from '../../services/file/file.service';
-import { NgxPicaService } from 'ngx-pica';
+import { NgxPicaService } from '@digitalascetic/ngx-pica';
 import { LocalFile } from '../file/local-file.model';
 import { UploadOptions } from '../../services/uploader/uploader.service';
 

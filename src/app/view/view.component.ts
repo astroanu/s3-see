@@ -80,7 +80,7 @@ export class ViewComponent {
 
   public currentDirectory: DirectoryInterface;
 
-  @ViewChild(ContextMenu) contextMenu: ContextMenu;
+  @ViewChild(ContextMenu, {static: false}) contextMenu: ContextMenu;
 
   @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
