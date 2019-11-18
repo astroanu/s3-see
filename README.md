@@ -3,3 +3,8 @@
 S3 See is a desktop browser and a manager for AWS S3 object storage service.
 
 Download the latest binaries [here](https://github.com/astroanu/s3-see/releases/latest)
+
+
+Global Packages
+
+`npm i -g yarn typescript electron electron-builder @angular/cli npm-run-all wait-on`
