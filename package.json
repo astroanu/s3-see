@@ -41,6 +41,7 @@
     "coveralls": "^3.0.3",
     "electron": "7.1.1",
     "electron-reload": "^1.4.0",
+    "exifr": "^5.0.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.0.1",
@@ -54,7 +55,7 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3"
+    "typescript": ">=3.4.0 <3.6.0"
   },
   "dependencies": {
     "@angular/animations": "^8.2.14",

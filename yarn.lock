@@ -3231,6 +3231,11 @@ exif-js@^2.3.0:
   resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
   integrity sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ=
 
+exifr@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/exifr/-/exifr-5.0.2.tgz#63724cbe00c2292a90958facd1b1b62cd1ee5c4c"
+  integrity sha512-1I0R3CtoyVcFhMhg5VQwkJzvwiDd2vNHoH8dCu0aOPptBKKjgnzsA+JNnwQ3kyoRzdZoCixZFwe2oOSx9MQNqA==
+
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -8001,15 +8006,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.5.3:
+typescript@3.5.3, "typescript@>=3.4.0 <3.6.0":
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
-
-typescript@^3.5.3:
-  version "3.9.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
-  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
 
 ultron@~1.1.0:
   version "1.1.1"

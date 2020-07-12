@@ -54,6 +54,9 @@ export class UploadJob extends Job implements JobInterface {
       return file.getBinaryData().then((blob: Blob) => {
         return this.picaService
           .resizeImage(this.blobToFile(blob, file.fileName), THUMB_SIZE, THUMB_SIZE, {
+            exifOptions: {
+              forceExifOrientation:true
+            },
             aspectRatio: {
               keepAspectRatio: true,
               forceMinDimensions: true
