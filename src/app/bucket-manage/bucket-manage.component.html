@@ -1,5 +1,5 @@
 <p-dialog header="Manage Buckets" [(visible)]="displayDialog" [modal]="true" [style]="{ minWidth: '80%' }">
-  <div *ngIf="!buckets.length" class="placeholder ui-corner-all">
+  <div *ngIf="!buckets.length" class="placeholder p-corner-all">
     No buckets configured
   </div>
 
@@ -7,8 +7,8 @@
     <div *ngFor="let bucket of buckets; let i = index">
       <p-card class="box box-stretched">
         <span class="actions">
-          <button pButton type="button" class="ui-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
-          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="ui-button-secondary"></button>
+          <button pButton type="button" class="p-button-danger" (click)="deleteBucket(i)" label="Delete"></button>
+          <button pButton type="button" (click)="editBucket(i)" label="Edit" class="p-button-secondary"></button>
         </span>
 
         <h4>{{ bucket.label }}</h4>
@@ -29,7 +29,7 @@
 
   <p-footer>
     <button type="button" pButton icon="pi pi-save" (click)="saveBuckets()" label="Save"></button>
-    <button type="button" pButton (click)="hideDialog()" label="Cancel" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="hideDialog()" label="Cancel" class="p-button-secondary"></button>
   </p-footer>
 </p-dialog>
 
@@ -97,6 +97,6 @@
 
   <p-footer>
     <button type="button" pButton [disabled]="itemForm.invalid" (click)="addBucket()" label="Add"></button>
-    <button type="button" pButton (click)="hideForm()" label="Cancel" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="hideForm()" label="Cancel" class="p-button-secondary"></button>
   </p-footer>
 </p-dialog>

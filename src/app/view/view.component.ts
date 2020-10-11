@@ -138,7 +138,7 @@ export class ViewComponent {
   }
 
   public get panelHeight() {
-    const dataViewEl = this.el.nativeElement.querySelector(".ui-dataview");
+    const dataViewEl = this.el.nativeElement.querySelector(".p-dataview");
 
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 85;
   }
@@ -146,7 +146,7 @@ export class ViewComponent {
   public setThumbSize() {
     let multiplierCorrected: number;
 
-    const dataViewEl = this.el.nativeElement.querySelector(".ui-dataview");
+    const dataViewEl = this.el.nativeElement.querySelector(".p-dataview");
 
     const containerWidth = dataViewEl.offsetWidth - 14;
 
