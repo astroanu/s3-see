@@ -1,12 +1,12 @@
-import * as fs from 'fs';
-import { DateFormatPipe } from 'ngx-moment';
-import { basename } from 'path';
+import * as fs from "fs";
+import { DateFormatPipe } from "ngx-moment";
+import { basename } from "path";
 
-import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
-import { UploadOptions } from '../../services/uploader/uploader.service';
-import { LocalFileInterface } from './local-file.interface';
+import { PrettySizePipe } from "../../pipes/pretty-size.pipe";
+import { UploadOptions } from "../../services/uploader/uploader.service";
+import { LocalFileInterface } from "./local-file.interface";
 
-var toBlob = require('stream-to-blob');
+var toBlob = require("stream-to-blob");
 
 export class LocalFile implements LocalFileInterface {
   private stat = null;
@@ -17,7 +17,9 @@ export class LocalFile implements LocalFileInterface {
   }
 
   public get thumbnailKey(): string {
-    return this.destinationKey.replace(this.fileName, '_thumbs/') + this.fileName;
+    return (
+      this.destinationKey.replace(this.fileName, "_thumbs/") + this.fileName
+    );
   }
 
   public get destinationKey(): string {
@@ -32,11 +34,15 @@ export class LocalFile implements LocalFileInterface {
       }
 
       if (this.uploadOptions.suffix) {
-        destKey = destKey.replace(this.fileName, this.addTrailingSlash(this.uploadOptions.suffix)) + this.fileName;
+        destKey =
+          destKey.replace(
+            this.fileName,
+            this.addTrailingSlash(this.uploadOptions.suffix)
+          ) + this.fileName;
       }
 
       if (this.uploadOptions.noSpaces) {
-        destKey = destKey.replace(' ', '_');
+        destKey = destKey.replace(" ", "_");
       }
 
       if (this.uploadOptions.toLowerCase) {
@@ -47,7 +53,7 @@ export class LocalFile implements LocalFileInterface {
   }
 
   private addTrailingSlash(value): string {
-    return (value += value.endsWith('/') ? '' : '/');
+    return (value += value.endsWith("/") ? "" : "/");
   }
 
   public getBinaryData(): Promise<Blob> {
@@ -64,7 +70,9 @@ export class LocalFile implements LocalFileInterface {
   }
 
   public get thumbUrl(): string {
-    return 'data:image/jpeg;base64,' + fs.readFileSync(this.fullLocalPath, 'base64');
+    return (
+      "data:image/jpeg;base64," + fs.readFileSync(this.fullLocalPath, "base64")
+    );
   }
 
   public get fullUrl(): string {
@@ -83,7 +91,7 @@ export class LocalFile implements LocalFileInterface {
 
   public get lastModified(): string {
     const pipe = new DateFormatPipe();
-    return pipe.transform(this.stat.mtime, 'Do MMM YYYY, h:mm a');
+    return pipe.transform(this.stat.mtime, "Do MMM YYYY, h:mm a");
   }
 
   public get fileName(): string {
@@ -95,7 +103,7 @@ export class LocalFile implements LocalFileInterface {
   }
 
   public get fullLocalPath(): string {
-    return this.filePath.replace('/', '\\');
+    return this.filePath.replace("/", "\\");
   }
 
   constructor(private relativePath: string, private filePath: string) {

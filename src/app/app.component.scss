@@ -8,14 +8,14 @@
   display: block;
 }
 
-:host ::ng-deep .ui-dropdown {
+:host ::ng-deep .p-dropdown {
   width: 100% !important;
   border-color: #c8c8c8;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.ui-menubar-custom {
+.p-menubar-custom {
   margin-top: 4px;
   margin-right: 4px;
 }

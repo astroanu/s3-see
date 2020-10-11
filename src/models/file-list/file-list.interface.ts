@@ -1,5 +1,5 @@
-import { DirectoryInterface } from '../directory/directory.interface';
-import { S3FileInterface } from '../file/s3-file.interface';
+import { DirectoryInterface } from "../directory/directory.interface";
+import { S3FileInterface } from "../file/s3-file.interface";
 
 export interface FileListInterface {
   nextContinuationToken: string;

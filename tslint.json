@@ -33,7 +33,15 @@
     "object-literal-sort-keys": false,
     "directive-selector": [true, "attribute", "app", "camelCase"],
     "component-selector": [true, "element", "app", "kebab-case"],
-    "one-line": { "options": ["check-catch", "check-else", "check-finally", "check-open-brace", "check-whitespace"] },
+    "one-line": {
+      "options": [
+        "check-catch",
+        "check-else",
+        "check-finally",
+        "check-open-brace",
+        "check-whitespace"
+      ]
+    },
     "one-variable-per-declaration": { "options": ["ignore-for-loop"] },
     "quotemark": { "options": ["single", "avoid-escape"] },
     "radix": true,
@@ -50,9 +58,16 @@
     "trailing-comma": false,
     "triple-equals": { "options": ["allow-null-check"] },
     "use-isnan": true,
-    "variable-name": { "options": ["ban-keywords", "check-format", "allow-pascal-case"] },
+    "variable-name": {
+      "options": ["ban-keywords", "check-format", "allow-pascal-case"]
+    },
     "whitespace": {
-      "options": ["check-branch", "check-decl", "check-operator", "check-separator"]
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator"
+      ]
     }
   }
 }

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { NgxIndexedDB } from 'ngx-indexed-db';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { NgxIndexedDB } from "ngx-indexed-db";
+import { Observable } from "rxjs";
 
-import { DbServiceInterface } from './db.service.interface';
+import { DbServiceInterface } from "./db.service.interface";
 
-const DBName = 's3see';
+const DBName = "s3see";
 const DBVersion = 1;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DbService implements DbServiceInterface {
   private db = new NgxIndexedDB(DBName, DBVersion);
@@ -36,9 +36,15 @@ export class DbService implements DbServiceInterface {
           value[this.primaryKey] = id;
 
           if (result) {
-            db.update(this.storeName, value).then(() => observer.next(), (e) => observer.next());
+            db.update(this.storeName, value).then(
+              () => observer.next(),
+              (e) => observer.next()
+            );
           } else {
-            db.add(this.storeName, value).then(() => observer.next(), (e) => observer.next());
+            db.add(this.storeName, value).then(
+              () => observer.next(),
+              (e) => observer.next()
+            );
           }
         });
       });
@@ -49,13 +55,16 @@ export class DbService implements DbServiceInterface {
     return new Observable((observer) => {
       this.db
         .openDatabase(DBVersion, (evt) => {
-          this.store = evt.currentTarget.result.createObjectStore(this.storeName, {
-            keyPath: this.primaryKey,
-            autoIncrement: false
-          });
+          this.store = evt.currentTarget.result.createObjectStore(
+            this.storeName,
+            {
+              keyPath: this.primaryKey,
+              autoIncrement: false,
+            }
+          );
 
           this.store.createIndex(this.primaryKey, this.primaryKey, {
-            unique: true
+            unique: true,
           });
         })
         .then(
@@ -66,7 +75,7 @@ export class DbService implements DbServiceInterface {
             observer.next(e);
           }
         )
-        .catch(() => console.log('getDb failed'));
+        .catch(() => console.log("getDb failed"));
     });
   }
 

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
-  selector: 'app-slide-show',
-  templateUrl: './slide-show.component.html',
-  styleUrls: ['./slide-show.component.scss']
+  selector: "app-slide-show",
+  templateUrl: "./slide-show.component.html",
+  styleUrls: ["./slide-show.component.scss"],
 })
 export class SlideShowComponent {
   public currentFile: object;

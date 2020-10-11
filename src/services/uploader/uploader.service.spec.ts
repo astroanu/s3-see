@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { JobFactoryService } from './job.factory.service';
+import { JobFactoryService } from "./job.factory.service";
 
-describe('UploaderService', () => {
+describe("UploaderService", () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      providers: [JobFactoryService]
+      providers: [JobFactoryService],
     })
   );
 });

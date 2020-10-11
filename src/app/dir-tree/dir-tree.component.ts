@@ -1,15 +1,20 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { MessageService } from 'primeng/components/common/messageservice';
-
-import { DirectoryInterface } from '../../models/directory/directory.interface';
-import { FileListInterface } from '../../models/file-list/file-list.interface';
-import { TreeService } from '../../services/tree/tree.service';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
+import { MessageService } from "primeng/api";
+import { DirectoryInterface } from "../../models/directory/directory.interface";
+import { FileListInterface } from "../../models/file-list/file-list.interface";
+import { TreeService } from "../../services/tree/tree.service";
+import { Observable } from "rxjs";
 
 @Component({
-  selector: 'app-dir-tree',
-  templateUrl: './dir-tree.component.html',
-  styleUrls: ['./dir-tree.component.scss']
+  selector: "app-dir-tree",
+  templateUrl: "./dir-tree.component.html",
+  styleUrls: ["./dir-tree.component.scss"],
 })
 export class DirTreeComponent {
   @Output() selected = new EventEmitter<any>();
@@ -31,26 +36,26 @@ export class DirTreeComponent {
   public loading: boolean = true;
 
   private emitLoadingEvent() {
-    this.status.emit('Loading directories...');
+    this.status.emit("Loading directories...");
   }
 
   private emitLoadedEvent() {
-    console.info('Dir listing complete');
-    this.status.emit('Directory listing complete.');
+    console.info("Dir listing complete");
+    this.status.emit("Directory listing complete.");
   }
 
   private emitLoadErrorEvent() {
-    this.status.emit('Failed to load directories...');
+    this.status.emit("Failed to load directories...");
   }
 
   private showErrorMessage(e = null) {
     this.messageService.add({
       sticky: true,
       life: 10000,
-      key: 'tc',
-      severity: 'error',
-      summary: 'Could not load directory structure',
-      detail: e ? e.toString() : null
+      key: "tc",
+      severity: "error",
+      summary: "Could not load directory structure",
+      detail: e ? e.toString() : null,
     });
   }
 
@@ -86,31 +91,40 @@ export class DirTreeComponent {
   }
 
   public get panelHeight() {
-    const dataViewEl = this.el.nativeElement.querySelector('.tree-wrap');
+    const dataViewEl = this.el.nativeElement.querySelector(".tree-wrap");
 
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 35;
   }
 
-  private getDirStructure(prefix = null, NextContinuationToken = null): Observable<void> {
+  private getDirStructure(
+    prefix = null,
+    NextContinuationToken = null
+  ): Observable<void> {
     return new Observable((observer) => {
-      return this.treeService.listDirectories(prefix, NextContinuationToken).subscribe(
-        (list: FileListInterface) => {
-          if (list.hasDirectories) {
-            list.directories.forEach((directory: DirectoryInterface) => {
-              this.fileTree.push(directory);
-            });
-          }
+      return this.treeService
+        .listDirectories(prefix, NextContinuationToken)
+        .subscribe(
+          (list: FileListInterface) => {
+            if (list.hasDirectories) {
+              list.directories.forEach((directory: DirectoryInterface) => {
+                this.fileTree.push(directory);
+              });
+            }
 
-          if (list.hasMore) {
-            return this.getDirStructure(prefix, list.nextContinuationToken);
-          } else {
-            observer.next();
-          }
-        },
-        (e) => observer.next(e)
-      );
+            if (list.hasMore) {
+              return this.getDirStructure(prefix, list.nextContinuationToken);
+            } else {
+              observer.next();
+            }
+          },
+          (e) => observer.next(e)
+        );
     });
   }
 
-  constructor(private treeService: TreeService, private messageService: MessageService, private el: ElementRef) {}
+  constructor(
+    private treeService: TreeService,
+    private messageService: MessageService,
+    private el: ElementRef
+  ) {}
 }

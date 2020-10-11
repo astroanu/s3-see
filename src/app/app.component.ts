@@ -1,30 +1,32 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from "@angular/core";
 
-import { ConfigService } from '../services/config/config.service';
-import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
-import { DirTreeComponent } from './dir-tree/dir-tree.component';
-import { QueueComponent } from './queue/queue.component';
-import { StatusBarComponent } from './status-bar/status-bar.component';
-import { UploaderComponent } from './uploader/uploader.component';
-import { ViewComponent } from './view/view.component';
+import { ConfigService } from "../services/config/config.service";
+import { BucketManageComponent } from "./bucket-manage/bucket-manage.component";
+import { DirTreeComponent } from "./dir-tree/dir-tree.component";
+import { QueueComponent } from "./queue/queue.component";
+import { StatusBarComponent } from "./status-bar/status-bar.component";
+import { UploaderComponent } from "./uploader/uploader.component";
+import { ViewComponent } from "./view/view.component";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  @ViewChild(DirTreeComponent) dirTree: DirTreeComponent;
+  @ViewChild(DirTreeComponent, { static: false }) dirTree: DirTreeComponent;
 
-  @ViewChild(ViewComponent) view: ViewComponent;
+  @ViewChild(ViewComponent, { static: false }) view: ViewComponent;
 
-  @ViewChild(UploaderComponent) uploader: UploaderComponent;
+  @ViewChild(UploaderComponent, { static: false }) uploader: UploaderComponent;
 
-  @ViewChild(BucketManageComponent) bucketManager: BucketManageComponent;
+  @ViewChild(BucketManageComponent, { static: false })
+  bucketManager: BucketManageComponent;
 
-  @ViewChild(QueueComponent) queueComponent: QueueComponent;
+  @ViewChild(QueueComponent, { static: false }) queueComponent: QueueComponent;
 
-  @ViewChild(StatusBarComponent) statusBarComponent: StatusBarComponent;
+  @ViewChild(StatusBarComponent, { static: false })
+  statusBarComponent: StatusBarComponent;
 
   public currentNode: DocumentEvent;
 
@@ -34,22 +36,22 @@ export class AppComponent {
 
   public menuItems: Array<object> = [
     {
-      label: 'File',
+      label: "File",
       items: [
         {
-          label: 'Upload',
+          label: "Upload",
           command: () => {
             this.uploader.showDialog();
-          }
+          },
         },
         {
-          label: 'Buckets',
+          label: "Buckets",
           command: () => {
             this.bucketManager.showDialog();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ];
 
   public uploadQueued(job: any) {
@@ -79,7 +81,7 @@ export class AppComponent {
       this.buckets = buckets.map((bucket) => {
         return {
           label: bucket.label,
-          value: bucket.bucketName
+          value: bucket.bucketName,
         };
       });
 

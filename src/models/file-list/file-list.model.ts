@@ -1,12 +1,12 @@
-import { S3 } from 'aws-sdk';
-import * as path from 'path';
+import { S3 } from "aws-sdk";
+import * as path from "path";
 
-import { FileService } from '../../services/file/file.service';
-import { DirectoryInterface } from '../directory/directory.interface';
-import { Directory } from '../directory/directory.model';
-import { FileListInterface } from '../file-list/file-list.interface';
-import { S3FileInterface } from '../file/s3-file.interface';
-import { S3File } from '../file/s3-file.model';
+import { FileService } from "../../services/file/file.service";
+import { DirectoryInterface } from "../directory/directory.interface";
+import { Directory } from "../directory/directory.model";
+import { FileListInterface } from "../file-list/file-list.interface";
+import { S3FileInterface } from "../file/s3-file.interface";
+import { S3File } from "../file/s3-file.model";
 
 export class FileList implements FileListInterface {
   get nextContinuationToken(): string {
@@ -26,9 +26,11 @@ export class FileList implements FileListInterface {
   }
 
   get directories(): Array<DirectoryInterface> {
-    return this.list.CommonPrefixes.filter((directory: S3.Types.CommonPrefix) => {
-      return path.basename(directory.Prefix) !== '_thumbs';
-    }).map((directory: S3.Types.CommonPrefix) => {
+    return this.list.CommonPrefixes.filter(
+      (directory: S3.Types.CommonPrefix) => {
+        return path.basename(directory.Prefix) !== "_thumbs";
+      }
+    ).map((directory: S3.Types.CommonPrefix) => {
       return new Directory(this.fileService, directory.Prefix);
     });
   }
@@ -36,7 +38,7 @@ export class FileList implements FileListInterface {
   get files(): Array<S3FileInterface> {
     return this.list.Contents.filter((file) => {
       const fileName = path.basename(file.Key);
-      const ext = fileName.split('.').pop();
+      const ext = fileName.split(".").pop();
 
       return ext !== fileName;
     }).map((file) => {
@@ -44,5 +46,8 @@ export class FileList implements FileListInterface {
     });
   }
 
-  constructor(private fileService: FileService, private list: S3.Types.ListObjectsV2Output) {}
+  constructor(
+    private fileService: FileService,
+    private list: S3.Types.ListObjectsV2Output
+  ) {}
 }

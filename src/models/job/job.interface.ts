@@ -1,4 +1,4 @@
-import { UploadJob } from './upload-job';
+import { UploadJob } from "./upload-job";
 
 export interface JobInterface {
   bytesTransfered: number;

@@ -1,6 +1,6 @@
-import { LocalFile } from '../file/local-file.model';
-import { Job, JOB_STARTED, THUMB_SIZE } from './job';
-import { JobInterface } from './job.interface';
+import { LocalFile } from "../file/local-file.model";
+import { Job, JOB_STARTED, THUMB_SIZE } from "./job";
+import { JobInterface } from "./job.interface";
 
 export class UploadJob extends Job implements JobInterface {
   public start(): Promise<any> {
@@ -8,11 +8,11 @@ export class UploadJob extends Job implements JobInterface {
       this.state = JOB_STARTED;
 
       this.files.forEach((file: LocalFile, itemId: number) => {
-        this.itemStatusMap[itemId] = 'queued';
+        this.itemStatusMap[itemId] = "queued";
 
         this.promiseQueue.add(() => {
           return new Promise((resolve, reject) => {
-            this.itemStatusMap[itemId] = 'started';
+            this.itemStatusMap[itemId] = "started";
 
             return this.fileService.setBucket(this.bucketName).subscribe(() => {
               this.status = `Uploading: ${file.key}`;
@@ -21,8 +21,11 @@ export class UploadJob extends Job implements JobInterface {
                 this.status = `Generating thumbnail: ${file.key}`;
 
                 return this.resize(file).then((thumbnail: Blob) => {
-                  return this.uploadThumbnail(file.thumbnailKey, thumbnail).subscribe(() => {
-                    this.itemStatusMap[itemId] = 'complete';
+                  return this.uploadThumbnail(
+                    file.thumbnailKey,
+                    thumbnail
+                  ).subscribe(() => {
+                    this.itemStatusMap[itemId] = "complete";
                     resolve();
                   });
                 });
@@ -35,7 +38,7 @@ export class UploadJob extends Job implements JobInterface {
       const timer = setInterval(() => {
         if (
           Object.values(this.itemStatusMap).filter((value) => {
-            return value === 'complete';
+            return value === "complete";
           }).length === Object.values(this.itemStatusMap).length
         ) {
           clearTimeout(timer);
@@ -46,19 +49,27 @@ export class UploadJob extends Job implements JobInterface {
   }
 
   private resize(file: LocalFile) {
-    const offScreenCanvas = document.createElement('canvas');
+    const offScreenCanvas = document.createElement("canvas");
     offScreenCanvas.width = THUMB_SIZE;
     offScreenCanvas.height = THUMB_SIZE;
 
     return new Promise((resolve, reject) => {
       return file.getBinaryData().then((blob: Blob) => {
         return this.picaService
-          .resizeImage(this.blobToFile(blob, file.fileName), THUMB_SIZE, THUMB_SIZE, {
-            aspectRatio: {
-              keepAspectRatio: true,
-              forceMinDimensions: true
+          .resizeImage(
+            this.blobToFile(blob, file.fileName),
+            THUMB_SIZE,
+            THUMB_SIZE,
+            {
+              exifOptions: {
+                forceExifOrientation: true,
+              },
+              aspectRatio: {
+                keepAspectRatio: true,
+                forceMinDimensions: true,
+              },
             }
-          })
+          )
           .subscribe((result) => {
             resolve(result);
           });
@@ -84,7 +95,9 @@ export class UploadJob extends Job implements JobInterface {
     return file.getBinaryData().then((data: Blob) => {
       return this.fileService
         .upload(file.key, data, (progress) => {
-          this.xhrProgress = Math.round((100 / progress.total) * progress.loaded);
+          this.xhrProgress = Math.round(
+            (100 / progress.total) * progress.loaded
+          );
         })
         .subscribe(() => {
           this.recordBytes(file.size);

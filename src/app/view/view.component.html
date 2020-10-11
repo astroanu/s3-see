@@ -1,15 +1,20 @@
-<div class="ui-dataview ui-widget ui-dataview-grid" (window:resize)="setThumbSize()">
+<div
+  class="p-dataview p-widget p-dataview-grid"
+  (window:resize)="setThumbSize()"
+>
   <p-toolbar class="toolbar">
-    <div class="ui-toolbar-group-left" *ngIf="currentDirectory">
+    <div class="p-toolbar-group-left" *ngIf="currentDirectory">
       <span class="control-block">
         <h4>{{ currentDirectory.label }}</h4>
       </span>
       <span class="control-block">
-        {{ filesShown.length }} Items (<i>{{ filesShownTotalSize | prettySize }}</i
+        {{ filesShown.length }} Items (<i>{{
+          filesShownTotalSize | prettySize
+        }}</i
         >)
       </span>
     </div>
-    <div class="toolbar ui-toolbar-group-right">
+    <div class="toolbar p-toolbar-group-right">
       <span class="control-block">
         <i class="pi pi-minus-circle"></i>
         <span class="zoom-controller">
@@ -24,20 +29,37 @@
         </span>
         <i class="pi pi-plus-circle"></i>
       </span>
-      <p-button icon="pi pi-bars" title="List View" (onClick)="viewList()" *ngIf="!listView"></p-button>
-      <p-button icon="pi pi-th-large" title="Thumbnail View" (onClick)="viewThumbs()" *ngIf="listView"></p-button>
+      <p-button
+        icon="pi pi-bars"
+        title="List View"
+        (onClick)="viewList()"
+        *ngIf="!listView"
+      ></p-button>
+      <p-button
+        icon="pi pi-th-large"
+        title="Thumbnail View"
+        (onClick)="viewThumbs()"
+        *ngIf="listView"
+      ></p-button>
     </div>
   </p-toolbar>
 
-  <div *ngIf="loading" class="loading-bar content-area ui-dataview-content ui-widget-content">
+  <div
+    *ngIf="loading"
+    class="loading-bar content-area p-dataview-content p-widget-content"
+  >
     <p-progressSpinner></p-progressSpinner>
   </div>
 
-  <div *ngIf="!filesShown.length && !loading" class="placeholder ui-corner-all">
+  <div *ngIf="!filesShown.length && !loading" class="placeholder p-corner-all">
     Select a directory to view it's contents.
   </div>
 
-  <div class="table-wrap" [style.height.px]="panelHeight" *ngIf="listView && filesShown.length">
+  <div
+    class="table-wrap"
+    [style.height.px]="panelHeight"
+    *ngIf="listView && filesShown.length"
+  >
     <p-table
       class="content-table"
       [resizableColumns]="true"
@@ -50,7 +72,11 @@
     >
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+          <th
+            *ngFor="let col of columns"
+            [pSortableColumn]="col.field"
+            pResizableColumn
+          >
             {{ col.header }}
             <p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
@@ -58,7 +84,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
-          <td *ngFor="let col of columns" class="ui-resizable-column">
+          <td *ngFor="let col of columns" class="p-resizable-column">
             {{ rowData[col.field] }}
           </td>
         </tr>
@@ -69,13 +95,13 @@
   <div
     *ngIf="!listView && filesShown.length"
     [style.height.px]="panelHeight"
-    class="content-area ui-dataview-content ui-widget-content ui-corner-all"
+    class="content-area p-dataview-content p-widget-content p-corner-all"
   >
-    <div class="ui-md-12">
+    <div class="p-md-12">
       <div
         *ngFor="let file of filesShown"
         [class.selected]="selectedFile === file"
-        class="ui-md-3 thumbnail"
+        class="p-md-3 thumbnail"
         (click)="setSelectedFile(file)"
         (dblclick)="openSlideShow(file)"
         (contextmenu)="showContectMenu($event, file)"
@@ -88,15 +114,25 @@
           [style.height.%]="100"
           [src]="file.thumbUrl"
         />
-        <div *ngIf="file.needsThumbnail" class="img-placeholder-wrap" [style.width.%]="100" [style.height.%]="100">
-          <div class="img-placeholder"><i class="pi pi-ban" title="Thumbnail unavailable"></i></div>
+        <div
+          *ngIf="file.needsThumbnail"
+          class="img-placeholder-wrap"
+          [style.width.%]="100"
+          [style.height.%]="100"
+        >
+          <div class="img-placeholder">
+            <i class="pi pi-ban" title="Thumbnail unavailable"></i>
+          </div>
         </div>
         <i *ngIf="!file.thumbUrl" class="pi pi-spin pi-spinner"></i>
       </div>
 
-      <div class="ui-helper-clearfix"></div>
+      <div class="p-helper-clearfix"></div>
     </div>
   </div>
 </div>
-<app-slide-show (closed)="clearSelectedFile()" [(file)]="fullScreenFile"></app-slide-show>
+<app-slide-show
+  (closed)="clearSelectedFile()"
+  [(file)]="fullScreenFile"
+></app-slide-show>
 <p-contextMenu [model]="contextmenu"></p-contextMenu>

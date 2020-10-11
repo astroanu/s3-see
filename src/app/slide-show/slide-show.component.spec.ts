@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SlideShowComponent } from './slide-show.component';
+import { SlideShowComponent } from "./slide-show.component";
 
-describe('SlideShowComponent', () => {
+describe("SlideShowComponent", () => {
   let component: SlideShowComponent;
   let fixture: ComponentFixture<SlideShowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SlideShowComponent]
+      declarations: [SlideShowComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SlideShowComponent);
@@ -16,7 +16,7 @@ describe('SlideShowComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

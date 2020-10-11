@@ -1,23 +1,23 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ElectronService } from 'ngx-electron';
-import { NgxPicaModule } from 'ngx-pica';
-import { MessageService } from 'primeng/components/common/messageservice';
-import { DropdownModule } from 'primeng/dropdown';
-import { MenubarModule } from 'primeng/menubar';
-import { SidebarModule } from 'primeng/sidebar';
-import { ToastModule } from 'primeng/toast';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { async, TestBed } from "@angular/core/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ElectronService } from "ngx-electron";
+import { NgxPicaModule } from "@digitalascetic/ngx-pica";
+import { MessageService } from "primeng/api";
+import { DropdownModule } from "primeng/dropdown";
+import { MenubarModule } from "primeng/menubar";
+import { SidebarModule } from "primeng/sidebar";
+import { ToastModule } from "primeng/toast";
 
-import { PrettySizePipe } from '../pipes/pretty-size.pipe';
-import { AppComponent } from './app.component';
-import { BucketManageComponent } from './bucket-manage/bucket-manage.component';
-import { DirTreeComponent } from './dir-tree/dir-tree.component';
-import { QueueComponent } from './queue/queue.component';
-import { UploaderComponent } from './uploader/uploader.component';
-import { ViewComponent } from './view/view.component';
+import { PrettySizePipe } from "../pipes/pretty-size.pipe";
+import { AppComponent } from "./app.component";
+import { BucketManageComponent } from "./bucket-manage/bucket-manage.component";
+import { DirTreeComponent } from "./dir-tree/dir-tree.component";
+import { QueueComponent } from "./queue/queue.component";
+import { UploaderComponent } from "./uploader/uploader.component";
+import { ViewComponent } from "./view/view.component";
 
-describe('AppComponent', () => {
+describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -27,7 +27,7 @@ describe('AppComponent', () => {
         BucketManageComponent,
         QueueComponent,
         ViewComponent,
-        UploaderComponent
+        UploaderComponent,
       ],
       providers: [MessageService, ElectronService],
       imports: [
@@ -37,13 +37,13 @@ describe('AppComponent', () => {
         NgxPicaModule,
         DropdownModule,
         MenubarModule,
-        ToastModule
+        ToastModule,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
+  it("should create the app", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();

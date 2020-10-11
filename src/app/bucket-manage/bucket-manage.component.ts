@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Observable } from "rxjs";
 
-import { ConfigService } from '../../services/config/config.service';
+import { ConfigService } from "../../services/config/config.service";
 
 @Component({
-  selector: 'app-bucket-manage',
-  templateUrl: './bucket-manage.component.html',
-  styleUrls: ['./bucket-manage.component.scss']
+  selector: "app-bucket-manage",
+  templateUrl: "./bucket-manage.component.html",
+  styleUrls: ["./bucket-manage.component.scss"],
 })
 export class BucketManageComponent {
   @Output() bucketsUpdated = new EventEmitter<any>();
@@ -23,7 +23,7 @@ export class BucketManageComponent {
     bucketName: new FormControl(null, [Validators.required]),
     accessKeyId: new FormControl(null, [Validators.required]),
     secretAccessKey: new FormControl(null, [Validators.required]),
-    region: new FormControl(null, [Validators.required])
+    region: new FormControl(null, [Validators.required]),
   });
 
   private editIndex = null;
@@ -87,7 +87,7 @@ export class BucketManageComponent {
         this.buckets = buckets.map((bucket) => {
           return Object.assign(bucket.getCredentials(), {
             bucketName: bucket.bucketName,
-            label: bucket.label
+            label: bucket.label,
           });
         });
         observer.next();
@@ -96,23 +96,23 @@ export class BucketManageComponent {
   }
 
   public get label() {
-    return this.itemForm.get('label');
+    return this.itemForm.get("label");
   }
 
   public get bucketName() {
-    return this.itemForm.get('bucketName');
+    return this.itemForm.get("bucketName");
   }
 
   public get accessKeyId() {
-    return this.itemForm.get('accessKeyId');
+    return this.itemForm.get("accessKeyId");
   }
 
   public get secretAccessKey() {
-    return this.itemForm.get('secretAccessKey');
+    return this.itemForm.get("secretAccessKey");
   }
 
   public get region() {
-    return this.itemForm.get('region');
+    return this.itemForm.get("region");
   }
 
   constructor(private config: ConfigService) {}

@@ -1,9 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "resolveJsonModule": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "module": "commonjs",
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

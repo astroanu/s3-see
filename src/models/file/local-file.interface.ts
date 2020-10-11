@@ -1,5 +1,5 @@
-import { UploadOptions } from '../../services/uploader/uploader.service';
-import { FileInterface } from './file.interface';
+import { UploadOptions } from "../../services/uploader/uploader.service";
+import { FileInterface } from "./file.interface";
 
 export interface LocalFileInterface extends FileInterface {
   setUploadOptions(uploadOptions: UploadOptions): void;

@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import * as fs from 'fs';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import * as fs from "fs";
+import { Observable } from "rxjs";
 
-import { LocalFile } from '../../models/file/local-file.model';
-import { JobFactoryService } from '../../services/uploader/job.factory.service';
-import { UploaderServiceInterface } from './uploader.service.interface';
+import { LocalFile } from "../../models/file/local-file.model";
+import { JobFactoryService } from "../../services/uploader/job.factory.service";
+import { UploaderServiceInterface } from "./uploader.service.interface";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UploaderService implements UploaderServiceInterface {
   private options: UploadOptions = {
@@ -16,7 +16,7 @@ export class UploaderService implements UploaderServiceInterface {
     flattern: false,
     overwrite: true,
     toLowerCase: true,
-    noSpaces: true
+    noSpaces: true,
   };
 
   private uploadDirectory: string;
@@ -37,7 +37,10 @@ export class UploaderService implements UploaderServiceInterface {
       if (stat && stat.isDirectory()) {
         results = results.concat(this.walk(file));
       } else {
-        const localFile = new LocalFile(file.replace(`${this.uploadDirectory}/`, ''), file);
+        const localFile = new LocalFile(
+          file.replace(`${this.uploadDirectory}/`, ""),
+          file
+        );
         localFile.setUploadOptions(this.options);
         results.push(localFile);
       }

@@ -1,45 +1,45 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/components/common/messageservice';
-import { ContextMenu } from 'primeng/contextmenu';
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { ContextMenu } from "primeng/contextmenu";
 
-import { DirectoryInterface } from '../../models/directory/directory.interface';
-import { S3FileInterface } from '../../models/file/s3-file.interface';
-import { FileService } from '../../services/file/file.service';
+import { DirectoryInterface } from "../../models/directory/directory.interface";
+import { S3FileInterface } from "../../models/file/s3-file.interface";
+import { FileService } from "../../services/file/file.service";
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  selector: "app-view",
+  templateUrl: "./view.component.html",
+  styleUrls: ["./view.component.scss"],
 })
 export class ViewComponent {
   public columns: Array<object> = [
     {
-      field: 'fileName',
-      header: 'File'
+      field: "fileName",
+      header: "File",
     },
     {
-      field: 'sizePretty',
-      header: 'Size'
+      field: "sizePretty",
+      header: "Size",
     },
     {
-      field: 'lastModified',
-      header: 'Last Modified'
-    }
+      field: "lastModified",
+      header: "Last Modified",
+    },
   ];
 
   public contextmenu = [
     {
-      label: 'Copy key',
+      label: "Copy key",
       command: () => {
         this.copyFileKey();
-      }
+      },
     },
     {
-      label: 'Create signed URL',
+      label: "Create signed URL",
       command: () => {
         this.copySignedUrl();
-      }
-    }
+      },
+    },
     /*{
       label: 'Download',
       command: () => {
@@ -80,7 +80,7 @@ export class ViewComponent {
 
   public currentDirectory: DirectoryInterface;
 
-  @ViewChild(ContextMenu) contextMenu: ContextMenu;
+  @ViewChild(ContextMenu, { static: false }) contextMenu: ContextMenu;
 
   @Input() set currentNode(node: DirectoryInterface) {
     if (node) {
@@ -95,7 +95,9 @@ export class ViewComponent {
           return file.size;
         });
 
-        this.filesShownTotalSize = fileSizes.length ? fileSizes.reduce((a, b) => a + b) : 0;
+        this.filesShownTotalSize = fileSizes.length
+          ? fileSizes.reduce((a, b) => a + b)
+          : 0;
       });
     }
   }
@@ -136,7 +138,7 @@ export class ViewComponent {
   }
 
   public get panelHeight() {
-    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+    const dataViewEl = this.el.nativeElement.querySelector(".p-dataview");
 
     return window.innerHeight - dataViewEl.getBoundingClientRect().top - 85;
   }
@@ -144,7 +146,7 @@ export class ViewComponent {
   public setThumbSize() {
     let multiplierCorrected: number;
 
-    const dataViewEl = this.el.nativeElement.querySelector('.ui-dataview');
+    const dataViewEl = this.el.nativeElement.querySelector(".p-dataview");
 
     const containerWidth = dataViewEl.offsetWidth - 14;
 
@@ -174,7 +176,7 @@ export class ViewComponent {
   }
 
   private downloadFile() {
-    console.log('todo');
+    console.log("todo");
   }
 
   private copySignedUrl() {
@@ -182,10 +184,10 @@ export class ViewComponent {
 
     this.messageService.add({
       life: 3000,
-      key: 'tc',
-      severity: 'success',
-      summary: 'Copied.',
-      detail: 'A sgned URL has been copied to the clipboard.'
+      key: "tc",
+      severity: "success",
+      summary: "Copied.",
+      detail: "A sgned URL has been copied to the clipboard.",
     });
   }
 
@@ -194,21 +196,25 @@ export class ViewComponent {
 
     this.messageService.add({
       life: 3000,
-      key: 'tc',
-      severity: 'success',
-      summary: 'Copied.',
-      detail: 'Object key has been copied to the clipboard.'
+      key: "tc",
+      severity: "success",
+      summary: "Copied.",
+      detail: "Object key has been copied to the clipboard.",
     });
   }
 
   private copyToClipboard(text) {
-    document.addEventListener('copy', (e: ClipboardEvent) => {
-      e.clipboardData.setData('text/plain', text);
+    document.addEventListener("copy", (e: ClipboardEvent) => {
+      e.clipboardData.setData("text/plain", text);
       e.preventDefault();
-      document.removeEventListener('copy', null);
+      document.removeEventListener("copy", null);
     });
-    document.execCommand('copy');
+    document.execCommand("copy");
   }
 
-  constructor(private fileService: FileService, private messageService: MessageService, private el: ElementRef) {}
+  constructor(
+    private fileService: FileService,
+    private messageService: MessageService,
+    private el: ElementRef
+  ) {}
 }

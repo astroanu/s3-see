@@ -10,11 +10,11 @@
   .actions {
     float: right;
 
-    .ui-button {
+    .p-button {
       margin-right: 10px;
     }
   }
 }
-:host ::ng-deep .ui-card-body {
+:host ::ng-deep .p-card-body {
   margin-bottom: 5px;
 }

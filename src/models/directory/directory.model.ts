@@ -1,14 +1,14 @@
-import { S3 } from 'aws-sdk';
-import * as path from 'path';
+import { S3 } from "aws-sdk";
+import * as path from "path";
 
-import { FileService } from '../../services/file/file.service';
-import { DirectoryInterface } from '../directory/directory.interface';
-import { FileListInterface } from '../file-list/file-list.interface';
-import { Observable } from 'rxjs';
+import { FileService } from "../../services/file/file.service";
+import { DirectoryInterface } from "../directory/directory.interface";
+import { FileListInterface } from "../file-list/file-list.interface";
+import { Observable } from "rxjs";
 
-export const FOLDER_ICON_NORMAL = 'pi pi-folder';
-export const FOLDER_ICON_EXPANDED = 'pi pi-folder-open';
-export const FOLDER_ICON_LOADING = 'pi pi-spinner pi-spin pi-spinner';
+export const FOLDER_ICON_NORMAL = "pi pi-folder";
+export const FOLDER_ICON_EXPANDED = "pi pi-folder-open";
+export const FOLDER_ICON_LOADING = "pi pi-spinner pi-spin pi-spinner";
 
 export class Directory implements DirectoryInterface {
   public children: Array<DirectoryInterface> = [];
@@ -21,11 +21,13 @@ export class Directory implements DirectoryInterface {
       if (this.files.length) {
         observer.next();
       } else {
-        this.fileService.listObjects(this.prefix).subscribe((list: FileListInterface) => {
-          this.files = list.files;
+        this.fileService
+          .listObjects(this.prefix)
+          .subscribe((list: FileListInterface) => {
+            this.files = list.files;
 
-          observer.next();
-        });
+            observer.next();
+          });
       }
     });
   }
@@ -35,13 +37,15 @@ export class Directory implements DirectoryInterface {
       if (this.children.length) {
         observer.next();
       } else {
-        return this.fileService.listDirectories(this.prefix).subscribe((list: FileListInterface) => {
-          this.children = list.directories;
+        return this.fileService
+          .listDirectories(this.prefix)
+          .subscribe((list: FileListInterface) => {
+            this.children = list.directories;
 
-          this.expanded = this.children.length > 0;
+            this.expanded = this.children.length > 0;
 
-          observer.next();
-        });
+            observer.next();
+          });
       }
     });
   }
@@ -55,8 +59,11 @@ export class Directory implements DirectoryInterface {
   }
 
   get label(): string {
-    return path.basename(this.prefix).replace('_', ' ');
+    return path.basename(this.prefix).replace("_", " ");
   }
 
-  constructor(public fileService: FileService, public prefix: S3.Types.Prefix) {}
+  constructor(
+    public fileService: FileService,
+    public prefix: S3.Types.Prefix
+  ) {}
 }

@@ -11,13 +11,13 @@
 >
   <div class="options-panel p-grid">
     <div class="p-col-12">
-      <div class="ui-inputgroup">
+      <div class="p-inputgroup">
         <button
           (click)="selectDirectory()"
           pButton
           title="Select folder"
           icon="pi pi-folder-open"
-          class="ui-button-secondary"
+          class="p-button-secondary"
         ></button>
         <input class="upload-directory" type="text" pInputText [disabled]="true" [(ngModel)]="uploadDirectory" />
         <button
@@ -32,7 +32,7 @@
           pButton
           (click)="showOptions()"
           title="Options"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           iconPos="left"
           icon="pi pi-cog"
         ></button>
@@ -78,7 +78,7 @@
         <td>
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
-        <td *ngFor="let col of columns" class="ui-resizable-column">
+        <td *ngFor="let col of columns" class="p-resizable-column">
           {{ rowData[col.field] }}
         </td>
         <td>

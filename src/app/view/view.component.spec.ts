@@ -1,18 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/components/common/messageservice';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SliderModule } from 'primeng/slider';
-import { TableModule } from 'primeng/table';
-import { ToolbarModule } from 'primeng/toolbar';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { ButtonModule } from "primeng/button";
+import { MessageService } from "primeng/api";
+import { ContextMenuModule } from "primeng/contextmenu";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { SliderModule } from "primeng/slider";
+import { TableModule } from "primeng/table";
+import { ToolbarModule } from "primeng/toolbar";
 
-import { PrettySizePipe } from '../../pipes/pretty-size.pipe';
-import { SlideShowComponent } from '../slide-show/slide-show.component';
-import { ViewComponent } from './view.component';
+import { PrettySizePipe } from "../../pipes/pretty-size.pipe";
+import { SlideShowComponent } from "../slide-show/slide-show.component";
+import { ViewComponent } from "./view.component";
 
-describe('ViewComponent', () => {
+describe("ViewComponent", () => {
   let component: ViewComponent;
   let fixture: ComponentFixture<ViewComponent>;
 
@@ -26,9 +26,9 @@ describe('ViewComponent', () => {
         ContextMenuModule,
         ToolbarModule,
         TableModule,
-        ButtonModule
+        ButtonModule,
       ],
-      providers: [MessageService]
+      providers: [MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ViewComponent);
@@ -36,7 +36,7 @@ describe('ViewComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

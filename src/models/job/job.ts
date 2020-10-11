@@ -1,12 +1,12 @@
-import PromiseQueue from 'easy-promise-queue';
-import { FileService } from '../../services/file/file.service';
-import { NgxPicaService } from 'ngx-pica';
-import { LocalFile } from '../file/local-file.model';
-import { UploadOptions } from '../../services/uploader/uploader.service';
+import PromiseQueue from "easy-promise-queue";
+import { FileService } from "../../services/file/file.service";
+import { NgxPicaService } from "@digitalascetic/ngx-pica";
+import { LocalFile } from "../file/local-file.model";
+import { UploadOptions } from "../../services/uploader/uploader.service";
 
-export const JOB_QUEUED = 'queued';
-export const JOB_STARTED = 'started';
-export const JOB_COMPLETE = 'complete';
+export const JOB_QUEUED = "queued";
+export const JOB_STARTED = "started";
+export const JOB_COMPLETE = "complete";
 
 export const THUMB_SIZE = 200;
 
@@ -15,7 +15,7 @@ export class Job {
 
   public state: string = JOB_QUEUED;
 
-  public status: string = 'Waiting...';
+  public status: string = "Waiting...";
 
   public promiseQueue: PromiseQueue;
 
@@ -43,5 +43,9 @@ export class Job {
     return bytes.length ? bytes.reduce((a, b) => a + b) : 0;
   }
 
-  constructor(public files: Array<LocalFile>, public options: UploadOptions, public bucketName: string) {}
+  constructor(
+    public files: Array<LocalFile>,
+    public options: UploadOptions,
+    public bucketName: string
+  ) {}
 }

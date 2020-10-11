@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProgressBarModule } from 'primeng/progressbar';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ProgressBarModule } from "primeng/progressbar";
 
-import { StatusBarComponent } from './status-bar.component';
+import { StatusBarComponent } from "./status-bar.component";
 
-describe('StatusBarComponent', () => {
+describe("StatusBarComponent", () => {
   let component: StatusBarComponent;
   let fixture: ComponentFixture<StatusBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StatusBarComponent],
-      imports: [ProgressBarModule]
+      imports: [ProgressBarModule],
     }).compileComponents();
   }));
 
@@ -20,7 +20,7 @@ describe('StatusBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

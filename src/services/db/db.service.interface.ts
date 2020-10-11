@@ -1,5 +1,5 @@
-import { NgxIndexedDB } from 'ngx-indexed-db';
-import { Observable } from 'rxjs';
+import { NgxIndexedDB } from "ngx-indexed-db";
+import { Observable } from "rxjs";
 
 export interface DbServiceInterface {
   get(id: string): Observable<any>;

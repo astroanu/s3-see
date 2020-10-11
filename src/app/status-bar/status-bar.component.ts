@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-status-bar',
-  templateUrl: './status-bar.component.html',
-  styleUrls: ['./status-bar.component.scss']
+  selector: "app-status-bar",
+  templateUrl: "./status-bar.component.html",
+  styleUrls: ["./status-bar.component.scss"],
 })
 export class StatusBarComponent {
   @Output() showQueue = new EventEmitter<any>();
 
-  public statusMessage: string = 'Loading...';
+  public statusMessage: string = "Loading...";
 
   private progress: number = 0;
 
