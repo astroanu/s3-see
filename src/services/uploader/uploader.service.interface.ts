@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { LocalFile } from '../../models/file/local-file.model';
-import { UploadOptions } from './uploader.service';
+import { LocalFile } from "../../models/file/local-file.model";
+import { UploadOptions } from "./uploader.service";
 
 export interface UploaderServiceInterface {
   setUploadDirectory(directorypath: string): void;

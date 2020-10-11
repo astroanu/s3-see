@@ -1,30 +1,30 @@
-import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { IMock, Mock } from 'typemoq';
+import { TestBed } from "@angular/core/testing";
+import { of } from "rxjs";
+import { IMock, Mock } from "typemoq";
 
-import { Bucket, BucketConfig, ConfigService } from '../config/config.service';
-import { ConfigServiceInterface } from '../config/config.service.interface';
-import { FileService } from './file.service';
-import { FileServiceInterface } from './file.service.interface';
+import { Bucket, BucketConfig, ConfigService } from "../config/config.service";
+import { ConfigServiceInterface } from "../config/config.service.interface";
+import { FileService } from "./file.service";
+import { FileServiceInterface } from "./file.service.interface";
 
-describe('FileService', () => {
+describe("FileService", () => {
   let service: FileServiceInterface;
 
   let moqConfigService: IMock<ConfigServiceInterface>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ConfigService]
+      providers: [ConfigService],
     });
 
     moqConfigService = Mock.ofType<ConfigServiceInterface>();
 
     const testBucketConfig: BucketConfig = {
-      accessKeyId: 'accessKeyId,',
-      secretAccessKey: 'secretAccessKey,',
-      region: 'region',
-      bucketName: 'test',
-      label: 'Test'
+      accessKeyId: "accessKeyId,",
+      secretAccessKey: "secretAccessKey,",
+      region: "region",
+      bucketName: "test",
+      label: "Test",
     };
 
     const bucket = new Bucket(testBucketConfig);
@@ -36,24 +36,24 @@ describe('FileService', () => {
       });
 
     moqConfigService
-      .setup((m) => m.getBucketCredentials('test'))
+      .setup((m) => m.getBucketCredentials("test"))
       .returns(() => {
         return of(bucket.getCredentials());
       });
 
     TestBed.overrideProvider(ConfigService, {
-      useValue: moqConfigService.object
+      useValue: moqConfigService.object,
     });
 
     service = TestBed.get(FileService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return bucket name', () => {
-    service.setBucket('test');
-    expect(service.getBucketName()).toEqual('test');
+  it("should return bucket name", () => {
+    service.setBucket("test");
+    expect(service.getBucketName()).toEqual("test");
   });
 });

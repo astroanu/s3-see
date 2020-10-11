@@ -1,13 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { MessageService } from 'primeng/components/common/messageservice';
-
-import { UploadJob } from '../../models/job/upload-job';
-import { JOB_QUEUED } from '../../models/job/job';
+import { Component, Output, EventEmitter } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { UploadJob } from "../../models/job/upload-job";
+import { JOB_QUEUED } from "../../models/job/job";
 
 @Component({
-  selector: 'app-queue',
-  templateUrl: './queue.component.html',
-  styleUrls: ['./queue.component.scss']
+  selector: "app-queue",
+  templateUrl: "./queue.component.html",
+  styleUrls: ["./queue.component.scss"],
 })
 export class QueueComponent {
   @Output() totalBytesInQueueChanged = new EventEmitter<any>();
@@ -51,10 +50,10 @@ export class QueueComponent {
 
     this.messageService.add({
       life: 3000,
-      key: 'tc',
-      severity: 'success',
-      summary: 'Upload job has been queued.',
-      detail: 'You can check the job progress on the status bar below.'
+      key: "tc",
+      severity: "success",
+      summary: "Upload job has been queued.",
+      detail: "You can check the job progress on the status bar below.",
     });
   }
 
@@ -74,10 +73,10 @@ export class QueueComponent {
           this.messageService.add({
             sticky: true,
             life: 10000,
-            key: 'tc',
-            severity: 'error',
-            summary: 'Could not complete batch job successfully',
-            detail: e.toString()
+            key: "tc",
+            severity: "error",
+            summary: "Could not complete batch job successfully",
+            detail: e.toString(),
           });
         });
     }

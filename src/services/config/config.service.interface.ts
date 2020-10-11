@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { Bucket } from './config.service';
+import { Bucket } from "./config.service";
 
 export interface ConfigServiceInterface {
   updateBucketConfig(buckets: Array<object>): Observable<void>;

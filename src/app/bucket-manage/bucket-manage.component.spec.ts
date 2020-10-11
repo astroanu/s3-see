@@ -1,18 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CardModule } from "primeng/card";
+import { DialogModule } from "primeng/dialog";
 
-import { BucketManageComponent } from './bucket-manage.component';
+import { BucketManageComponent } from "./bucket-manage.component";
 
-describe('BucketManageComponent', () => {
+describe("BucketManageComponent", () => {
   let component: BucketManageComponent;
   let fixture: ComponentFixture<BucketManageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BucketManageComponent],
-      imports: [FormsModule, ReactiveFormsModule, DialogModule, CardModule]
+      imports: [FormsModule, ReactiveFormsModule, DialogModule, CardModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BucketManageComponent);
@@ -20,7 +20,7 @@ describe('BucketManageComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create instance', () => {
+  it("should create instance", () => {
     expect(component).toBeTruthy();
   });
 });

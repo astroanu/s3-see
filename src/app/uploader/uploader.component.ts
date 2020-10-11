@@ -9,7 +9,7 @@ import { BrowserWindow, OpenDialogOptions } from "electron";
 @Component({
   selector: "app-uploader",
   templateUrl: "./uploader.component.html",
-  styleUrls: ["./uploader.component.scss"]
+  styleUrls: ["./uploader.component.scss"],
 })
 export class UploaderComponent {
   @Output() uploadQueued = new EventEmitter<any>();
@@ -30,7 +30,7 @@ export class UploaderComponent {
     flattern: new FormControl(false),
     overwrite: new FormControl(true),
     toLowerCase: new FormControl(true),
-    noSpaces: new FormControl(true)
+    noSpaces: new FormControl(true),
   });
 
   public selectedFiles: Array<LocalFile> = null;
@@ -46,31 +46,31 @@ export class UploaderComponent {
   public columns: Array<object> = [
     {
       field: "fileName",
-      header: "File"
+      header: "File",
     },
     {
       field: "sizePretty",
-      header: "Size"
+      header: "Size",
     },
     {
       field: "lastModified",
-      header: "Last Modified"
+      header: "Last Modified",
     },
     {
       field: "destinationKey",
-      header: "Upload Destination"
-    }
+      header: "Upload Destination",
+    },
   ];
 
   public selectDirectory() {
     const options: OpenDialogOptions = {
       title: "Select a folder",
-      properties: ["openDirectory"]
+      properties: ["openDirectory"],
     };
 
     this.electronService.remote.dialog
       .showOpenDialog(new BrowserWindow(), options)
-      .then(paths => {
+      .then((paths) => {
         if (paths) {
           this.uploadDirectory = paths[0];
 

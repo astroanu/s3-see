@@ -11,7 +11,7 @@ import { ViewComponent } from "./view/view.component";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
   @ViewChild(DirTreeComponent, { static: false }) dirTree: DirTreeComponent;
@@ -42,16 +42,16 @@ export class AppComponent {
           label: "Upload",
           command: () => {
             this.uploader.showDialog();
-          }
+          },
         },
         {
           label: "Buckets",
           command: () => {
             this.bucketManager.showDialog();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ];
 
   public uploadQueued(job: any) {
@@ -72,16 +72,16 @@ export class AppComponent {
   }
 
   public initializeBucktesList() {
-    return this.config.getBuckets().subscribe(buckets => {
+    return this.config.getBuckets().subscribe((buckets) => {
       if (!buckets.length) {
         this.bucketManager.showDialog();
         return;
       }
 
-      this.buckets = buckets.map(bucket => {
+      this.buckets = buckets.map((bucket) => {
         return {
           label: bucket.label,
-          value: bucket.bucketName
+          value: bucket.bucketName,
         };
       });
 
