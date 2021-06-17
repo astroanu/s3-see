@@ -14,5 +14,8 @@
     "types": ["jasmine", "node"]
   },
   "include": ["main.ts", "src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "angularCompilerOptions": {
+    "disableTypeScriptVersionCheck": true,
+  }
 }

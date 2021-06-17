@@ -26,7 +26,7 @@ export class UploadJob extends Job implements JobInterface {
                     thumbnail
                   ).subscribe(() => {
                     this.itemStatusMap[itemId] = "complete";
-                    resolve();
+                    resolve(null);
                   });
                 });
               });

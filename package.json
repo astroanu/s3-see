@@ -32,7 +32,7 @@
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1001.6",
+    "@angular-devkit/build-angular": "^12.0.4",
     "@angular/cli": "~10.1.6",
     "@angular/compiler-cli": "~10.1.5",
     "@angular/language-service": "~10.1.5",
@@ -45,7 +45,7 @@
     "exifr": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~6.0.0",
-    "karma": "^5.2.3",
+    "karma": "5.2.3",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.1",
