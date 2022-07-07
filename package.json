@@ -75,7 +75,7 @@
     "easy-promise-queue": "^0.5.4",
     "exif-js": "^2.3.0",
     "fs": "0.0.1-security",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-electron": "^2.1.1",
     "ngx-indexed-db": "^2.0.5",
     "ngx-moment": "^5.0.0",
